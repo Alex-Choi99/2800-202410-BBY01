@@ -1,10 +1,10 @@
 ## About Us
-Team Name: BBY-XX OR DTC-XX
+Team Name: BBY-01
 Team Members: 
-- Person 1
-- Person 2
-- Person 3
-- Person 4
-- Person 5
+- Alfredo Luzardo
+- Alex Choi
+- Mark Pirvulescu
+- Wayne Wong
+- Daniil Yarygin
 ## More details to come
 TBA
