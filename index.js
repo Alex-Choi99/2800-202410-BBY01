@@ -4,6 +4,8 @@ const mongoose = require('mongoose');
 const connectMongo = require('connect-mongo');
 const app = express();
 require('dotenv').config();
+const Joi = require("joi");
+const bcrypt = require('bcrypt');
 const port = process.env.PORT || 3000;
 
 const node_session_secret = process.env.NODE_SESSION_SECRET;
@@ -74,36 +76,28 @@ app.get('/login', (req, res) => {
     }
 );
 
-app.use('/', sessionValidation);
+app.get('/signup', (req, res) => {
+    res.render('signup');
+    }
+);
+
+// app.use('/');
 app.get('/', (req, res) => {
     res.render('/');
     } 
 );
 
-app.post('/submitUser', async (req, res) => {
+app.post('/signupSubmit', async (req, res) => {
     const { name, email, password } = req.body;
-    //var html = ``;
-
-    /* if (!name) {
-        html += `Name is missing`;
-    }
-    if (!email) {
-        html += `<br> Email is missing`;
-    }
-    if (!password) {
-        html += `<br> Password is missing`;
-    } */
-
-
 
     const schema = Joi.object({
         name: Joi.string().max(40).required(),
-        email: Joi.string().max(40).required(),
+        email: Joi.string().max(40).email().required(),
         password: Joi.string().max(40).required()
     });
 
     const validationResult = schema.validate({ name, email, password });
-
+    console.log('all good');
     if (validationResult.error != null) {
         res.render("submitSignUp", { name: name, email: email, password: password });
         /* html += `
@@ -135,7 +129,7 @@ app.post('/submitUser', async (req, res) => {
         req.session.email = email;
         req.session.name = user.name;
         req.session.cookie.maxAge = expireTime;
-        res.redirect('skillsSelection');
+        res.redirect('/login');
         return;
     }
 
@@ -163,7 +157,7 @@ app.post('/loginSubmit', async (req, res) => {
     if (await bcrypt.compare(password, result[0].password)) {
         console.log("correct password");
         req.session.authenticated = true;
-        req.session.email = email;
+        req.session.email = result[0].email;
         req.session.name = result[0].name;
         req.session.cookie.maxAge = expireTime;
         req.session.skills = result[0].skills;

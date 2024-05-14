@@ -19,6 +19,7 @@
     "express-session": "^1.18.0",
     "joi": "^17.13.1",
     "mongodb": "^6.5.0",
-    "mongoose": "^8.3.3"
+    "mongoose": "^8.3.4",
+    "nodemon": "^3.1.0"
   }
 }
