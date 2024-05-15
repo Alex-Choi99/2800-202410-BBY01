@@ -71,10 +71,22 @@ function sessionValidation(req, res, next) {
     }
 };
 
+// app.post('/login/:type', async (req, res) => {
+//     const forgorType = req.params.type;
+//     await 
+//     res.redirect('/login', { forgorType });
+// });
+
 app.get('/login', (req, res) => {
-    res.render('login');
+    var forgor = req.query.type || 'know';
+    console.log(forgor);
+    res.render('login', {forgor});
     }
 );
+
+app.post('/resetConfirm', (req,res) => {
+    res.render('resetConfirm');
+});
 
 app.get('/signup', (req, res) => {
     res.render('signup');
