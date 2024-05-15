@@ -69,15 +69,16 @@ function sessionValidation(req, res, next) {
     }
 };
 
-app.get('/login', (req, res) => {
-    res.render('login');
+app.get('/', async (req, res) => {
+    const result = await userModel.find();
+    console.log(result);
+    res.render('main', {users: result});
     }
 );
 
-app.use('/', sessionValidation);
-app.get('/', (req, res) => {
-    res.render('/');
-    } 
+app.get('/login', (req, res) => {
+    res.render('login');
+    }
 );
 
 app.post('/submitUser', async (req, res) => {
@@ -181,5 +182,5 @@ app.post('/loginSubmit', async (req, res) => {
 });
 
 app.listen(port, () => {
-    console.log('Server is running on port ${port}');
+    console.log(`Server is running on port ${port}`);
 });
