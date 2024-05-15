@@ -74,7 +74,6 @@ app.get('/login', (req, res) => {
     }
 );
 
-app.use('/', sessionValidation);
 app.get('/', (req, res) => {
     res.render('main');
     } 
