@@ -80,7 +80,6 @@ function generateRandomPassword(length) {
         const randomIndex = Math.floor(Math.random() * chars.length);
         password += chars[randomIndex];
     }
-
     return password;
 }
 
@@ -119,8 +118,6 @@ function generateRandomPassword(length) {
 //     await 
 //     res.redirect('/login', { forgorType });
 // });
-
-
 
 app.get('/login', (req, res) => {
     var forgor = req.query.type || 'know';
@@ -184,8 +181,10 @@ app.post('/resetConfirm', async (req, res) => {
                         },
                     ],
                     Subject: `Password reset`,
-                    TextPart: `Your new password is ${newPW}`,
-                    TemplateID: 5969125,
+                    TextPart: `Your new password is ${newPW}
+                    http://localhost:3025/newPW
+                    `,
+                    // TemplateID: 5969125,
                     Variables: vari
                 },
             ],
@@ -214,12 +213,11 @@ app.get('/signup', (req, res) => {
     res.render('signup');
 }
 );
-
-// app.use('/');
-app.get('/', (req, res) => {
-    res.render('/');
-}
-);
+app.get('/', async (req, res) => {
+    const result = await userModel.find();
+    console.log(result);
+    res.render('main', {users: result});
+});
 
 app.post('/signupSubmit', async (req, res) => {
     const { name, email, password } = req.body;
