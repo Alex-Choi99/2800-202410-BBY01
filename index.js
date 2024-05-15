@@ -69,14 +69,16 @@ function sessionValidation(req, res, next) {
     }
 };
 
-app.get('/login', (req, res) => {
-    res.render('login');
+app.get('/', async (req, res) => {
+    const result = await userModel.find();
+    console.log(result);
+    res.render('main', {users: result});
     }
 );
 
-app.get('/', (req, res) => {
-    res.render('main');
-    } 
+app.get('/login', (req, res) => {
+    res.render('login');
+    }
 );
 
 app.post('/submitUser', async (req, res) => {
