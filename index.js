@@ -17,6 +17,11 @@ const mongodb_password = process.env.MONGODB_PASSWORD;
 const mongodb_dt_user = process.env.MONGODB_DATABASE_USER;
 const mongodb_dt_sessions = process.env.MONGODB_DATABASE_SESSION;
 
+const mailjet = require('node-mailjet').apiConnect(
+    process.env.MJ_APIKEY_PUBLIC,
+    process.env.MJ_APIKEY_PRIVATE
+  );
+
 const expireTime = 1 * 60 * 60 * 1000;
 
 const MongoURI = `mongodb+srv://${mongodb_user}:${mongodb_password}@${mongodb_host}/${mongodb_dt_user}`;
@@ -185,6 +190,77 @@ app.post('/loginSubmit', async (req, res) => {
     }
 
 });
+
+
+
+
+const request = mailjet
+  .post('send', { version: 'v3.1' })
+  .request({
+    Messages: [
+      {
+        From: {
+          Email: 'your@email.com',
+          Name: 'Your Name',
+        },
+        To: [
+          {
+            Email: 'recipient@email.com',
+            Name: 'Recipient Name',
+          },
+        ],
+        Subject: 'Test Email from Mailjet and Node.js',
+        TemplateID: templateId,
+        Variables:{
+        //variables you want to use in your templete
+          name:"test"
+          },
+       TemplateLanguage: true,
+      },
+    ],
+  });
+request
+  .then((result) => {
+    console.log(result.body);
+  })
+  .catch((err) => {
+    console.error(err.statusCode, err.message);
+  });
+
+/* async function sendEmail(name, email, subject, message) {
+    const data = JSON.stringify({
+      "Messages": [{
+        "From": {"Email": "bby01.290124@gmail.com", "Name": "LearnXchange"},
+        "To": [{"Email": email, "Name": name}],
+        "Subject": subject,
+        "TextPart": message
+      }]
+    });
+  
+    const config = {
+      method: 'post',
+      url: 'https://api.mailjet.com/v3.1/send',
+      data: data,
+      headers: {'Content-Type': 'application/json'},
+      auth: {username: '<API Key>', password: '<Secret Key>'},
+    };
+  
+    return axios(config)
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  
+  }
+  
+  // define your own email api which points to your server.
+  app.post('/api/sendemail/', function (req, res) {
+    const {name, email, subject, message} = req.body;
+    //implement your spam protection or checks.
+    sendEmail(name, email, subject, message);
+  }); */
 
 app.listen(port, () => {
     console.log('Server is running on port ${port}');
