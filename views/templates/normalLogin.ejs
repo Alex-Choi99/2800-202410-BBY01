@@ -4,13 +4,9 @@
       <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 
       <div class="form-floating">
-        <input name="loginID" type="text" class="form-control" id="floatingInput" placeholder="Login ID">
-        <label for="floatingInput">Login ID</label>
+        <input name="email" type="text" class="form-control" id="floatingInput" placeholder="Email address">
+        <label for="floatingInput">Email or ID</label>
       </div>
-      <!-- <div class="form-floating">
-        <input name="email" type="email" class="form-control" id="floatingInput" placeholder="Email address">
-        <label for="floatingInput">Email address</label>
-      </div> -->
       <div class="form-floating">
         <input name="password" type="password" class="form-control" id="floatingPassword" placeholder="Password">
         <label for="floatingPassword">Password</label>
@@ -24,7 +20,7 @@
     <form action="/login?type=forgor" method="get">
       <div class="form-floating">
         <input name="type" type="hidden" class="form-control" value="forgor">
-        <button class="btn btn-primary btn-sm w-60 py-2 m-1" type="submit">Forgot login info?</button>
+        <button class="btn btn-secondary btn-sm w-60 py-2 m-1" type="submit">Forgot login info?</button>
       </div>
     </form>
   </div>
