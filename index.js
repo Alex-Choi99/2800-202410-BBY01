@@ -239,7 +239,8 @@ app.post('/signupSubmit', async (req, res) => {
     const validationResult = schema.validate({ name, id, email, password });
     console.log('all good');
     if (validationResult.error != null) {
-        res.render("submitSignUp", { name: name, email: email, id: id, password: password });
+        //{ name: name, email: email, id: id, password: password }
+        res.render("signup", { errorMessage: 'user with that email already exists in our record.'});
         /* html += `
         <form action='/signup' method='get'>
             <button>Try Again</button>
@@ -249,7 +250,7 @@ app.post('/signupSubmit', async (req, res) => {
     } else {
         let user = await userModel.findOne({ email });
         if (user) {
-            res.redirect('/signup', { errorMessage: 'user with that email already exists in our record.'});
+            res.render('signup', { errorMessage: 'user with that email already exists in our record.'});
             return;
         }
 
