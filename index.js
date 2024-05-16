@@ -227,39 +227,46 @@ app.post('/signupSubmit', async (req, res) => {
 });
 
 app.post('/loginSubmit', async (req, res) => {
-    const { email, password } = req.body;
+    const { loginID, password } = req.body;
 
-    const schema = Joi.string().max(30).required();
-    const validationResult = schema.validate(email, password);
+    const schema = Joi.object({
+        loginID: Joi.string().max(30).required(),
+        password: Joi.string().max(30).required()
+    })
+    const validationResult = schema.validate(loginID, password);
     if (validationResult.error != null) {
         console.log(validationResult.error);
-        res.render("loginSubmit", { errorMessage: "Invalid email/password combination" });
+        res.render("login", { forgor: 'know', errorMessage: "Invalid email/password combination" });
         return;
     }
-    const result = await userModel.find({ email: email }).exec();
+    const result = await userModel.findOne({
+        $or: [
+            { email: loginID },
+            { id: loginID }
+        ]
+    }).exec();
 
     console.log('User info from DB' + result);
     if (result.length != 1) {
         console.log("user not found");
-        res.render("loginSubmit", { errorMessage: "No User Detected" });
+        res.render("login", { forgor: 'know', errorMessage: "No User Detected" });
         return;
     }
 
-    if (await bcrypt.compare(password, result[0].password)) {
+    if (await bcrypt.compare(password, result.password)) {
         console.log("correct password");
         req.session.authenticated = true;
-        req.session.email = result[0].email;
-        req.session.name = result[0].name;
+        req.session.email = result.email;
+        req.session.name = result.name;
         req.session.cookie.maxAge = expireTime;
-        req.session.skills = result[0].skills;
-        console.log("Result:", result[0].skills);
-        // console.log(req.session);
+        req.session.skills = result.skills;
+        console.log("Result:", result.skills);
         res.redirect('/');
         return;
     }
     else {
         console.log("incorrect password");
-        res.render("loginSubmit", { errorMessage: "Incorrect Password" });
+        res.render("login", { forgor: 'know', errorMessage: "Incorrect Password" });
         return;
     }
 });
@@ -298,8 +305,6 @@ app.post('/api/sendemail/', function (req, res) {
     //implement your spam protection or checks.
     sendEmail(name, email, subject, message);
 });
-
-
 
 app.post('/logout', (req, res) => {
     req.session.destroy((err) => {
