@@ -18,6 +18,7 @@ const userSchema = new Schema({
     skills: {
         type: Array,
         required: true,
+        default: ['default']
     },
     image_id: {
         type: String,

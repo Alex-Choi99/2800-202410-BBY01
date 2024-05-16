@@ -9,6 +9,9 @@ const bcrypt = require('bcrypt');
 const port = process.env.PORT || 3000;
 const cloudinary = require('cloudinary');
 const {v4: uuid} = require('uuid');
+const multer = require('multer')
+const storage = multer.memoryStorage()
+const upload = multer({ storage: storage })
 
 const node_session_secret = process.env.NODE_SESSION_SECRET;
 const mongodb_session_secret = process.env.MONGODB_SESSION_SECRET;
@@ -28,10 +31,6 @@ cloudinary.config({
     api_key: process.env.CLOUDINARY_CLOUD_KEY,
     api_secret: process.env.CLOUDINARY_CLOUD_SECRET
 });
-
-const multer = require('multer')
-const storage = multer.memoryStorage()
-const upload = multer({ storage: storage })
 
 const expireTime = 1 * 60 * 60 * 1000;
 
@@ -93,42 +92,6 @@ function generateRandomPassword(length) {
     }
     return password;
 }
-
-// const sendEmail = (recipientEmail, recipientName, templateId, templateVariables) => {
-//     const request = mailjet.post('send', { version: 'v3.1' }).request({
-//         Messages: [
-//             {
-//                 From: {
-//                     Email: 'bby01.290124@gmail.com',
-//                     Name: 'LearnXchange',
-//                 },
-//                 To: [
-//                     {
-//                         Email: recipientEmail,
-//                         Name: recipientName,
-//                     },
-//                 ],
-//                 Subject: 'Test Email from Mailjet and Node.js',
-//                 TemplateID: templateId,
-//                 Variables: templateVariables,
-//                 TemplateLanguage: true,
-//             },
-//         ],
-//     });
-//     request.then((result) => {
-//         console.log('Email sent successfully:', JSON.stringify(result.body, null, 2));
-//     }).catch((err) => {
-//         console.error('Error sending email:', JSON.stringify(err, null, 2));
-//     });
-// };
-
-
-
-// app.post('/login/:type', async (req, res) => {
-//     const forgorType = req.params.type;
-//     await 
-//     res.redirect('/login', { forgorType });
-// });
 
 app.get('/', async (req, res) => {
     const result = await userModel.find();
@@ -340,7 +303,6 @@ app.post('/loginSubmit', async (req, res) => {
 //       .catch(function (error) {
 //         console.log(error);
 //       });
-
 //   }
 
 // define your own email api which points to your server.
@@ -356,14 +318,32 @@ app.get('/profile', async (req, res) => {
     res.render('profile', {user: user});
 });
 
-app.post('/setProfilePic', upload.single('image'), (req, res, next) => {
+app.post('/setProfilePic', upload.single('image'), async (req, res, next) => {
     let image_uuid = uuid();
     let email = req.session.email;
-    let user = userModel.findOne({email});
+    let doc = await userModel.findOne({email});
     let buf64 = req.file.buffer.toString('base64');
-    stream = cloudinary.uploader.upload("data:image/png;base64," + buf64, function (result) {
-        console.log(result);
-    });
+    stream = cloudinary.uploader.upload("data:image/octet-stream;base64," + buf64, async function (result) {
+        try {
+            console.log(result);
+            const success = await userModel.updateOne({email: email}, {$set : {image_id: image_uuid}});
+            if (!success) {
+                console.log("Error uploading to MongoDB");
+            } 
+            else{
+                console.log("USER DOCUMENT " + doc);
+                req.session.image = image_uuid;
+                console.log(doc.image_id);
+                console.log("IMAGE UUID: " + req.session.image);
+                res.redirect("/profile");
+            }
+        }
+        catch(ex) {
+            console.log("Error connecting to MongoDB");
+			console.log(ex);
+        }
+    }, { public_id: image_uuid }
+);
 
 });
 // app.post('/picUpload', upload.single('image'), (req, res, next) => {
