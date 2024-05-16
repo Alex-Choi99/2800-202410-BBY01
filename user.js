@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { type } = require('os');
 const Schema  = mongoose.Schema;
 
 const userSchema = new Schema({
@@ -18,6 +19,10 @@ const userSchema = new Schema({
     skills: {
         type: Array,
         required: true,
+    },
+    tempCode: {
+        type: String,
+        required: false,
     }
 });
 

@@ -138,6 +138,7 @@ app.post('/resetConfirm', async (req, res) => {
         }
 
         const result = await userModel.findOne({ email });
+        const oldCode = result.tempCode;
         console.log('User info from db'+ result);
         if (!result) {
             console.log("user not found");
@@ -145,28 +146,29 @@ app.post('/resetConfirm', async (req, res) => {
             return;
         }
 
-        var emailName = ''
-        let i = 0
-        while (i < result.email.length) {
-            if (result.email[i] == '@') {
-                break;
-            }
-            emailName += result.email[i];
-            i++
-        }
+        // var emailName = ''
+        // let i = 0
+        // while (i < result.email.length) {
+        //     if (result.email[i] == '@') {
+        //         break;
+        //     }
+        //     emailName += result.email[i];
+        //     i++
+        // }
 
-        var newPW = generateRandomPassword(10);
-        const saltRounds = 10;
-        const hashedPassword = await bcrypt.hash(newPW, saltRounds);
+        var tempCode = generateRandomPassword(10);
+        result.tempCode = tempCode;
+        await result.save();
+        // const vari = 
+        //     {
+        //         link: `https://2800-202410-bby01.onrender.com/newPassword?${emailName}`,
+        //         newPW: newPW,
+        //     };
+        // const saltRounds = 10;
+        // const hashedPassword = await bcrypt.hash(newPW, saltRounds);
+        await userModel.updateOne({ email: result.email }, { $set: { tempCode: tempCode } });
 
-        const vari = 
-            {
-                link: `https://2800-202410-bby01.onrender.com/newPassword?${emailName}`,
-                newPW: newPW,
-            };
-
-        await userModel.updateOne({ email: email }, { $set: { password: hashedPassword } });
-        console.log('hashed Password' + hashedPassword)
+        console.log('New tempCode' + tempCode)
         const request = mailjet.post('send', { version: 'v3.1' }).request({
             Messages: [
                 {
@@ -181,11 +183,11 @@ app.post('/resetConfirm', async (req, res) => {
                         },
                     ],
                     Subject: `Password reset`,
-                    TextPart: `Your new password is ${newPW}
-                    http://localhost:3025/newPW
+                    TextPart: `Your new temporary code is ${tempCode}
+http://localhost:3025/newPW
                     `,
                     // TemplateID: 5969125,
-                    Variables: vari
+                    // Variables: vari
                 },
             ],
         });
@@ -203,19 +205,56 @@ app.post('/resetConfirm', async (req, res) => {
         res.render('resetConfirm');
     } catch (error) {
         console.error('Error in resetConfirm:', error);
-        res.render('login', { forgor, errorMessage: 'An error occurred while processing your request.' });
+        res.render('login', { forgor: 'forgor', errorMessage: 'An error occurred while processing your request.' });
+    }    
+});
+
+app.get('/newPW', async (req,res) => {
+    res.render('newPW');
+});
+
+app.post('/newPWSubmit', async (req, res) => {
+    const tempCode = req.body.tempCode;
+    const newPW = req.body.newPW;
+    const confirmPW = req.body.confirmPW;
+
+    const schema = Joi.string().max(30).required();
+    const validationResult = schema.validate(tempCode, newPW, confirmPW);
+    if (validationResult.error != null) {
+        console.log(validationResult.error);
+        res.render("newPW", { errorMessage: "Password cannot be more than 30." });
+        return;
     }
 
-    
-});
+    const findCode = await userModel.findOne({ tempCode });
+    if (!findCode){
+        res.render("newPW", {errorMessage: "Non existing temporary code."});
+        return;
+    }
+
+    if (newPW != confirmPW) {
+        res.render("newPW", {errorMessage: "new password and confirmation are not matching."});
+        return;
+    }
+
+    const saltRounds = 12;
+    const hashedPassword = await bcrypt.hash(newPW, saltRounds);
+    await userModel.updateOne({ tempCode: tempCode }, { $set: { password: hashedPassword } });
+    res.render('login', { forgor: 'know' });
+})
 
 app.get('/signup', (req, res) => {
     res.render('signup');
 }
 );
+
 app.get('/', async (req, res) => {
     const result = await userModel.find();
     console.log(result);
+    if(!req.session){
+        res.redirect('login', {forgor: 'know'});
+        return;
+    }
     res.render('main', {users: result});
 });
 
