@@ -83,44 +83,8 @@ function generateRandomPassword(length) {
     return password;
 }
 
-// const sendEmail = (recipientEmail, recipientName, templateId, templateVariables) => {
-//     const request = mailjet.post('send', { version: 'v3.1' }).request({
-//         Messages: [
-//             {
-//                 From: {
-//                     Email: 'bby01.290124@gmail.com',
-//                     Name: 'LearnXchange',
-//                 },
-//                 To: [
-//                     {
-//                         Email: recipientEmail,
-//                         Name: recipientName,
-//                     },
-//                 ],
-//                 Subject: 'Test Email from Mailjet and Node.js',
-//                 TemplateID: templateId,
-//                 Variables: templateVariables,
-//                 TemplateLanguage: true,
-//             },
-//         ],
-//     });
-//     request.then((result) => {
-//         console.log('Email sent successfully:', JSON.stringify(result.body, null, 2));
-//     }).catch((err) => {
-//         console.error('Error sending email:', JSON.stringify(err, null, 2));
-//     });
-// };
-
-
-
-// app.post('/login/:type', async (req, res) => {
-//     const forgorType = req.params.type;
-//     await 
-//     res.redirect('/login', { forgorType });
-// });
-
 app.get('/login', (req, res) => {
-    var forgor = req.query.type || 'know';
+    var forgor = req.query.type;
     console.log('forgor type' + forgor);
     res.render('login', { forgor });
 });
@@ -205,8 +169,6 @@ app.post('/resetConfirm', async (req, res) => {
         console.error('Error in resetConfirm:', error);
         res.render('login', { forgor, errorMessage: 'An error occurred while processing your request.' });
     }
-
-    
 });
 
 app.get('/signup', (req, res) => {
@@ -336,6 +298,21 @@ app.post('/api/sendemail/', function (req, res) {
     //implement your spam protection or checks.
     sendEmail(name, email, subject, message);
 });
+
+
+
+app.post('/logout', (req, res) => {
+    req.session.destroy((err) => {
+        if (err) {
+            throw err;
+        }
+        res.redirect('/');
+    });
+});
+
+app.get('/404', (req, res) => {
+    res.render('404');
+})
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
