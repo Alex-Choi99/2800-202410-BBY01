@@ -7,9 +7,13 @@ require('dotenv').config();
 const Joi = require("joi");
 const bcrypt = require('bcrypt');
 const port = process.env.PORT || 3000;
+const cloudinary = require('cloudinary');
+const {v4: uuid} = require('uuid');
+const multer = require('multer')
+const storage = multer.memoryStorage()
+const upload = multer({ storage: storage })
 
 const node_session_secret = process.env.NODE_SESSION_SECRET;
-
 const mongodb_session_secret = process.env.MONGODB_SESSION_SECRET;
 const mongodb_host = process.env.MONGODB_HOST;
 const mongodb_user = process.env.MONGODB_USER;
@@ -22,6 +26,12 @@ const mailjet = require('node-mailjet').apiConnect(
     process.env.MJ_APIKEY_PRIVATE
 );
 
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_CLOUD_KEY,
+    api_secret: process.env.CLOUDINARY_CLOUD_SECRET
+});
+
 const expireTime = 1 * 60 * 60 * 1000;
 
 const MongoURI = `mongodb+srv://${mongodb_user}:${mongodb_password}@${mongodb_host}/${mongodb_dt_user}`;
@@ -30,7 +40,7 @@ const MongoDBSessionURI = `mongodb+srv://${mongodb_user}:${mongodb_password}@${m
 const userModel = require("./user.js");
 
 mongoose.connect(MongoURI, {}).then(res => {
-        console.log('MongoDB Connected');
+    console.log('MongoDB Connected');
 })
 
 app.set('view engine', 'ejs');
@@ -47,13 +57,13 @@ app.use(express.static(__dirname + "/public"));
 app.use(express.urlencoded({ extended: false }));
 
 app.use(session({
-        secret: node_session_secret,
-        saveUninitialized: false,
-        resave: true,
-        store: mongoStore,
-        cookie: {
-            maxAge: expireTime
-        }
+    secret: node_session_secret,
+    saveUninitialized: false,
+    resave: true,
+    store: mongoStore,
+    cookie: {
+        maxAge: expireTime
+    }
 }));
 
 function isValidSession(req) {
@@ -94,7 +104,7 @@ app.get('/', async (req, res) => {
 app.get('/login', (req, res) => {
     var forgor = req.query.type;
     console.log('forgor type' + forgor);
-    res.render('login', { forgor });
+    res.render('login', { forgor, errorMessage: '' });
 });
 
 app.post('/resetConfirm', async (req, res) => {
@@ -131,13 +141,6 @@ app.post('/resetConfirm', async (req, res) => {
         var tempCode = generateRandomPassword(10);
         result.tempCode = tempCode;
         await result.save();
-        // const vari = 
-        //     {
-        //         link: `https://2800-202410-bby01.onrender.com/newPassword?${emailName}`,
-        //         newPW: newPW,
-        //     };
-        // const saltRounds = 10;
-        // const hashedPassword = await bcrypt.hash(newPW, saltRounds);
         await userModel.updateOne({ email: result.email }, { $set: { tempCode: tempCode } });
 
         console.log('New tempCode' + tempCode)
@@ -213,60 +216,60 @@ app.post('/newPWSubmit', async (req, res) => {
     const hashedPassword = await bcrypt.hash(newPW, saltRounds);
     await userModel.updateOne({ tempCode: tempCode }, { $set: { password: hashedPassword } });
     res.render('login', { forgor: 'know' });
-})
+});
 
 app.get('/signup', (req, res) => {
     res.render('signup');
-}
-);
+});
 
 app.get('/profile', (req, res) => {
   res.render('profile');
 });
 
 app.post('/signupSubmit', async (req, res) => {
-    const { name, email, password } = req.body;
+    const { name, id, email, password } = req.body;
 
     const schema = Joi.object({
         name: Joi.string().max(40).required(),
+        id: Joi.string().max(40).required(),
         email: Joi.string().max(40).email().required(),
         password: Joi.string().max(40).required()
     });
 
-    const validationResult = schema.validate({ name, email, password });
+    const validationResult = schema.validate({ name, id, email, password });
     console.log('all good');
     if (validationResult.error != null) {
-        res.render("submitSignUp", { name: name, email: email, password: password });
+        res.render("submitSignUp", { name: name, email: email, id: id, password: password });
         /* html += `
         <form action='/signup' method='get'>
             <button>Try Again</button>
         </form>`;
         res.send(html);
         return; */
-
     } else {
         let user = await userModel.findOne({ email });
         if (user) {
-            res.redirect('/signup');
+            res.redirect('/signup', { errorMessage: 'user with that email already exists in our record.'});
             return;
         }
 
         const hashedPass = await bcrypt.hash(password, 12);
         user = new userModel({
             name,
+            id,
             email,
             password: hashedPass,
         });
 
         await user.save();
         req.session.authenticated = true;
-        req.session.email = email;
+        req.session.email = user.email;
         req.session.name = user.name;
+        req.session.id = user.id;
         req.session.cookie.maxAge = expireTime;
         res.redirect('/login');
         return;
     }
-
 });
 
 app.post('/loginSubmit', async (req, res) => {
@@ -295,6 +298,7 @@ app.post('/loginSubmit', async (req, res) => {
         req.session.name = result[0].name;
         req.session.cookie.maxAge = expireTime;
         req.session.skills = result[0].skills;
+        req.session.image = result[0].image;
         console.log("Result:", result[0].skills);
         // console.log(req.session);
         res.redirect('/');
@@ -332,7 +336,6 @@ app.post('/loginSubmit', async (req, res) => {
 //       .catch(function (error) {
 //         console.log(error);
 //       });
-
 //   }
 
 // define your own email api which points to your server.
@@ -342,7 +345,40 @@ app.post('/api/sendemail/', function (req, res) {
     sendEmail(name, email, subject, message);
 });
 
+app.get('/profile', async (req, res) => {
+    let email = req.session.email;
+    var user = await userModel.findOne({email});
+    res.render('profile', {user: user});
+});
 
+app.post('/setProfilePic', upload.single('image'), async (req, res, next) => {
+    let image_uuid = uuid();
+    let email = req.session.email;
+    let doc = await userModel.findOne({email});
+    let buf64 = req.file.buffer.toString('base64');
+    stream = cloudinary.uploader.upload("data:image/octet-stream;base64," + buf64, async function (result) {
+        try {
+            console.log(result);
+            const success = await userModel.updateOne({email: email}, {$set : {image_id: image_uuid}});
+            if (!success) {
+                console.log("Error uploading to MongoDB");
+            } 
+            else{
+                console.log("USER DOCUMENT " + doc);
+                req.session.image = image_uuid;
+                console.log(doc.image_id);
+                console.log("IMAGE UUID: " + req.session.image);
+                res.redirect("/profile");
+            }
+        }
+        catch(ex) {
+            console.log("Error connecting to MongoDB");
+			console.log(ex);
+        }
+    }, { public_id: image_uuid }
+);
+
+});
 
 app.post('/logout', (req, res) => {
     req.session.destroy((err) => {

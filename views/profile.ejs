@@ -22,23 +22,15 @@
               <div class="card-header text-bg-primary">Welcome, Bob Ross</div>
               <div class="card-body">
                 <div class="text-center mb-3">
-                  <img src="/images/fluffy.gif" class="img-fluid rounded-circle" alt="Bob Ross Image">
+                  <% if (user.image_id == null) { %>
+                    <p>NO IMAGE</p>
+                  <% } else { %>
+                    <script type="text/javascript">document.write($.cloudinary.imageTag('<%- user.image_id %>', {height: 100, width: 100, crop: "fit"}).toHtml());</script>
+                  <% } %>
                 </div>
                 <h5 class="text-center mb-1">Bob Ross</h5>
                 <p class="text-center text-secondary mb-4">Painter</p>
                 <ul class="list-group list-group-flush mb-4">
-                  <!-- <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <h6 class="m-0">Followers</h6>
-                    <span>7,854</span>
-                  </li> -->
-                  <!-- <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <h6 class="m-0">Following</h6>
-                    <span>5,987</span>
-                  </li> -->
-                  <!-- <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <h6 class="m-0">Friends</h6>
-                    <span>4,620</span>
-                  </li> -->
                 </ul>
                 <div class="d-grid m-0">
                   <button class="btn btn-outline-primary" type="button">Contact</button>
@@ -46,54 +38,7 @@
               </div>
             </div>
           </div>
-          <!-- <div class="col-12">
-            <div class="card widget-card border-light shadow-sm">
-              <div class="card-header text-bg-primary">Social Accounts</div>
-              <div class="card-body">
-                <a href="#!" class="d-inline-block bg-dark link-light lh-1 p-2 rounded">
-                  <i class="bi bi-youtube"></i>
-                </a>
-                <a href="#!" class="d-inline-block bg-dark link-light lh-1 p-2 rounded">
-                  <i class="bi bi-twitter-x"></i>
-                </a>
-                <a href="#!" class="d-inline-block bg-dark link-light lh-1 p-2 rounded">
-                  <i class="bi bi-facebook"></i>
-                </a>
-                <a href="#!" class="d-inline-block bg-dark link-light lh-1 p-2 rounded">
-                  <i class="bi bi-linkedin"></i>
-                </a>
-              </div>
-            </div>
-          </div> -->
           <div class="col-12">
-            <!-- <div class="card widget-card border-light shadow-sm">
-              <div class="card-header text-bg-primary">About Me</div>
-              <div class="card-body">
-                <ul class="list-group list-group-flush mb-0">
-                  <li class="list-group-item">
-                    <h6 class="mb-1">
-                      <span class="bii bi-mortarboard-fill me-2"></span>
-                      Education
-                    </h6>
-                    <span>M.S Computer Science</span>
-                  </li>
-                  <li class="list-group-item">
-                    <h6 class="mb-1">
-                      <span class="bii bi-geo-alt-fill me-2"></span>
-                      Location
-                    </h6>
-                    <span>Mountain View, California</span>
-                  </li>
-                  <li class="list-group-item">
-                    <h6 class="mb-1">
-                      <span class="bii bi-building-fill-gear me-2"></span>
-                      Company
-                    </h6>
-                    <span>GitHub Inc</span>
-                  </li>
-                </ul>
-              </div>
-            </div> -->
           </div>
           <div class="col-12">
             <div class="card widget-card border-light shadow-sm">
@@ -117,85 +62,16 @@
         <div class="card widget-card border-light shadow-sm">
           <div class="card-body p-4">
             <ul class="nav nav-tabs" id="profileTab" role="tablist">
-              <!-- <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="overview-tab" data-bs-toggle="tab" data-bs-target="#overview-tab-pane" type="button" role="tab" aria-controls="overview-tab-pane" aria-selected="true">Overview</button>
-              </li> -->
               <li class="nav-item" role="presentation">
                 <!-- <button class="nav-link show active" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="true">Profile</button> -->
                 <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Profile</button>
               </li>
-              <!-- <li class="nav-item" role="presentation">
-                <button class="nav-link" id="email-tab" data-bs-toggle="tab" data-bs-target="#email-tab-pane" type="button" role="tab" aria-controls="email-tab-pane" aria-selected="false">Emails</button>
-              </li> -->
-              <!-- <li class="nav-item" role="presentation">
-                <button class="nav-link" id="password-tab" data-bs-toggle="tab" data-bs-target="#password-tab-pane" type="button" role="tab" aria-controls="password-tab-pane" aria-selected="false">Password</button>
-              </li> -->
             </ul>
             <!-- <div class="tab-pane fade show active" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0"> -->
             <div class="tab-content pt-4" id="profileTabContent">
-              <!-- <div class="tab-pane fade show active" id="overview-tab-pane" role="tabpanel" aria-labelledby="overview-tab" tabindex="0">
-                <h5 class="mb-3">About</h5>
-                <p class="lead mb-3">Bob Ross is a seasoned and results-driven Project Manager who brings experience and expertise to project management. With a proven track record of successfully delivering complex projects on time and within budget, Bob Ross is the go-to professional for organizations seeking efficient and effective project leadership.</p>
-                <h5 class="mb-3">Profile</h5>
-                <div class="row g-0">
-                  <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
-                    <div class="p-2">First Name</div>
-                  </div>
-                  <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
-                    <div class="p-2">Ethan</div>
-                  </div>
-                  <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
-                    <div class="p-2">Last Name</div>
-                  </div>
-                  <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
-                    <div class="p-2">Leo</div>
-                  </div>
-                  <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
-                    <div class="p-2">Education</div>
-                  </div>
-                  <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
-                    <div class="p-2">M.S Computer Science</div>
-                  </div>
-                  <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
-                    <div class="p-2">Address</div>
-                  </div>
-                  <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
-                    <div class="p-2">Mountain View, California</div>
-                  </div>
-                  <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
-                    <div class="p-2">Country</div>
-                  </div>
-                  <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
-                    <div class="p-2">United States</div>
-                  </div>
-                  <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
-                    <div class="p-2">Job</div>
-                  </div>
-                  <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
-                    <div class="p-2">Project Manager</div>
-                  </div>
-                  <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
-                    <div class="p-2">Company</div>
-                  </div>
-                  <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
-                    <div class="p-2">GitHub Inc</div>
-                  </div>
-                  <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
-                    <div class="p-2">Phone</div>
-                  </div>
-                  <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
-                    <div class="p-2">+1 (248) 679-8745</div>
-                  </div>
-                  <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
-                    <div class="p-2">Email</div>
-                  </div>
-                  <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
-                    <div class="p-2">leo@example.com</div>
-                  </div>
-                </div>
-              </div> -->
               <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-                <form action="#!" class="row gy-3 gy-xxl-4">
+
+                <!-- <form action="!#" class="row gy-3 gy-xxl-4"> -->
                   <div class="col-12">
                     <div class="row gy-2">
                       <!-- <label class="col-12 form-label m-0">Profile Image</label>
@@ -216,30 +92,10 @@
                     <label for="inputFirstName" class="form-label">Name</label>
                     <input type="text" class="form-control" id="inputFirstName" value="Bob Ross">
                   </div>
-                  <!-- <div class="col-12 col-md-6">
-                    <label for="inputLastName" class="form-label">Last Name</label>
-                    <input type="text" class="form-control" id="inputLastName" value="Ross">
-                  </div> -->
-                  <!-- <div class="col-12 col-md-6">
-                    <label for="inputEducation" class="form-label">Education</label>
-                    <input type="text" class="form-control" id="inputEducation" value="M.S Computer Science">
-                  </div> -->
                   <div class="col-12 col-md-6">
                     <label for="inputSkills" class="form-label">Skills</label>
                     <input type="text" class="form-control" id="inputSkills" value="HTML, SCSS, Javascript, React, Vue, Angular, UI, UX">
                   </div>
-                  <!-- <div class="col-12 col-md-6">
-                    <label for="inputJob" class="form-label">Job</label>
-                    <input type="text" class="form-control" id="inputJob" value="Project Manager">
-                  </div> -->
-                  <!-- <div class="col-12 col-md-6">
-                    <label for="inputCompany" class="form-label">Company</label>
-                    <input type="text" class="form-control" id="inputCompany" value="GitHub Inc">
-                  </div> -->
-                  <!-- <div class="col-12 col-md-6">
-                    <label for="inputPhone" class="form-label">Phone</label>
-                    <input type="tel" class="form-control" id="inputPhone" value="+12486798745">
-                  </div> -->
                   <div class="col-12 col-md-6">
                     <label for="inputEmail" class="form-label">Email</label>
                     <input type="email" class="form-control" id="inputEmail" value="bob@example.com">
@@ -271,7 +127,8 @@
                   <div class="col-12">
                     <button type="submit" class="btn btn-primary">Save Changes</button>
                   </div>
-                </form>
+                <!-- </form> -->
+
               </div>
               <div class="tab-pane fade" id="email-tab-pane" role="tabpanel" aria-labelledby="email-tab" tabindex="0">
                 <!-- <form action="#!">
@@ -312,7 +169,7 @@
                 </form> -->
               </div>
               <div class="tab-pane fade" id="password-tab-pane" role="tabpanel" aria-labelledby="password-tab" tabindex="0">
-                <form action="#!">
+                <!-- <form action="#!">
                   <div class="row gy-3 gy-xxl-4">
                     <div class="col-12">
                       <label for="currentPassword" class="form-label">Current Password</label>
@@ -330,7 +187,7 @@
                       <button type="submit" class="btn btn-primary">Change Password</button>
                     </div>
                   </div>
-                </form>
+                </form> -->
               </div>
             </div>
           </div>

@@ -7,6 +7,10 @@ const userSchema = new Schema({
         type: String,
         required: true,
     },
+    id: {
+        type: String,
+        required: false,
+    },
     email: {
         type: String,
         required: true,
@@ -23,7 +27,11 @@ const userSchema = new Schema({
     tempCode: {
         type: String,
         required: false,
-    }
+    },
+    image_id: {
+        type: String,
+        required: false,
+    } 
 });
 
 module.exports = mongoose.mongoose.model('User', userSchema);
