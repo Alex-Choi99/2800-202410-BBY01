@@ -103,6 +103,10 @@ app.get('/', async (req, res) => {
     res.render('index', {users: result, user: isValidSession(req)});
 });
 
+app.get('/aboutus', (req, res) => {
+    res.render('about');
+});
+
 app.get('/login', (req, res) => {
     var forgor = req.query.type;
     console.log('forgor type' + forgor);
@@ -266,7 +270,7 @@ app.post('/signupSubmit', async (req, res) => {
         req.session.name = user.name;
         req.session.id = user.id;
         req.session.cookie.maxAge = expireTime;
-        res.redirect('/login');
+        res.redirect('selectSkills');
         return;
     }
 });
