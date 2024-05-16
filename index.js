@@ -328,6 +328,41 @@ app.post('/api/sendemail/', function (req, res) {
     sendEmail(name, email, subject, message);
 });
 
+app.get('/selectSkills', (req, res) => {
+    res.render('selectSkills');
+});
+
+app.post('/setTags', async (req, res) => {
+    // var userSkill = await userModel.skills;
+
+    // for(let i = 0; i < skills[0].length; i++){
+
+    // }
+    /* const user = await userModel.findOne({email: req.session.email});
+    const {skill1, skill2, skill3, skill4, skill5, skill6} = req.body;
+    const tags = [skill1, skill2, skill3, skill4, skill5, skill6];
+    for (let i = 0; i < tags.length; i++) {
+        if (tags[i].checked) {
+            await userModel.updateOne({email: req.session.email}, {$set : {user.skills: tags[i]}});
+        }
+
+    } */
+    const user = await userModel.findOne({ email: req.session.email });
+        
+        // Extract tags from the request body
+        const { skill1, skill2, skill3, skill4, skill5, skill6 } = req.body;
+
+        // Create an array of selected skills
+        const selectedSkills = [skill1, skill2, skill3, skill4, skill5, skill6].filter(skill => skill);
+
+        // Update user's skills
+        user.skills = selectedSkills;
+        await user.save();
+
+        res.redirect('/');
+
+});
+
 app.get('/profile', async (req, res) => {
     let email = req.session.email;
     var user = await userModel.findOne({email});
