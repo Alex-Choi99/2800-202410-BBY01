@@ -1,0 +1,23 @@
+<%- include ("templates/header") %>
+<% if (!user) { %>
+    <div class="d-flex justify-content-center mt-5 mb-5">
+        <form action='/signup' method='get' class="mr-3">
+            <button class="btn btn-secondary btn-lg">Signup</button>
+        </form>
+        <form action='/login' method='get'>  
+            <button class="btn btn-secondary btn-lg">Login</button>
+        </form>
+    </div>
+<% } else { %>
+    <ul class="list-group">
+        <% let i=0; %>
+            <% for(i=0; i < users.length; i++) { %>
+                <%- include('templates/user', {user: users[i]}) %>
+                    <% } %>
+    </ul>
+    </body>
+<% } %>
+
+<%- include ("templates/footer") %>
+
+</html>
