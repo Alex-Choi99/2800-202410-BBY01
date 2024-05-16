@@ -32,7 +32,7 @@
                 <ul class="list-group list-group-flush mb-4">
                 </ul>
                 <div class="d-grid m-0">
-                  <button class="btn btn-outline-primary" type="button">Follow</button>
+                  <button class="btn btn-outline-primary" type="button">Contact</button>
                 </div>
               </div>
             </div>
@@ -62,33 +62,29 @@
           <div class="card-body p-4">
             <ul class="nav nav-tabs" id="profileTab" role="tablist">
               <li class="nav-item" role="presentation">
+                <!-- <button class="nav-link show active" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="true">Profile</button> -->
                 <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Profile</button>
               </li>
             </ul>
+            <!-- <div class="tab-pane fade show active" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0"> -->
             <div class="tab-content pt-4" id="profileTabContent">
               <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
 
                 <!-- <form action="!#" class="row gy-3 gy-xxl-4"> -->
                   <div class="col-12">
                     <div class="row gy-2">
-                      <!-- UPLOAD IMAGE FORM -->
-                      <form action="/setProfilePic" method="post" enctype="multipart/form-data" >
-                        <label class="col-12 form-label m-0">Profile Image</label>
-                        <% if (user.image_id == null) { %>
-                          <p>NO IMAGE</p>
-                          <% } else { %>
-                            <script type="text/javascript">document.write($.cloudinary.imageTag('<%- user.image_id %>', {height: 100, width: 100, crop: "fit"}).toHtml());</script>
-                          <% } %>
-                        <div>
-                          
-                        </div>
-                        <div class="col-12">
-                          <p>Image: <input type="file" name="image"/></p>
-                          <p><input type="submit" value="Upload"/></p>
-                          <!-- <img src="./assets/img/profile-img-1.jpg" class="img-fluid" alt="Bob Ross"> -->
-                        </div>
-                      </form>
-                    
+                      <!-- <label class="col-12 form-label m-0">Profile Image</label>
+                      <div class="col-12">
+                        <img src="./assets/img/profile-img-1.jpg" class="img-fluid" alt="Bob Ross">
+                      </div> -->
+                      <!-- <div class="col-12">
+                        <a href="#!" class="d-inline-block bg-primary link-light lh-1 p-2 rounded">
+                          <i class="bi bi-upload"></i>
+                        </a>
+                        <a href="#!" class="d-inline-block bg-danger link-light lh-1 p-2 rounded">
+                          <i class="bi bi-trash"></i>
+                        </a>
+                      </div> -->
                     </div>
                   </div>
                   <div class="col-12 col-md-6">
@@ -103,6 +99,26 @@
                     <label for="inputEmail" class="form-label">Email</label>
                     <input type="email" class="form-control" id="inputEmail" value="bob@example.com">
                   </div>
+                  <!-- <div class="col-12 col-md-6">
+                    <label for="inputAddress" class="form-label">Address</label>
+                    <input type="text" class="form-control" id="inputAddress" value="Mountain View, California">
+                  </div> -->
+                  <!-- <div class="col-12 col-md-6">
+                    <label for="inputYouTube" class="form-label">YouTube</label>
+                    <input type="text" class="form-control" id="inputYouTube" value="https://www.youtube.com/BobRoss">
+                  </div> -->
+                  <!-- <div class="col-12 col-md-6">
+                    <label for="inputX" class="form-label">X</label>
+                    <input type="text" class="form-control" id="inputX" value="https://twitter.com/BobRoss">
+                  </div> -->
+                  <!-- <div class="col-12 col-md-6">
+                    <label for="inputFacebook" class="form-label">Facebook</label>
+                    <input type="text" class="form-control" id="inputFacebook" value="https://www.facebook.com/BobRoss">
+                  </div> -->
+                  <!-- <div class="col-12 col-md-6">
+                    <label for="inputLinkedIn" class="form-label">LinkedIn</label>
+                    <input type="text" class="form-control" id="inputLinkedIn" value="https://www.linkedin.com/BobRoss">
+                  </div> -->
                   <div class="col-12">
                     <label for="inputAbout" class="form-label">About</label>
                     <textarea class="form-control" id="inputAbout">Bob Ross is a seasoned and results-driven Project Manager who brings experience and expertise to project management. With a proven track record of successfully delivering complex projects on time and within budget, Bob Ross is the go-to professional for organizations seeking efficient and effective project leadership.</textarea>
