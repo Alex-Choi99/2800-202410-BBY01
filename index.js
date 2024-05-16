@@ -16,6 +16,7 @@ const mongodb_user = process.env.MONGODB_USER;
 const mongodb_password = process.env.MONGODB_PASSWORD;
 const mongodb_dt_user = process.env.MONGODB_DATABASE_USER;
 const mongodb_dt_sessions = process.env.MONGODB_DATABASE_SESSION;
+const mongodb_dt_skills = process.env.MONGODB_DATABSE_SKILLS;
 
 const mailjet = require('node-mailjet').apiConnect(
     process.env.MJ_APIKEY_PUBLIC,
@@ -26,6 +27,7 @@ const expireTime = 1 * 60 * 60 * 1000;
 
 const MongoURI = `mongodb+srv://${mongodb_user}:${mongodb_password}@${mongodb_host}/${mongodb_dt_user}`;
 const MongoDBSessionURI = `mongodb+srv://${mongodb_user}:${mongodb_password}@${mongodb_host}/${mongodb_dt_sessions}`;
+const MongoDBSkillsURI = `mongodb+srv://${mongodb_user}:${mongodb_password}@${mongodb_host}/${mongodb_dt_skills}`;
 
 const userModel = require("./user.js");
 
@@ -175,6 +177,7 @@ app.get('/signup', (req, res) => {
     res.render('signup');
 }
 );
+
 app.get('/', async (req, res) => {
     const result = await userModel.find();
     console.log(result);
@@ -299,7 +302,40 @@ app.post('/api/sendemail/', function (req, res) {
     sendEmail(name, email, subject, message);
 });
 
+app.get('/selectSkills', (req, res) => {
+    res.render('selectSkills');
+});
 
+app.post('/setTags', async (req, res) => {
+    // var userSkill = await userModel.skills;
+
+    // for(let i = 0; i < skills[0].length; i++){
+
+    // }
+    /* const user = await userModel.findOne({email: req.session.email});
+    const {skill1, skill2, skill3, skill4, skill5, skill6} = req.body;
+    const tags = [skill1, skill2, skill3, skill4, skill5, skill6];
+    for (let i = 0; i < tags.length; i++) {
+        if (tags[i].checked) {
+            await userModel.updateOne({email: req.session.email}, {$set : {user.skills: tags[i]}});
+        }
+
+    } */
+    const user = await userModel.findOne({ email: req.session.email });
+        
+        // Extract tags from the request body
+        const { skill1, skill2, skill3, skill4, skill5, skill6 } = req.body;
+
+        // Create an array of selected skills
+        const selectedSkills = [skill1, skill2, skill3, skill4, skill5, skill6].filter(skill => skill);
+
+        // Update user's skills
+        user.skills = selectedSkills;
+        await user.save();
+
+        res.redirect('/');
+
+});
 
 app.post('/logout', (req, res) => {
     req.session.destroy((err) => {
