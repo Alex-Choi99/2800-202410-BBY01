@@ -42,6 +42,8 @@ const mongoStore = connectMongo.create({
     }
 });
 
+app.use(express.static(__dirname + "/public"));
+
 app.use(express.urlencoded({ extended: false }));
 
 app.use(session({
