@@ -222,10 +222,6 @@ app.get('/signup', (req, res) => {
     res.render('signup');
 });
 
-app.get('/profile', (req, res) => {
-  res.render('profile');
-});
-
 app.post('/signupSubmit', async (req, res) => {
     const { name, id, email, password } = req.body;
 
