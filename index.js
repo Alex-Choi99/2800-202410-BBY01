@@ -83,7 +83,13 @@ function generateRandomPassword(length) {
         password += chars[randomIndex];
     }
     return password;
-}
+};
+
+app.get('/', async (req, res) => {
+    const result = await userModel.find();
+    console.log(result);
+    res.render('index', {users: result, user: isValidSession(req)});
+});
 
 app.get('/login', (req, res) => {
     var forgor = req.query.type;
@@ -216,17 +222,6 @@ app.get('/signup', (req, res) => {
 
 app.get('/profile', (req, res) => {
   res.render('profile');
-});
-
-
-app.get('/', async (req, res) => {
-    const result = await userModel.find();
-    console.log(result);
-    if(!req.session){
-        res.redirect('login', {forgor: 'know'});
-        return;
-    }
-    res.render('main', {users: result});
 });
 
 app.post('/signupSubmit', async (req, res) => {
