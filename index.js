@@ -328,7 +328,40 @@ app.post('/api/sendemail/', function (req, res) {
     sendEmail(name, email, subject, message);
 });
 
+app.get('/profile', async (req, res) => {
+    let email = req.session.email;
+    var user = await userModel.findOne({email});
+    res.render('profile', {user: user});
+});
 
+app.post('/setProfilePic', upload.single('image'), async (req, res, next) => {
+    let image_uuid = uuid();
+    let email = req.session.email;
+    let doc = await userModel.findOne({email});
+    let buf64 = req.file.buffer.toString('base64');
+    stream = cloudinary.uploader.upload("data:image/octet-stream;base64," + buf64, async function (result) {
+        try {
+            console.log(result);
+            const success = await userModel.updateOne({email: email}, {$set : {image_id: image_uuid}});
+            if (!success) {
+                console.log("Error uploading to MongoDB");
+            } 
+            else{
+                console.log("USER DOCUMENT " + doc);
+                req.session.image = image_uuid;
+                console.log(doc.image_id);
+                console.log("IMAGE UUID: " + req.session.image);
+                res.redirect("/profile");
+            }
+        }
+        catch(ex) {
+            console.log("Error connecting to MongoDB");
+			console.log(ex);
+        }
+    }, { public_id: image_uuid }
+);
+
+});
 
 app.post('/logout', (req, res) => {
     req.session.destroy((err) => {
