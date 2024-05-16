@@ -1,7 +1,32 @@
 <div class="d-flex justify-content-center flex-nowrap">
-    <h1>Type your email here</h1>
+  <div class="col-10 col-md-4">
     <form action="/resetConfirm" method="post">
+      <h1 class="h3 mb-3 fw-normal">Type your email here</h1>
+
+      <!-- <div class="form-floating">
+        <input name="loginID" type="text" class="form-control" id="floatingInput" placeholder="Login ID">
+        <label for="floatingInput">Login ID</label>
+      </div> -->
+      <div class="form-floating">
         <input name="email" type="email" class="form-control" id="floatingInput" placeholder="Email address">
-        <button type="submit">Submit</button>
+        <label for="floatingInput">Email address</label>
+      </div>
+      <!-- <div class="form-floating">
+        <input name="password" type="password" class="form-control" id="floatingPassword" placeholder="Password">
+        <label for="floatingPassword">Password</label>
+      </div> -->
+      
+      <br>
+      <button class="btn btn-primary w-100 py-2" type="submit">Submit</button>
     </form>
+
+  <!-- <div class="d-flex justify-content-center flex-nowrap">
+    <form action="/login?type=forgor" method="get">
+      <div class="form-floating">
+        <input name="type" type="hidden" class="form-control" value="forgor">
+        <button class="btn btn-primary btn-sm w-60 py-2 m-1" type="submit">Forgot login info?</button>
+      </div>
+    </form>
+  </div> -->
+  </div>
 </div>
