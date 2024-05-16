@@ -23,7 +23,11 @@ const userSchema = new Schema({
     tempCode: {
         type: String,
         required: false,
-    }
+    },
+    image_id: {
+        type: String,
+        required: false,
+    } 
 });
 
 module.exports = mongoose.mongoose.model('User', userSchema);
