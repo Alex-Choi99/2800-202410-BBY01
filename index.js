@@ -20,6 +20,7 @@ const mongodb_user = process.env.MONGODB_USER;
 const mongodb_password = process.env.MONGODB_PASSWORD;
 const mongodb_dt_user = process.env.MONGODB_DATABASE_USER;
 const mongodb_dt_sessions = process.env.MONGODB_DATABASE_SESSION;
+const mongodb_dt_skills = process.env.MONGODB_DATABSE_SKILLS;
 
 const mailjet = require('node-mailjet').apiConnect(
     process.env.MJ_APIKEY_PUBLIC,
@@ -36,6 +37,7 @@ const expireTime = 1 * 60 * 60 * 1000;
 
 const MongoURI = `mongodb+srv://${mongodb_user}:${mongodb_password}@${mongodb_host}/${mongodb_dt_user}`;
 const MongoDBSessionURI = `mongodb+srv://${mongodb_user}:${mongodb_password}@${mongodb_host}/${mongodb_dt_sessions}`;
+const MongoDBSkillsURI = `mongodb+srv://${mongodb_user}:${mongodb_password}@${mongodb_host}/${mongodb_dt_skills}`;
 
 const userModel = require("./user.js");
 
@@ -222,10 +224,6 @@ app.get('/signup', (req, res) => {
     res.render('signup');
 });
 
-app.get('/profile', (req, res) => {
-  res.render('profile');
-});
-
 app.post('/signupSubmit', async (req, res) => {
     const { name, id, email, password } = req.body;
 
@@ -239,7 +237,8 @@ app.post('/signupSubmit', async (req, res) => {
     const validationResult = schema.validate({ name, id, email, password });
     console.log('all good');
     if (validationResult.error != null) {
-        res.render("submitSignUp", { name: name, email: email, id: id, password: password });
+        //{ name: name, email: email, id: id, password: password }
+        res.render("signup", { errorMessage: 'user with that email already exists in our record.'});
         /* html += `
         <form action='/signup' method='get'>
             <button>Try Again</button>
@@ -249,7 +248,7 @@ app.post('/signupSubmit', async (req, res) => {
     } else {
         let user = await userModel.findOne({ email });
         if (user) {
-            res.redirect('/signup', { errorMessage: 'user with that email already exists in our record.'});
+            res.render('signup', { errorMessage: 'user with that email already exists in our record.'});
             return;
         }
 
@@ -273,70 +272,54 @@ app.post('/signupSubmit', async (req, res) => {
 });
 
 app.post('/loginSubmit', async (req, res) => {
-    const { email, password } = req.body;
+    const { loginID, password } = req.body;
+    console.log(loginID + password);
 
-    const schema = Joi.string().max(30).required();
-    const validationResult = schema.validate(email, password);
+    const schema = Joi.object({
+        loginID: Joi.string().max(30).required(),
+        password: Joi.string().max(30).required()
+    })
+    const validationResult = schema.validate({loginID, password});
     if (validationResult.error != null) {
         console.log(validationResult.error);
-        res.render("loginSubmit", { errorMessage: "Invalid email/password combination" });
+        res.render("login", { forgor: 'know', errorMessage: "Input must be less than 30 characters." });
         return;
     }
-    const result = await userModel.find({ email: email }).exec();
+    const result = await userModel.findOne({
+        $or: [
+            { email: loginID },
+            { id: loginID }
+        ]
+    }).exec();
 
-    console.log('User info from DB' + result);
-    if (result.length != 1) {
+    console.log('User info from DB:', result);
+    if (!result) {
         console.log("user not found");
-        res.render("loginSubmit", { errorMessage: "No User Detected" });
+        res.render("login", { forgor: 'know', errorMessage: "No User Detected" });
         return;
     }
 
-    if (await bcrypt.compare(password, result[0].password)) {
+    if (await bcrypt.compare(password, result.password)) {
         console.log("correct password");
         req.session.authenticated = true;
-        req.session.email = result[0].email;
-        req.session.name = result[0].name;
+        req.session.email = result.email;
+        req.session.name = result.name;
         req.session.cookie.maxAge = expireTime;
-        req.session.skills = result[0].skills;
-        req.session.image = result[0].image;
-        console.log("Result:", result[0].skills);
+        req.session.skills = result.skills;
+        console.log("Result:", result.skills);
+        req.session.skills = result.skills;
+        req.session.image = result.image;
+        console.log("Result:", result.skills);
         // console.log(req.session);
         res.redirect('/');
         return;
     }
     else {
         console.log("incorrect password");
-        res.render("loginSubmit", { errorMessage: "Incorrect Password" });
+        res.render("login", { forgor: 'know', errorMessage: "Incorrect Password" });
         return;
     }
 });
-
-// async function sendEmail(name, email, subject, message) {
-//     const data = JSON.stringify({
-//       "Messages": [{
-//         "From": {"Email": "bby01.290124@gmail.com", "Name": "LearnXchange"},
-//         "To": [{"Email": email, "Name": name}],
-//         "Subject": subject,
-//         "TextPart": message
-//       }]
-//     });
-
-//     const config = {
-//       method: 'post',
-//       url: 'https://api.mailjet.com/v3.1/send',
-//       data: data,
-//       headers: {'Content-Type': 'application/json'},
-//       auth: {username: process.env.MJ_APIKEY_PUBLIC , password: process.env.MJ_APIKEY_PRIVATE},
-//     };
-
-//     return axios(config)
-//       .then(function (response) {
-//         console.log(JSON.stringify(response.data));
-//       })
-//       .catch(function (error) {
-//         console.log(error);
-//       });
-//   }
 
 // define your own email api which points to your server.
 app.post('/api/sendemail/', function (req, res) {
