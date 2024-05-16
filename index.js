@@ -92,7 +92,7 @@ app.get('/', async (req, res) => {
 });
 
 app.get('/login', (req, res) => {
-    var forgor = req.query.type || 'know';
+    var forgor = req.query.type;
     console.log('forgor type' + forgor);
     res.render('login', { forgor, errorMessage: '' });
 });
@@ -351,6 +351,21 @@ app.post('/api/sendemail/', function (req, res) {
     //implement your spam protection or checks.
     sendEmail(name, email, subject, message);
 });
+
+
+
+app.post('/logout', (req, res) => {
+    req.session.destroy((err) => {
+        if (err) {
+            throw err;
+        }
+        res.redirect('/');
+    });
+});
+
+app.get('/404', (req, res) => {
+    res.render('404');
+})
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);

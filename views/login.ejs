@@ -1,29 +1,31 @@
 <%- include("templates/header") %>
 <% 
+    // reusing /login page to display different template based on what user want when login
     switch(forgor) {
         case 'forgor':
             %>
+            <%# //asks what info did u forget %>
             <%- include("templates/forgorLogin") %>
             <% 
             break;
         case 'forgorID':
             %>
+            <%# //you forgot id %>
             <%- include("templates/forgorType", { forgorType: 'ID' }) %>
             <% 
             break;
         case 'forgorPW':
             %>
+            <%# //you forgot password %>
             <%- include("templates/forgorType", { forgorType: 'PW' }) %>
             <% 
             break;
         default:
             %>
+            <%# //user just got on login page %>
             <%- include("templates/normalLogin") %>
             <% 
-            break;
     }
 %>
-<% if(errorMessage != null){ %>
-    <p><%= errorMessage %></p>
-<% } %>
+
 <%- include("templates/footer") %>
