@@ -16,12 +16,14 @@
             <%- include("templates/forgorType", { forgorType: 'PW' }) %>
             <% 
             break;
-        case 'know':
+        default:
             %>
             <%- include("templates/normalLogin") %>
             <% 
             break;
     }
 %>
-
+<% if(errorMessage != null){ %>
+    <p><%= errorMessage %></p>
+<% } %>
 <%- include("templates/footer") %>
