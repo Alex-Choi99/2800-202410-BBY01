@@ -104,7 +104,7 @@ app.get('/', async (req, res) => {
 app.get('/login', (req, res) => {
     var forgor = req.query.type;
     console.log('forgor type' + forgor);
-    res.render('login', { forgor });
+    res.render('login', { forgor, errorMessage: '' });
 });
 
 app.post('/resetConfirm', async (req, res) => {
@@ -216,60 +216,60 @@ app.post('/newPWSubmit', async (req, res) => {
     const hashedPassword = await bcrypt.hash(newPW, saltRounds);
     await userModel.updateOne({ tempCode: tempCode }, { $set: { password: hashedPassword } });
     res.render('login', { forgor: 'know' });
-})
+});
 
 app.get('/signup', (req, res) => {
     res.render('signup');
-}
-);
+});
 
 app.get('/profile', (req, res) => {
   res.render('profile');
 });
 
 app.post('/signupSubmit', async (req, res) => {
-    const { name, email, password } = req.body;
+    const { name, id, email, password } = req.body;
 
     const schema = Joi.object({
         name: Joi.string().max(40).required(),
+        id: Joi.string().max(40).required(),
         email: Joi.string().max(40).email().required(),
         password: Joi.string().max(40).required()
     });
 
-    const validationResult = schema.validate({ name, email, password });
+    const validationResult = schema.validate({ name, id, email, password });
     console.log('all good');
     if (validationResult.error != null) {
-        res.render("submitSignUp", { name: name, email: email, password: password });
+        res.render("submitSignUp", { name: name, email: email, id: id, password: password });
         /* html += `
         <form action='/signup' method='get'>
             <button>Try Again</button>
         </form>`;
         res.send(html);
         return; */
-
     } else {
         let user = await userModel.findOne({ email });
         if (user) {
-            res.redirect('/signup');
+            res.redirect('/signup', { errorMessage: 'user with that email already exists in our record.'});
             return;
         }
 
         const hashedPass = await bcrypt.hash(password, 12);
         user = new userModel({
             name,
+            id,
             email,
             password: hashedPass,
         });
 
         await user.save();
         req.session.authenticated = true;
-        req.session.email = email;
+        req.session.email = user.email;
         req.session.name = user.name;
+        req.session.id = user.id;
         req.session.cookie.maxAge = expireTime;
         res.redirect('/login');
         return;
     }
-
 });
 
 app.post('/loginSubmit', async (req, res) => {
@@ -379,20 +379,6 @@ app.post('/setProfilePic', upload.single('image'), async (req, res, next) => {
 );
 
 });
-// app.post('/picUpload', upload.single('image'), (req, res, next) => {
-//     console.log('Request received for /picUpload');
-//     let buf64 = req.file.buffer.toString('base64');
-//     stream = cloudinary.uploader.upload("data:image/png;base64," + buf64, function (result) {
-//         console.log(result);
-//         // res.send('Done:<br/> <img src="' + result.url + '"/><br/>' +
-//         //     cloudinary.image(result.public_id, { format: "png", width: 100, height: 130, crop: "fit" }));
-//     }, { public_id: req.body.title });     
-     
-//     console.log(req.body);
-//     console.log(req.file);
-// });
-
-
 
 app.post('/logout', (req, res) => {
     req.session.destroy((err) => {
