@@ -274,15 +274,16 @@ app.post('/signupSubmit', async (req, res) => {
 
 app.post('/loginSubmit', async (req, res) => {
     const { loginID, password } = req.body;
+    console.log(loginID + password);
 
     const schema = Joi.object({
         loginID: Joi.string().max(30).required(),
         password: Joi.string().max(30).required()
     })
-    const validationResult = schema.validate(loginID, password);
+    const validationResult = schema.validate({loginID, password});
     if (validationResult.error != null) {
         console.log(validationResult.error);
-        res.render("login", { forgor: 'know', errorMessage: "Invalid email/password combination" });
+        res.render("login", { forgor: 'know', errorMessage: "Input must be less than 30 characters." });
         return;
     }
     const result = await userModel.findOne({
@@ -292,8 +293,8 @@ app.post('/loginSubmit', async (req, res) => {
         ]
     }).exec();
 
-    console.log('User info from DB' + result);
-    if (result.length != 1) {
+    console.log('User info from DB:', result);
+    if (!result) {
         console.log("user not found");
         res.render("login", { forgor: 'know', errorMessage: "No User Detected" });
         return;
@@ -307,9 +308,9 @@ app.post('/loginSubmit', async (req, res) => {
         req.session.cookie.maxAge = expireTime;
         req.session.skills = result.skills;
         console.log("Result:", result.skills);
-        req.session.skills = result[0].skills;
-        req.session.image = result[0].image;
-        console.log("Result:", result[0].skills);
+        req.session.skills = result.skills;
+        req.session.image = result.image;
+        console.log("Result:", result.skills);
         // console.log(req.session);
         res.redirect('/');
         return;
@@ -320,33 +321,6 @@ app.post('/loginSubmit', async (req, res) => {
         return;
     }
 });
-
-// async function sendEmail(name, email, subject, message) {
-//     const data = JSON.stringify({
-//       "Messages": [{
-//         "From": {"Email": "bby01.290124@gmail.com", "Name": "LearnXchange"},
-//         "To": [{"Email": email, "Name": name}],
-//         "Subject": subject,
-//         "TextPart": message
-//       }]
-//     });
-
-//     const config = {
-//       method: 'post',
-//       url: 'https://api.mailjet.com/v3.1/send',
-//       data: data,
-//       headers: {'Content-Type': 'application/json'},
-//       auth: {username: process.env.MJ_APIKEY_PUBLIC , password: process.env.MJ_APIKEY_PRIVATE},
-//     };
-
-//     return axios(config)
-//       .then(function (response) {
-//         console.log(JSON.stringify(response.data));
-//       })
-//       .catch(function (error) {
-//         console.log(error);
-//       });
-//   }
 
 // define your own email api which points to your server.
 app.post('/api/sendemail/', function (req, res) {
