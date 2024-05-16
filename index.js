@@ -7,9 +7,13 @@ require('dotenv').config();
 const Joi = require("joi");
 const bcrypt = require('bcrypt');
 const port = process.env.PORT || 3000;
+const cloudinary = require('cloudinary');
+const {v4: uuid} = require('uuid');
+const multer = require('multer')
+const storage = multer.memoryStorage()
+const upload = multer({ storage: storage })
 
 const node_session_secret = process.env.NODE_SESSION_SECRET;
-
 const mongodb_session_secret = process.env.MONGODB_SESSION_SECRET;
 const mongodb_host = process.env.MONGODB_HOST;
 const mongodb_user = process.env.MONGODB_USER;
@@ -23,6 +27,12 @@ const mailjet = require('node-mailjet').apiConnect(
     process.env.MJ_APIKEY_PRIVATE
 );
 
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_CLOUD_KEY,
+    api_secret: process.env.CLOUDINARY_CLOUD_SECRET
+});
+
 const expireTime = 1 * 60 * 60 * 1000;
 
 const MongoURI = `mongodb+srv://${mongodb_user}:${mongodb_password}@${mongodb_host}/${mongodb_dt_user}`;
@@ -32,7 +42,7 @@ const MongoDBSkillsURI = `mongodb+srv://${mongodb_user}:${mongodb_password}@${mo
 const userModel = require("./user.js");
 
 mongoose.connect(MongoURI, {}).then(res => {
-        console.log('MongoDB Connected');
+    console.log('MongoDB Connected');
 })
 
 app.set('view engine', 'ejs');
@@ -44,16 +54,18 @@ const mongoStore = connectMongo.create({
     }
 });
 
+app.use(express.static(__dirname + "/public"));
+
 app.use(express.urlencoded({ extended: false }));
 
 app.use(session({
-        secret: node_session_secret,
-        saveUninitialized: false,
-        resave: true,
-        store: mongoStore,
-        cookie: {
-            maxAge: expireTime
-        }
+    secret: node_session_secret,
+    saveUninitialized: false,
+    resave: true,
+    store: mongoStore,
+    cookie: {
+        maxAge: expireTime
+    }
 }));
 
 function isValidSession(req) {
@@ -83,12 +95,18 @@ function generateRandomPassword(length) {
         password += chars[randomIndex];
     }
     return password;
-}
+};
+
+app.get('/', async (req, res) => {
+    const result = await userModel.find();
+    console.log(result);
+    res.render('index', {users: result, user: isValidSession(req)});
+});
 
 app.get('/login', (req, res) => {
     var forgor = req.query.type;
     console.log('forgor type' + forgor);
-    res.render('login', { forgor });
+    res.render('login', { forgor, errorMessage: '' });
 });
 
 app.post('/resetConfirm', async (req, res) => {
@@ -104,6 +122,7 @@ app.post('/resetConfirm', async (req, res) => {
         }
 
         const result = await userModel.findOne({ email });
+        const oldCode = result.tempCode;
         console.log('User info from db'+ result);
         if (!result) {
             console.log("user not found");
@@ -111,28 +130,22 @@ app.post('/resetConfirm', async (req, res) => {
             return;
         }
 
-        var emailName = ''
-        let i = 0
-        while (i < result.email.length) {
-            if (result.email[i] == '@') {
-                break;
-            }
-            emailName += result.email[i];
-            i++
-        }
+        // var emailName = ''
+        // let i = 0
+        // while (i < result.email.length) {
+        //     if (result.email[i] == '@') {
+        //         break;
+        //     }
+        //     emailName += result.email[i];
+        //     i++
+        // }
 
-        var newPW = generateRandomPassword(10);
-        const saltRounds = 10;
-        const hashedPassword = await bcrypt.hash(newPW, saltRounds);
+        var tempCode = generateRandomPassword(10);
+        result.tempCode = tempCode;
+        await result.save();
+        await userModel.updateOne({ email: result.email }, { $set: { tempCode: tempCode } });
 
-        const vari = 
-            {
-                link: `https://2800-202410-bby01.onrender.com/newPassword?${emailName}`,
-                newPW: newPW,
-            };
-
-        await userModel.updateOne({ email: email }, { $set: { password: hashedPassword } });
-        console.log('hashed Password' + hashedPassword)
+        console.log('New tempCode' + tempCode)
         const request = mailjet.post('send', { version: 'v3.1' }).request({
             Messages: [
                 {
@@ -147,11 +160,11 @@ app.post('/resetConfirm', async (req, res) => {
                         },
                     ],
                     Subject: `Password reset`,
-                    TextPart: `Your new password is ${newPW}
-                    http://localhost:3025/newPW
+                    TextPart: `Your new temporary code is ${tempCode}
+http://localhost:3025/newPW
                     `,
                     // TemplateID: 5969125,
-                    Variables: vari
+                    // Variables: vari
                 },
             ],
         });
@@ -169,131 +182,148 @@ app.post('/resetConfirm', async (req, res) => {
         res.render('resetConfirm');
     } catch (error) {
         console.error('Error in resetConfirm:', error);
-        res.render('login', { forgor, errorMessage: 'An error occurred while processing your request.' });
+        res.render('login', { forgor: 'forgor', errorMessage: 'An error occurred while processing your request.' });
+    }    
+});
+
+app.get('/newPW', async (req,res) => {
+    res.render('newPW');
+});
+
+app.post('/newPWSubmit', async (req, res) => {
+    const tempCode = req.body.tempCode;
+    const newPW = req.body.newPW;
+    const confirmPW = req.body.confirmPW;
+
+    const schema = Joi.string().max(30).required();
+    const validationResult = schema.validate(tempCode, newPW, confirmPW);
+    if (validationResult.error != null) {
+        console.log(validationResult.error);
+        res.render("newPW", { errorMessage: "Password cannot be more than 30." });
+        return;
     }
+
+    const findCode = await userModel.findOne({ tempCode });
+    if (!findCode){
+        res.render("newPW", {errorMessage: "Non existing temporary code."});
+        return;
+    }
+
+    if (newPW != confirmPW) {
+        res.render("newPW", {errorMessage: "new password and confirmation are not matching."});
+        return;
+    }
+
+    const saltRounds = 12;
+    const hashedPassword = await bcrypt.hash(newPW, saltRounds);
+    await userModel.updateOne({ tempCode: tempCode }, { $set: { password: hashedPassword } });
+    res.render('login', { forgor: 'know' });
 });
 
 app.get('/signup', (req, res) => {
     res.render('signup');
-}
-);
+});
 
-app.get('/', async (req, res) => {
-    const result = await userModel.find();
-    console.log(result);
-    res.render('main', {users: result});
+
+app.get('/profile', (req, res) => {
+  res.render('profile');
 });
 
 app.post('/signupSubmit', async (req, res) => {
-    const { name, email, password } = req.body;
+    const { name, id, email, password } = req.body;
 
     const schema = Joi.object({
         name: Joi.string().max(40).required(),
+        id: Joi.string().max(40).required(),
         email: Joi.string().max(40).email().required(),
         password: Joi.string().max(40).required()
     });
 
-    const validationResult = schema.validate({ name, email, password });
+    const validationResult = schema.validate({ name, id, email, password });
     console.log('all good');
     if (validationResult.error != null) {
-        res.render("submitSignUp", { name: name, email: email, password: password });
+        res.render("submitSignUp", { name: name, email: email, id: id, password: password });
         /* html += `
         <form action='/signup' method='get'>
             <button>Try Again</button>
         </form>`;
         res.send(html);
         return; */
-
     } else {
         let user = await userModel.findOne({ email });
         if (user) {
-            res.redirect('/signup');
+            res.redirect('/signup', { errorMessage: 'user with that email already exists in our record.'});
             return;
         }
 
         const hashedPass = await bcrypt.hash(password, 12);
         user = new userModel({
             name,
+            id,
             email,
             password: hashedPass,
         });
 
         await user.save();
         req.session.authenticated = true;
-        req.session.email = email;
+        req.session.email = user.email;
         req.session.name = user.name;
+        req.session.id = user.id;
         req.session.cookie.maxAge = expireTime;
         res.redirect('/login');
         return;
     }
-
 });
 
 app.post('/loginSubmit', async (req, res) => {
-    const { email, password } = req.body;
+    const { loginID, password } = req.body;
+    console.log(loginID + password);
 
-    const schema = Joi.string().max(30).required();
-    const validationResult = schema.validate(email, password);
+    const schema = Joi.object({
+        loginID: Joi.string().max(30).required(),
+        password: Joi.string().max(30).required()
+    })
+    const validationResult = schema.validate({loginID, password});
     if (validationResult.error != null) {
         console.log(validationResult.error);
-        res.render("loginSubmit", { errorMessage: "Invalid email/password combination" });
+        res.render("login", { forgor: 'know', errorMessage: "Input must be less than 30 characters." });
         return;
     }
-    const result = await userModel.find({ email: email }).exec();
+    const result = await userModel.findOne({
+        $or: [
+            { email: loginID },
+            { id: loginID }
+        ]
+    }).exec();
 
-    console.log('User info from DB' + result);
-    if (result.length != 1) {
+    console.log('User info from DB:', result);
+    if (!result) {
         console.log("user not found");
-        res.render("loginSubmit", { errorMessage: "No User Detected" });
+        res.render("login", { forgor: 'know', errorMessage: "No User Detected" });
         return;
     }
 
-    if (await bcrypt.compare(password, result[0].password)) {
+    if (await bcrypt.compare(password, result.password)) {
         console.log("correct password");
         req.session.authenticated = true;
-        req.session.email = result[0].email;
-        req.session.name = result[0].name;
+        req.session.email = result.email;
+        req.session.name = result.name;
         req.session.cookie.maxAge = expireTime;
-        req.session.skills = result[0].skills;
-        console.log("Result:", result[0].skills);
+        req.session.skills = result.skills;
+        console.log("Result:", result.skills);
+        req.session.skills = result.skills;
+        req.session.image = result.image;
+        console.log("Result:", result.skills);
         // console.log(req.session);
         res.redirect('/');
         return;
     }
     else {
         console.log("incorrect password");
-        res.render("loginSubmit", { errorMessage: "Incorrect Password" });
+        res.render("login", { forgor: 'know', errorMessage: "Incorrect Password" });
         return;
     }
 });
-
-// async function sendEmail(name, email, subject, message) {
-//     const data = JSON.stringify({
-//       "Messages": [{
-//         "From": {"Email": "bby01.290124@gmail.com", "Name": "LearnXchange"},
-//         "To": [{"Email": email, "Name": name}],
-//         "Subject": subject,
-//         "TextPart": message
-//       }]
-//     });
-
-//     const config = {
-//       method: 'post',
-//       url: 'https://api.mailjet.com/v3.1/send',
-//       data: data,
-//       headers: {'Content-Type': 'application/json'},
-//       auth: {username: process.env.MJ_APIKEY_PUBLIC , password: process.env.MJ_APIKEY_PRIVATE},
-//     };
-
-//     return axios(config)
-//       .then(function (response) {
-//         console.log(JSON.stringify(response.data));
-//       })
-//       .catch(function (error) {
-//         console.log(error);
-//       });
-
-//   }
 
 // define your own email api which points to your server.
 app.post('/api/sendemail/', function (req, res) {
@@ -302,40 +332,7 @@ app.post('/api/sendemail/', function (req, res) {
     sendEmail(name, email, subject, message);
 });
 
-app.get('/selectSkills', (req, res) => {
-    res.render('selectSkills');
-});
 
-app.post('/setTags', async (req, res) => {
-    // var userSkill = await userModel.skills;
-
-    // for(let i = 0; i < skills[0].length; i++){
-
-    // }
-    /* const user = await userModel.findOne({email: req.session.email});
-    const {skill1, skill2, skill3, skill4, skill5, skill6} = req.body;
-    const tags = [skill1, skill2, skill3, skill4, skill5, skill6];
-    for (let i = 0; i < tags.length; i++) {
-        if (tags[i].checked) {
-            await userModel.updateOne({email: req.session.email}, {$set : {user.skills: tags[i]}});
-        }
-
-    } */
-    const user = await userModel.findOne({ email: req.session.email });
-        
-        // Extract tags from the request body
-        const { skill1, skill2, skill3, skill4, skill5, skill6 } = req.body;
-
-        // Create an array of selected skills
-        const selectedSkills = [skill1, skill2, skill3, skill4, skill5, skill6].filter(skill => skill);
-
-        // Update user's skills
-        user.skills = selectedSkills;
-        await user.save();
-
-        res.redirect('/');
-
-});
 
 app.post('/logout', (req, res) => {
     req.session.destroy((err) => {
