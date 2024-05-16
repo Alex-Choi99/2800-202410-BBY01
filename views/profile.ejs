@@ -130,6 +130,12 @@
                       <!-- UPLOAD IMAGE FORM -->
                       <form action="/picUpload" method="post" enctype="multipart/form-data" >
                         <label class="col-12 form-label m-0">Profile Image</label>
+                        <% if (user.image) { %>
+                          <script type="text/javascript">document.write($.cloudinary.imageTag('<%- user.image %>', {height: 100, width: 100, crop: "fit"}).toHtml());</script>
+                          <% } %>
+                        <div>
+                          
+                        </div>
                         <div class="col-12">
                           <p>Image: <input type="file" name="image"/></p>
                           <p><input type="submit" value="Upload"/></p>

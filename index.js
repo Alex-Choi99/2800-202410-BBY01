@@ -8,6 +8,7 @@ const Joi = require("joi");
 const bcrypt = require('bcrypt');
 const port = process.env.PORT || 3000;
 const cloudinary = require('cloudinary');
+const {v4: uuid} = require('uuid');
 
 const node_session_secret = process.env.NODE_SESSION_SECRET;
 const mongodb_session_secret = process.env.MONGODB_SESSION_SECRET;
@@ -301,6 +302,7 @@ app.post('/loginSubmit', async (req, res) => {
         req.session.name = result[0].name;
         req.session.cookie.maxAge = expireTime;
         req.session.skills = result[0].skills;
+        req.session.image = result[0].image;
         console.log("Result:", result[0].skills);
         // console.log(req.session);
         res.redirect('/');
@@ -348,21 +350,32 @@ app.post('/api/sendemail/', function (req, res) {
     sendEmail(name, email, subject, message);
 });
 
-app.get('/profile', (req, res) => {
-    res.render('profile');
+app.get('/profile', async (req, res) => {
+    let email = req.session.email;
+    var user = await userModel.findOne({email});
+    res.render('profile', {user: user});
 });
 
-app.post('/picUpload', upload.single('image'), (req, res, next) => {
-    console.log('Request received for /picUpload');
+app.post('/setProfilePic', upload.single('image'), (req, res, next) => {
+    console.log('Request received');
     let buf64 = req.file.buffer.toString('base64');
     stream = cloudinary.uploader.upload("data:image/png;base64," + buf64, function (result) {
         console.log(result);
-        res.send('Done:<br/> <img src="' + result.url + '"/><br/>' +
-            cloudinary.image(result.public_id, { format: "png", width: 100, height: 130, crop: "fit" }));
-    }, { public_id: req.body.title });      
-    console.log(req.body);
-    console.log(req.file);
+    });
+
 });
+// app.post('/picUpload', upload.single('image'), (req, res, next) => {
+//     console.log('Request received for /picUpload');
+//     let buf64 = req.file.buffer.toString('base64');
+//     stream = cloudinary.uploader.upload("data:image/png;base64," + buf64, function (result) {
+//         console.log(result);
+//         // res.send('Done:<br/> <img src="' + result.url + '"/><br/>' +
+//         //     cloudinary.image(result.public_id, { format: "png", width: 100, height: 130, crop: "fit" }));
+//     }, { public_id: req.body.title });     
+     
+//     console.log(req.body);
+//     console.log(req.file);
+// });
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
