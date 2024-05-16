@@ -250,6 +250,11 @@ app.get('/signup', (req, res) => {
 }
 );
 
+app.get('/profile', (req, res) => {
+  res.render('profile');
+});
+
+
 app.get('/', async (req, res) => {
     const result = await userModel.find();
     console.log(result);
