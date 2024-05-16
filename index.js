@@ -357,7 +357,9 @@ app.get('/profile', async (req, res) => {
 });
 
 app.post('/setProfilePic', upload.single('image'), (req, res, next) => {
-    console.log('Request received');
+    let image_uuid = uuid();
+    let email = req.session.email;
+    let user = userModel.findOne({email});
     let buf64 = req.file.buffer.toString('base64');
     stream = cloudinary.uploader.upload("data:image/png;base64," + buf64, function (result) {
         console.log(result);
