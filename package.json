@@ -11,6 +11,7 @@
   "dependencies": {
     "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
+    "cloudinary": "^2.2.0",
     "connect-mongo": "^5.1.0",
     "connect-mongodb-session": "^5.0.0",
     "dotenv": "^16.4.5",
@@ -20,6 +21,7 @@
     "joi": "^17.13.1",
     "mongodb": "^6.5.0",
     "mongoose": "^8.3.4",
+    "multer": "^1.4.5-lts.1",
     "node-mailjet": "^6.0.5",
     "nodemon": "^3.1.0"
   }
