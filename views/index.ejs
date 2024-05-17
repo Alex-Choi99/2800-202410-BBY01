@@ -11,15 +11,21 @@
       </form>
     </div>
   <% } else { %>
+
     <div class="dropdown">
       <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-        Select User
+        FILTER
       </button>
-      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <% users.forEach(user => { %>
-          <li><a class="dropdown-item" href="#"><%= user.name %></a></li>
-        <% }) %>
-      </ul>
+      <form class="dropdown-menu" aria-labelledby="dropdownMenuButton" action="/" method="get">
+          <label><input type="checkbox" name="skills" value="Math">Math</label><br>
+          <label><input type="checkbox" name="skills" value="Sports">Sports</label><br>
+          <label><input type="checkbox" name="skills" value="Physics">Physics</label><br>
+          <label><input type="checkbox" name="skills" value="Computer Technology">Computer Technology</label><br>
+          <label><input type="checkbox" name="skills" value="Social Sciences">Social Sciences</label><br>
+          <label><input type="checkbox" name="skills" value="Biology">Biology</label><br>
+          <button type="submit" class="btn btn-primary">Save</button>
+      </form>
+
     </div>
     
     <ul class="list-group mt-3">

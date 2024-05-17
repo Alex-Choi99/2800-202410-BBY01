@@ -98,7 +98,14 @@ function generateRandomPassword(length) {
 };
 
 app.get('/', async (req, res) => {
-    const result = await userModel.find();
+
+    const filters = {};
+    
+    if (req.query.skills) {
+        filters.skills = { $in: req.query.skills.split(',') };
+    }
+
+    const result = await userModel.find(filters);
     console.log(result);
     res.render('index', {users: result, user: isValidSession(req)});
 });
