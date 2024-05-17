@@ -113,6 +113,59 @@ app.get('/login', (req, res) => {
     res.render('login', { forgor, errorMessage: '' });
 });
 
+app.post('/loginSubmit', async (req, res) => {
+    const { loginID, password } = req.body;
+    console.log(loginID + password);
+
+    const schema = Joi.object({
+        loginID: Joi.string().max(30).required(),
+        password: Joi.string().max(30).required()
+    })
+    const validationResult = schema.validate({loginID, password});
+    if (validationResult.error != null) {
+        console.log(validationResult.error);
+        res.render("login", { forgor: 'know', errorMessage: "Input must be less than 30 characters." });
+        return;
+    }
+    const result = await userModel.findOne({
+        $or: [
+            { email: loginID },
+            { userId: loginID }
+        ]
+    }).exec();
+
+    console.log('User info from DB:', result);
+    if (!result) {
+        console.log("user not found");
+        res.render("login", { forgor: 'know', errorMessage: "No User Detected" });
+        return;
+    }
+
+    if (await bcrypt.compare(password, result.password)) {
+        console.log("correct password");
+        req.session.authenticated = true;
+        req.session.name = result.name;
+        req.session.email = result.email;
+        req.session.userId = result.userId;
+        req.session.image_id = result.image_id;
+        req.session.cookie.maxAge = expireTime;
+        // for(let i = 0; i < result.skills.length; i++){
+        //     req.session.skills[i] = result.skills[i];
+        //     console.log("Result: ", result.skills[i]);
+        // }
+        req.session.image = result.image;
+        console.log("Result:", result.skills);
+        // console.log(req.session);
+        res.redirect('/');
+        return;
+    }
+    else {
+        console.log("incorrect password");
+        res.render("login", { forgor: 'know', errorMessage: "Incorrect Password" });
+        return;
+    }
+});
+
 app.post('/resetConfirm', async (req, res) => {
     try {
         const email = req.body.email;
@@ -275,56 +328,6 @@ app.post('/signupSubmit', async (req, res) => {
     }
 });
 
-app.post('/loginSubmit', async (req, res) => {
-    const { loginID, password } = req.body;
-    console.log(loginID + password);
-
-    const schema = Joi.object({
-        loginID: Joi.string().max(30).required(),
-        password: Joi.string().max(30).required()
-    })
-    const validationResult = schema.validate({loginID, password});
-    if (validationResult.error != null) {
-        console.log(validationResult.error);
-        res.render("login", { forgor: 'know', errorMessage: "Input must be less than 30 characters." });
-        return;
-    }
-    const result = await userModel.findOne({
-        $or: [
-            { email: loginID },
-            { id: loginID }
-        ]
-    }).exec();
-
-    console.log('User info from DB:', result);
-    if (!result) {
-        console.log("user not found");
-        res.render("login", { forgor: 'know', errorMessage: "No User Detected" });
-        return;
-    }
-
-    if (await bcrypt.compare(password, result.password)) {
-        console.log("correct password");
-        req.session.authenticated = true;
-        req.session.email = result.email;
-        req.session.name = result.name;
-        req.session.cookie.maxAge = expireTime;
-        req.session.skills = result.skills;
-        console.log("Result:", result.skills);
-        req.session.skills = result.skills;
-        req.session.image = result.image;
-        console.log("Result:", result.skills);
-        // console.log(req.session);
-        res.redirect('/');
-        return;
-    }
-    else {
-        console.log("incorrect password");
-        res.render("login", { forgor: 'know', errorMessage: "Incorrect Password" });
-        return;
-    }
-});
-
 // define your own email api which points to your server.
 app.post('/api/sendemail/', function (req, res) {
     const { name, email, subject, message } = req.body;
@@ -370,9 +373,27 @@ app.post('/setTags', async (req, res) => {
 
 app.use('/profile', sessionValidation);
 app.get('/profile', async (req, res) => {
-    let email = req.session.email;
+    req.session.cookie.maxAge = expireTime;
+    var email = req.session.email;
+    // var name = req.session.name;
+    // var userId = req.session.userId;
+    // var img = req.session.image_id;
     var user = await userModel.findOne({email});
-    res.render('profile', {user: user});
+    // console.log(` ${email} + ${name} + ${userId} + ${img} + ${user}`);
+
+    // if(user.skills == null){
+    //     skills = [''];
+    // } else{
+    //     for(let i = 0; i < user.skills.length; i++){
+    //         req.session.skills[i] = user.skills[i];
+    //         console.log("Result: ", user.skills[i]);
+    //     }
+    // }
+    // var skills = req.session.skills;
+//, name, email, id, img, skills
+    console.log(JSON.stringify(user.skills));
+
+    res.render('profile', {user, name: user.name, skills: user.skills });
 });
 
 app.post('/setProfilePic', upload.single('image'), async (req, res, next) => {
@@ -400,7 +421,7 @@ app.post('/setProfilePic', upload.single('image'), async (req, res, next) => {
 			console.log(ex);
         }
     }, { public_id: image_uuid }
-);
+    );
 
 });
 

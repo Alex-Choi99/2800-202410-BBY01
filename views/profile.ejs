@@ -18,7 +18,7 @@
           <div class="row gy-4">
             <div class="col-12">
               <div class="card widget-card border-light shadow-sm">
-                <div class="card-header text-bg-primary">Welcome, Bob Ross</div>
+                <div class="card-header text-bg-primary">Welcome, <%= name %> </div>
                 <div class="card-body">
                   <div class="text-center mb-3">
                     <% if (user.image_id==null) { %>
@@ -28,7 +28,7 @@
                           type="text/javascript">document.write($.cloudinary.imageTag('<%- user.image_id %>', { height: 100, width: 100, crop: "fit" }).toHtml());</script>
                         <% } %>
                   </div>
-                  <h5 class="text-center mb-1">Bob Ross</h5>
+                  <h5 class="text-center mb-1"><%= name %></h5>
                   <p class="text-center text-secondary mb-4">Painter</p>
                   <ul class="list-group list-group-flush mb-4">
                   </ul>
@@ -102,8 +102,15 @@
                   </div>
                   <div class="col-12 col-md-6">
                     <label for="inputSkills" class="form-label">Skills</label>
+                    <% var tag = ''; %>
+                    <% for(let i = 0; i < skills.length; i++) { %>
+                      <% tag += skills[i]; %>
+                      <% if(i != skills.length - 1){ %>
+                        <% tag += ', ' %>
+                      <% } %>
+                      <% } %>
                     <input type="text" class="form-control" id="inputSkills"
-                      value="HTML, SCSS, Javascript, React, Vue, Angular, UI, UX">
+                      value="<%= tag %>">
                   </div>
                   <div class="col-12 col-md-6">
                     <label for="inputEmail" class="form-label">Email</label>
