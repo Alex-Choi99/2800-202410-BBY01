@@ -332,6 +332,7 @@ app.post('/api/sendemail/', function (req, res) {
     sendEmail(name, email, subject, message);
 });
 
+app.use('/selectSkills', sessionValidation);
 app.get('/selectSkills', (req, res) => {
     res.render('selectSkills');
 });
@@ -367,6 +368,7 @@ app.post('/setTags', async (req, res) => {
 
 });
 
+app.use('/profile', sessionValidation);
 app.get('/profile', async (req, res) => {
     let email = req.session.email;
     var user = await userModel.findOne({email});
@@ -390,7 +392,7 @@ app.post('/setProfilePic', upload.single('image'), async (req, res, next) => {
                 req.session.image = image_uuid;
                 console.log(doc.image_id);
                 console.log("IMAGE UUID: " + req.session.image);
-                res.redirect("/profile");
+                res.redirect("profile");
             }
         }
         catch(ex) {
