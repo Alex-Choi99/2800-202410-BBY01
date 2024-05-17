@@ -15,8 +15,13 @@
       overflow-y: auto;
     }
   </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/cloudinary-jquery@2.11.3/cloudinary-jquery.min.js"></script>
 </head>
 <body>
+  <script type="text/javascript"> 
+    $.cloudinary.config({ cloud_name: '<%= process.env.CLOUDINARY_CLOUD_NAME %>', secure: true});
+  </script>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
       <!-- Alert Icon -->
@@ -56,5 +61,5 @@
       </div>
     </div>
   </nav>
-</body>
-</html>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
+
