@@ -1,0 +1,19 @@
+<%- include('templates/header') %>
+<div class="d-flex justify-content-center flex-nowrap">
+    <form action="/newPWSubmit" method="post">
+        <div class="form-floating">
+            <input name="tempCode" type="text" class="form-control" id="floatingPassword" placeholder="Password">
+            <label for="floatingPassword">Temporary code</label>
+        </div>
+        <div class="form-floating">
+            <input name="newPW" type="password" class="form-control" id="floatingPassword" placeholder="Password">
+            <label for="floatingPassword">New password</label>
+        </div>
+        <div class="form-floating">
+            <input name="confirmPW" type="password" class="form-control" id="floatingPassword" placeholder="Password">
+            <label for="floatingPassword">Confirm New password</label>
+        </div>
+        <button type="submit">Submit</button>
+    </form>
+</div>
+<%- include('templates/footer') %>

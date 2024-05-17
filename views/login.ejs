@@ -1,26 +1,29 @@
 <%- include("templates/header") %>
-<% 
+<%
     switch(forgor) {
         case 'forgor':
             %>
+            <%# //asks what info did u forget %>
             <%- include("templates/forgorLogin") %>
             <% 
             break;
         case 'forgorID':
             %>
+            <%# //you forgot id %>
             <%- include("templates/forgorType", { forgorType: 'ID' }) %>
             <% 
             break;
         case 'forgorPW':
             %>
+            <%# //you forgot password %>
             <%- include("templates/forgorType", { forgorType: 'PW' }) %>
             <% 
             break;
-        case 'know':
+        default:
             %>
+            <%# //user just got on login page %>
             <%- include("templates/normalLogin") %>
             <% 
-            break;
     }
 %>
 <%- include("templates/footer") %>

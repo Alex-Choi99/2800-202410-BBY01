@@ -1,96 +1,99 @@
 <%- include("templates/header") %>
 
-
-<!-- Profile 1 - Bootstrap Brain Component -->
-<section class="bg-light py-3 py-md-5 py-xl-8">
-  <div class="container">
-    <div class="row justify-content-md-center">
-      <div class="col-12 col-md-10 col-lg-8 col-xl-7 col-xxl-6">
-        <h2 class="mb-4 display-5 text-center">Profile</h2>
-        <!-- <p class="text-secondary text-center lead fs-4 mb-5">The Profile page is your digital hub, where you can fine-tune your experience. Here's a closer look at the settings you can expect to find in your profile page.</p> -->
-        <hr class="w-50 mx-auto mb-5 mb-xl-9 border-dark-subtle">
+  <!-- Profile 1 - Bootstrap Brain Component -->
+  <section class="bg-light py-3 py-md-5 py-xl-8">
+    <div class="container">
+      <div class="row justify-content-md-center">
+        <div class="col-12 col-md-10 col-lg-8 col-xl-7 col-xxl-6">
+          <h2 class="mb-4 display-5 text-center">Profile</h2>
+          <!-- <p class="text-secondary text-center lead fs-4 mb-5">The Profile page is your digital hub, where you can fine-tune your experience. Here's a closer look at the settings you can expect to find in your profile page.</p> -->
+          <hr class="w-50 mx-auto mb-5 mb-xl-9 border-dark-subtle">
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="container">
-    <div class="row gy-4 gy-lg-0">
-      <div class="col-12 col-lg-4 col-xl-3">
-        <div class="row gy-4">
-          <div class="col-12">
-            <div class="card widget-card border-light shadow-sm">
-              <div class="card-header text-bg-primary">Welcome, Bob Ross</div>
-              <div class="card-body">
-                <div class="text-center mb-3">
-                  <% if (user.image_id == null) { %>
-                    <p>NO IMAGE</p>
-                  <% } else { %>
-                    <script type="text/javascript">document.write($.cloudinary.imageTag('<%- user.image_id %>', {height: 100, width: 100, crop: "fit"}).toHtml());</script>
-                  <% } %>
-                </div>
-                <h5 class="text-center mb-1">Bob Ross</h5>
-                <p class="text-center text-secondary mb-4">Painter</p>
-                <ul class="list-group list-group-flush mb-4">
-                </ul>
-                <div class="d-grid m-0">
-                  <button class="btn btn-outline-primary" type="button">Follow</button>
+    <div class="container">
+      <div class="row gy-4 gy-lg-0">
+        <div class="col-12 col-lg-4 col-xl-3">
+          <div class="row gy-4">
+            <div class="col-12">
+              <div class="card widget-card border-light shadow-sm">
+                <div class="card-header text-bg-primary">Welcome, <%= name %> </div>
+                <div class="card-body">
+                  <div class="text-center mb-3">
+                    <% if (user.image_id==null) { %>
+                      <p>NO IMAGE</p>
+                      <% } else { %>
+                        <script
+                          type="text/javascript">document.write($.cloudinary.imageTag('<%- user.image_id %>', { height: 100, width: 100, crop: "fit" }).toHtml());</script>
+                        <% } %>
+                  </div>
+                  <h5 class="text-center mb-1"><%= name %></h5>
+                  <p class="text-center text-secondary mb-4">Painter</p>
+                  <ul class="list-group list-group-flush mb-4">
+                  </ul>
+                  <div class="d-grid m-0">
+                    <button class="btn btn-outline-primary" type="button">Contact</button>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="col-12">
-          </div>
-          <div class="col-12">
-            <div class="card widget-card border-light shadow-sm">
-              <div class="card-header text-bg-primary">Skills</div>
-              <div class="card-body">
-                <span class="badge text-bg-primary">Painting</span>
-                <span class="badge text-bg-primary">HTML</span>
-                <span class="badge text-bg-primary">SCSS</span>
-                <span class="badge text-bg-primary">Javascript</span>
-                <span class="badge text-bg-primary">React</span>
-                <span class="badge text-bg-primary">Vue</span>
-                <span class="badge text-bg-primary">Angular</span>
-                <span class="badge text-bg-primary">UI</span>
-                <span class="badge text-bg-primary">UX</span>
+            <div class="col-12">
+            </div>
+            <div class="col-12">
+              <div class="card widget-card border-light shadow-sm">
+                <div class="card-header text-bg-primary">Skills</div>
+                <div class="card-body">
+                  <span class="badge text-bg-primary">Painting</span>
+                  <span class="badge text-bg-primary">HTML</span>
+                  <span class="badge text-bg-primary">SCSS</span>
+                  <span class="badge text-bg-primary">Javascript</span>
+                  <span class="badge text-bg-primary">React</span>
+                  <span class="badge text-bg-primary">Vue</span>
+                  <span class="badge text-bg-primary">Angular</span>
+                  <span class="badge text-bg-primary">UI</span>
+                  <span class="badge text-bg-primary">UX</span>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="col-12 col-lg-8 col-xl-9">
-        <div class="card widget-card border-light shadow-sm">
-          <div class="card-body p-4">
-            <ul class="nav nav-tabs" id="profileTab" role="tablist">
-              <li class="nav-item" role="presentation">
-                <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Profile</button>
-              </li>
-            </ul>
-            <div class="tab-content pt-4" id="profileTabContent">
-              <!-- <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0"> -->
-              <div id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+        <div class="col-12 col-lg-8 col-xl-9">
+          <div class="card widget-card border-light shadow-sm">
+            <div class="card-body p-4">
+              <ul class="nav nav-tabs" id="profileTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                  <!-- <button class="nav-link show active" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="true">Profile</button> -->
+                  <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane"
+                    type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Profile</button>
+                </li>
+              </ul>
+              <!-- <div class="tab-pane fade show active" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0"> -->
+              <div class="tab-content pt-4" id="profileTabContent">
+                <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab"
+                  tabindex="0">
 
-                <!-- <form action="!#" class="row gy-3 gy-xxl-4"> -->
+                  <!-- <form action="!#" class="row gy-3 gy-xxl-4"> -->
                   <div class="col-12">
                     <div class="row gy-2">
                       <!-- UPLOAD IMAGE FORM -->
-                      <form action="/setProfilePic" method="post" enctype="multipart/form-data" >
+                      <form action="/setProfilePic" method="post" enctype="multipart/form-data">
                         <label class="col-12 form-label m-0">Profile Image</label>
-                        <% if (user.image_id == null) { %>
+                        <% if (user.image_id==null) { %>
                           <p>NO IMAGE</p>
                           <% } else { %>
-                            <script type="text/javascript">document.write($.cloudinary.imageTag('<%- user.image_id %>', {height: 100, width: 100, crop: "fit"}).toHtml());</script>
-                          <% } %>
-                        <div>
-                          
-                        </div>
-                        <div class="col-12">
-                          <p>Image: <input type="file" name="image"/></p>
-                          <p><input type="submit" value="Upload"/></p>
-                          <!-- <img src="./assets/img/profile-img-1.jpg" class="img-fluid" alt="Bob Ross"> -->
-                        </div>
+                            <script
+                              type="text/javascript">document.write($.cloudinary.imageTag('<%- user.image_id %>', { height: 100, width: 100, crop: "fit" }).toHtml());</script>
+                            <% } %>
+                              <div>
+
+                              </div>
+                              <div class="col-12">
+                                <p>Image: <input type="file" name="image" /></p>
+                                <p><input type="submit" value="Upload" /></p>
+                                <!-- <img src="./assets/img/profile-img-1.jpg" class="img-fluid" alt="Bob Ross"> -->
+                              </div>
                       </form>
-                    
                     </div>
                   </div>
                   <div class="col-12 col-md-6">
@@ -100,15 +103,41 @@
                   </div>
                   <div class="col-12 col-md-6">
                     <label for="inputSkills" class="form-label">Skills</label>
-                    <!-- <input type="text" class="form-control" id="inputSkills" value="HTML, SCSS, Javascript, React, Vue, Angular, UI, UX"> -->
-                    <p>Painting, HTML, SCSS, Javascript, React, Vue, Angular, UI, UX
-                    <button type="submit" class="btn btn-primary">Edit</button>
+                    <% var tag = ''; %>
+                    <% for(let i = 0; i < skills.length; i++) { %>
+                      <% tag += skills[i]; %>
+                      <% if(i != skills.length - 1){ %>
+                        <% tag += ', ' %>
+                      <% } %>
+                      <% } %>
+                    <input type="text" class="form-control" id="inputSkills"
+                      value="<%= tag %>">
                   </div>
                   <div class="col-12 col-md-6">
                     <label for="inputEmail" class="form-label">Email</label>
                     <!-- <input type="email" class="form-control" id="inputEmail" value="bob@example.com"> -->
                     <p>bob@example.com
                   </div>
+                  <!-- <div class="col-12 col-md-6">
+                    <label for="inputAddress" class="form-label">Address</label>
+                    <input type="text" class="form-control" id="inputAddress" value="Mountain View, California">
+                  </div> -->
+                  <!-- <div class="col-12 col-md-6">
+                    <label for="inputYouTube" class="form-label">YouTube</label>
+                    <input type="text" class="form-control" id="inputYouTube" value="https://www.youtube.com/BobRoss">
+                  </div> -->
+                  <!-- <div class="col-12 col-md-6">
+                    <label for="inputX" class="form-label">X</label>
+                    <input type="text" class="form-control" id="inputX" value="https://twitter.com/BobRoss">
+                  </div> -->
+                  <!-- <div class="col-12 col-md-6">
+                    <label for="inputFacebook" class="form-label">Facebook</label>
+                    <input type="text" class="form-control" id="inputFacebook" value="https://www.facebook.com/BobRoss">
+                  </div> -->
+                  <!-- <div class="col-12 col-md-6">
+                    <label for="inputLinkedIn" class="form-label">LinkedIn</label>
+                    <input type="text" class="form-control" id="inputLinkedIn" value="https://www.linkedin.com/BobRoss">
+                  </div> -->
                   <div class="col-12">
                     <label for="inputAbout" class="form-label">About</label>
                     <!-- <textarea class="form-control" id="inputAbout">Bob Ross is a seasoned and results-driven Project Manager who brings experience and expertise to project management. With a proven track record of successfully delivering complex projects on time and within budget, Bob Ross is the go-to professional for organizations seeking efficient and effective project leadership.</textarea> -->
@@ -117,11 +146,11 @@
                   <div class="col-12">
                     <button type="submit" class="btn btn-primary">Save Changes</button>
                   </div>
-                <!-- </form> -->
+                  <!-- </form> -->
 
-              </div>
-              <div class="tab-pane fade" id="email-tab-pane" role="tabpanel" aria-labelledby="email-tab" tabindex="0">
-                <!-- <form action="#!">
+                </div>
+                <div class="tab-pane fade" id="email-tab-pane" role="tabpanel" aria-labelledby="email-tab" tabindex="0">
+                  <!-- <form action="#!">
                   <fieldset class="row gy-3 gy-md-0">
                     <legend class="col-form-label col-12 col-md-3 col-xl-2">Email Alerts</legend>
                     <div class="col-12 col-md-9 col-xl-10">
@@ -157,9 +186,10 @@
                     </div>
                   </div>
                 </form> -->
-              </div>
-              <div class="tab-pane fade" id="password-tab-pane" role="tabpanel" aria-labelledby="password-tab" tabindex="0">
-                <!-- <form action="#!">
+                </div>
+                <div class="tab-pane fade" id="password-tab-pane" role="tabpanel" aria-labelledby="password-tab"
+                  tabindex="0">
+                  <!-- <form action="#!">
                   <div class="row gy-3 gy-xxl-4">
                     <div class="col-12">
                       <label for="currentPassword" class="form-label">Current Password</label>
@@ -178,15 +208,15 @@
                     </div>
                   </div>
                 </form> -->
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-</section>
+  </section>
 
 
-<%- include("templates/footer") %>
+  <%- include("templates/footer") %>

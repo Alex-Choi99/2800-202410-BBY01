@@ -1,11 +1,20 @@
 <div class="d-flex justify-content-center flex-nowrap">
-    <h1>Which info did you forget?</h1>
+  <div class="col-10 col-md-4">
+    <h1 class="h3 mb-3 fw-normal">Which info did you forget?</h1>
+
     <form action="/login?type=forgorID" method="get">
-        <input type="hidden" name="type" value="forgorID">
-        <button type="submit">ID</button>
+      <div class="form-floating">
+        <input name="type" type="hidden" class="form-control" value="forgorID">
+        <button class="btn btn-primary w-100 py-2" type="submit">ID</button>
+      </div>
     </form>
+    <br>
     <form action="/login?type=forgorPW" method="get">
-        <input type="hidden" name="type" value="forgorPW">
-        <button type="submit">Password</button>
+      <div class="form-floating">
+        <input name="type" type="hidden" class="form-control" value="forgorPW">
+        <button class="btn btn-primary w-100 py-2" type="submit">Password</button>
+      </div>
     </form>
+
+  </div>
 </div>

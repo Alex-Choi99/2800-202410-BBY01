@@ -1,26 +1,28 @@
 <div class="d-flex justify-content-center flex-nowrap">
+  <div class="col-10 col-md-4">
     <form action="/loginSubmit" method="post">
       <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 
       <div class="form-floating">
-        <input name="email" type="email" class="form-control" id="floatingInput" placeholder="Email address">
-        <label for="floatingInput">Email address</label>
+        <input name="loginID" type="text" class="form-control" id="floatingInput" placeholder="Email address">
+        <label for="floatingInput">Email or ID</label>
       </div>
       <div class="form-floating">
         <input name="password" type="password" class="form-control" id="floatingPassword" placeholder="Password">
         <label for="floatingPassword">Password</label>
       </div>
-
-      <div class="form-check text-start my-3">
-        <input class="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault">
-        <label class="form-check-label" for="flexCheckDefault">
-          Remember me
-        </label>
-      </div>
+      
+      <br>
       <button class="btn btn-primary w-100 py-2" type="submit">Sign in</button>
     </form>
+
+  <div class="d-flex justify-content-center flex-nowrap">
     <form action="/login?type=forgor" method="get">
-      <input type="hidden" name="type" value="forgor">
-      <button type="submit">Forgot login info?</button>
+      <div class="form-floating">
+        <input name="type" type="hidden" class="form-control" value="forgor">
+        <button class="btn btn-secondary btn-sm w-60 py-2 m-1" type="submit">Forgot login info?</button>
+      </div>
     </form>
   </div>
+  </div>
+</div>
