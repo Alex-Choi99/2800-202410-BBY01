@@ -22,6 +22,7 @@ const userSchema = new Schema({
     },
     skills: {
         type: Array,
+        default: 'NaN',
         required: true,
     },
     tempCode: {

@@ -13,62 +13,66 @@
     </div>
   </div>
 
-  <div class="container">
-    <div class="row gy-4 gy-lg-0">
-      <div class="col-12 col-lg-4 col-xl-3">
-        <div class="row gy-4">
-          <div class="col-12">
-            <div class="card widget-card border-light shadow-sm">
-              <div class="card-header text-bg-primary">Welcome, Bob Ross</div>
-              <div class="card-body">
-                <div class="text-center mb-3">
-                  <% if (user.image_id == null) { %>
-                    <p>NO IMAGE</p>
-                  <% } else { %>
-                    <script type="text/javascript">document.write($.cloudinary.imageTag('<%- user.image_id %>', {height: 100, width: 100, crop: "fit"}).toHtml());</script>
-                  <% } %>
-                </div>
-                <h5 class="text-center mb-1">Bob Ross</h5>
-                <p class="text-center text-secondary mb-4">Painter</p>
-                <ul class="list-group list-group-flush mb-4">
-                </ul>
-                <div class="d-grid m-0">
-                  <button class="btn btn-outline-primary" type="button">Follow</button>
+    <div class="container">
+      <div class="row gy-4 gy-lg-0">
+        <div class="col-12 col-lg-4 col-xl-3">
+          <div class="row gy-4">
+            <div class="col-12">
+              <div class="card widget-card border-light shadow-sm">
+                <div class="card-header text-bg-primary">Welcome, <%= name %> </div>
+                <div class="card-body">
+                  <div class="text-center mb-3">
+                    <% if (user.image_id==null) { %>
+                      <p>NO IMAGE</p>
+                      <% } else { %>
+                        <script
+                          type="text/javascript">document.write($.cloudinary.imageTag('<%- user.image_id %>', { height: 100, width: 100, crop: "fit" }).toHtml());</script>
+                        <% } %>
+                  </div>
+                  <h5 class="text-center mb-1"><%= name %></h5>
+                  <p class="text-center text-secondary mb-4">Painter</p>
+                  <ul class="list-group list-group-flush mb-4">
+                  </ul>
+                  <div class="d-grid m-0">
+                    <button class="btn btn-outline-primary" type="button">Contact</button>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="col-12">
-          </div>
-          <div class="col-12">
-            <div class="card widget-card border-light shadow-sm">
-              <div class="card-header text-bg-primary">Skills</div>
-              <div class="card-body">
-                <span class="badge text-bg-primary">Painting</span>
-                <span class="badge text-bg-primary">HTML</span>
-                <span class="badge text-bg-primary">SCSS</span>
-                <span class="badge text-bg-primary">Javascript</span>
-                <span class="badge text-bg-primary">React</span>
-                <span class="badge text-bg-primary">Vue</span>
-                <span class="badge text-bg-primary">Angular</span>
-                <span class="badge text-bg-primary">UI</span>
-                <span class="badge text-bg-primary">UX</span>
+            <div class="col-12">
+            </div>
+            <div class="col-12">
+              <div class="card widget-card border-light shadow-sm">
+                <div class="card-header text-bg-primary">Skills</div>
+                <div class="card-body">
+                  <span class="badge text-bg-primary">Painting</span>
+                  <span class="badge text-bg-primary">HTML</span>
+                  <span class="badge text-bg-primary">SCSS</span>
+                  <span class="badge text-bg-primary">Javascript</span>
+                  <span class="badge text-bg-primary">React</span>
+                  <span class="badge text-bg-primary">Vue</span>
+                  <span class="badge text-bg-primary">Angular</span>
+                  <span class="badge text-bg-primary">UI</span>
+                  <span class="badge text-bg-primary">UX</span>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="col-12 col-lg-8 col-xl-9">
-        <div class="card widget-card border-light shadow-sm">
-          <div class="card-body p-4">
-            <ul class="nav nav-tabs" id="profileTab" role="tablist">
-              <li class="nav-item" role="presentation">
-                <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Profile</button>
-              </li>
-            </ul>
-            <div class="tab-content pt-4" id="profileTabContent">
-              <!-- <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0"> -->
-              <div id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+        <div class="col-12 col-lg-8 col-xl-9">
+          <div class="card widget-card border-light shadow-sm">
+            <div class="card-body p-4">
+              <ul class="nav nav-tabs" id="profileTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                  <!-- <button class="nav-link show active" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="true">Profile</button> -->
+                  <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane"
+                    type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Profile</button>
+                </li>
+              </ul>
+              <!-- <div class="tab-pane fade show active" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0"> -->
+              <div class="tab-content pt-4" id="profileTabContent">
+                <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab"
+                  tabindex="0">
 
                 <!-- <form action="!#" class="row gy-3 gy-xxl-4"> -->
                   <div class="col-12">
@@ -100,9 +104,15 @@
                   </div>
                   <div class="col-12 col-md-6">
                     <label for="inputSkills" class="form-label">Skills</label>
-                    <!-- <input type="text" class="form-control" id="inputSkills" value="HTML, SCSS, Javascript, React, Vue, Angular, UI, UX"> -->
-                    <p>Painting, HTML, SCSS, Javascript, React, Vue, Angular, UI, UX
-                    <button type="submit" class="btn btn-primary">Edit</button>
+                    <% var tag = ''; %>
+                    <% for(let i = 0; i < skills.length; i++) { %>
+                      <% tag += skills[i]; %>
+                      <% if(i != skills.length - 1){ %>
+                        <% tag += ', ' %>
+                      <% } %>
+                      <% } %>
+                    <input type="text" class="form-control" id="inputSkills"
+                      value="<%= tag %>">
                   </div>
                   <div class="col-12 col-md-6">
                     <label for="inputEmail" class="form-label">Email</label>
