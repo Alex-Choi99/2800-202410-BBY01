@@ -97,6 +97,11 @@ function generateRandomPassword(length) {
     return password;
 };
 
+app.get('/login', (req, res) => {
+    res.render('login', { currentPage: 'login' });
+  });
+
+  
 app.get('/', async (req, res) => {
     const result = await userModel.find();
     console.log(result);
