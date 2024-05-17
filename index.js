@@ -411,7 +411,7 @@ app.post('/setProfilePic', upload.single('image'), async (req, res, next) => {
 
 });
 
-app.post('/logout', (req, res) => {
+app.get('/logout', (req, res) => {
     req.session.destroy((err) => {
         if (err) {
             throw err;
