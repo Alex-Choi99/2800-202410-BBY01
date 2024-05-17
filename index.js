@@ -400,7 +400,7 @@ app.get('/profile', async (req, res) => {
 //, name, email, id, img, skills
     console.log(JSON.stringify(user.skills));
 
-    res.render('profile', {user, name: user.name, skills: user.skills });
+    res.render('profile', {user, skills: user.skills });
 });
 
 app.post('/setProfilePic', upload.single('image'), async (req, res, next) => {
@@ -414,13 +414,13 @@ app.post('/setProfilePic', upload.single('image'), async (req, res, next) => {
             const success = await userModel.updateOne({email: email}, {$set : {image_id: image_uuid}});
             if (!success) {
                 console.log("Error uploading to MongoDB");
-            } 
-            else{
+            } else{
                 console.log("USER DOCUMENT " + doc);
                 req.session.image = image_uuid;
                 console.log(doc.image_id);
                 console.log("IMAGE UUID: " + req.session.image);
                 res.redirect("profile");
+                // console.log(public_id);
             }
         }
         catch(ex) {
@@ -429,10 +429,9 @@ app.post('/setProfilePic', upload.single('image'), async (req, res, next) => {
         }
     }, { public_id: image_uuid }
     );
-
 });
 
-app.get('/logout', (req, res) => {
+app.post('/logout', (req, res) => {
     req.session.destroy((err) => {
         if (err) {
             throw err;

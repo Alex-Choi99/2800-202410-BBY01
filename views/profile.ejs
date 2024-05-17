@@ -19,7 +19,7 @@
           <div class="row gy-4">
             <div class="col-12">
               <div class="card widget-card border-light shadow-sm">
-                <div class="card-header text-bg-primary">Welcome, <%= name %> </div>
+                <div class="card-header text-bg-primary">Welcome, <%= user.name %> </div>
                 <div class="card-body">
                   <div class="text-center mb-3">
                     <% if (user.image_id==null) { %>
@@ -29,7 +29,7 @@
                           type="text/javascript">document.write($.cloudinary.imageTag('<%- user.image_id %>', { height: 100, width: 100, crop: "fit" }).toHtml());</script>
                         <% } %>
                   </div>
-                  <h5 class="text-center mb-1"><%= name %></h5>
+                  <h5 class="text-center mb-1"><%= user.name %></h5>
                   <p class="text-center text-secondary mb-4">Painter</p>
                   <ul class="list-group list-group-flush mb-4">
                   </ul>
@@ -100,7 +100,7 @@
                   <div class="col-12 col-md-6">
                     <label for="inputFirstName" class="form-label">Name</label>
                     <!-- <input type="text" class="form-control" id="inputFirstName" value="Bob Ross"> -->
-                    <p>Bob Ross
+                    <p> <%= user.name %>
                   </div>
                   <div class="col-12 col-md-6">
                     <label for="inputSkills" class="form-label">Skills</label>
@@ -117,7 +117,7 @@
                   <div class="col-12 col-md-6">
                     <label for="inputEmail" class="form-label">Email</label>
                     <!-- <input type="email" class="form-control" id="inputEmail" value="bob@example.com"> -->
-                    <p>bob@example.com
+                    <p> <%= user.email %>
                   </div>
                   <div class="col-12">
                     <label for="inputAbout" class="form-label">About</label>
