@@ -8,7 +8,7 @@ const Joi = require("joi");
 const bcrypt = require('bcrypt');
 const port = process.env.PORT || 3000;
 const cloudinary = require('cloudinary');
-const {v4: uuid} = require('uuid');
+const { v4: uuid } = require('uuid');
 const multer = require('multer');
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
@@ -100,22 +100,25 @@ function generateRandomPassword(length) {
     return password;
 };
 
-app.get('/login', (req, res) => {
-    res.render('login', { currentPage: 'login' });
-  });
-
-  
+// app.get('/login', (req, res) => {
+//     console.log(req.session);
+//     res.render('login', { forgor: 'know' , user: isValidSession(req) });
+// });
+app.use('/', (req, res, next) => {
+    app.locals.user = isValidSession(req);
+    next();
+});
 app.get('/', async (req, res) => {
 
     const filters = {};
-    
+
     if (req.query.skills) {
         filters.skills = { $in: req.query.skills.split(',') };
     }
 
     const result = await userModel.find(filters);
     console.log(result);
-    res.render('index', {users: result, user: isValidSession(req)});
+    res.render('index', { users: result });
 });
 
 app.get('/aboutus', (req, res) => {
@@ -125,7 +128,7 @@ app.get('/aboutus', (req, res) => {
 app.get('/login', (req, res) => {
     var forgor = req.query.type;
     console.log('forgor type' + forgor);
-    res.render('login', { forgor, errorMessage: '' });
+    res.render('login', { forgor, errorMessage: '', user: isValidSession(req) });
 });
 
 app.post('/loginSubmit', async (req, res) => {
@@ -136,7 +139,7 @@ app.post('/loginSubmit', async (req, res) => {
         loginID: Joi.string().max(30).required(),
         password: Joi.string().max(30).required()
     })
-    const validationResult = schema.validate({loginID, password});
+    const validationResult = schema.validate({ loginID, password });
     if (validationResult.error != null) {
         console.log(validationResult.error);
         res.render("login", { forgor: 'know', errorMessage: "Input must be less than 30 characters." });
@@ -195,7 +198,7 @@ app.post('/resetConfirm', async (req, res) => {
 
         const result = await userModel.findOne({ email });
         const oldCode = result.tempCode;
-        console.log('User info from db'+ result);
+        console.log('User info from db' + result);
         if (!result) {
             console.log("user not found");
             res.render('login', { forgor, errorMessage: 'No user detected.' });
@@ -255,10 +258,10 @@ http://localhost:3025/newPW
     } catch (error) {
         console.error('Error in resetConfirm:', error);
         res.render('login', { forgor: 'forgor', errorMessage: 'An error occurred while processing your request.' });
-    }    
+    }
 });
 
-app.get('/newPW', async (req,res) => {
+app.get('/newPW', async (req, res) => {
     res.render('newPW');
 });
 
@@ -276,13 +279,13 @@ app.post('/newPWSubmit', async (req, res) => {
     }
 
     const findCode = await userModel.findOne({ tempCode });
-    if (!findCode){
-        res.render("newPW", {errorMessage: "Non existing temporary code."});
+    if (!findCode) {
+        res.render("newPW", { errorMessage: "Non existing temporary code." });
         return;
     }
 
     if (newPW != confirmPW) {
-        res.render("newPW", {errorMessage: "new password and confirmation are not matching."});
+        res.render("newPW", { errorMessage: "new password and confirmation are not matching." });
         return;
     }
 
@@ -310,7 +313,7 @@ app.post('/signupSubmit', async (req, res) => {
     console.log('all good');
     if (validationResult.error != null) {
         //{ name: name, email: email, id: id, password: password }
-        res.render("signup", { errorMessage: 'user with that email already exists in our record.'});
+        res.render("signup", { errorMessage: 'user with that email already exists in our record.' });
         /* html += `
         <form action='/signup' method='get'>
             <button>Try Again</button>
@@ -320,7 +323,7 @@ app.post('/signupSubmit', async (req, res) => {
     } else {
         let user = await userModel.findOne({ email });
         if (user) {
-            res.render('signup', { errorMessage: 'user with that email already exists in our record.'});
+            res.render('signup', { errorMessage: 'user with that email already exists in our record.' });
             return;
         }
 
@@ -371,18 +374,18 @@ app.post('/setTags', async (req, res) => {
 
     } */
     const user = await userModel.findOne({ email: req.session.email });
-        
-        // Extract tags from the request body
-        const { skill1, skill2, skill3, skill4, skill5, skill6 } = req.body;
 
-        // Create an array of selected skills
-        const selectedSkills = [skill1, skill2, skill3, skill4, skill5, skill6].filter(skill => skill);
+    // Extract tags from the request body
+    const { skill1, skill2, skill3, skill4, skill5, skill6 } = req.body;
 
-        // Update user's skills
-        user.skills = selectedSkills;
-        await user.save();
+    // Create an array of selected skills
+    const selectedSkills = [skill1, skill2, skill3, skill4, skill5, skill6].filter(skill => skill);
 
-        res.redirect('/');
+    // Update user's skills
+    user.skills = selectedSkills;
+    await user.save();
+
+    res.redirect('/');
 
 });
 
@@ -393,7 +396,7 @@ app.get('/profile', async (req, res) => {
     // var name = req.session.name;
     // var userId = req.session.userId;
     // var img = req.session.image_id;
-    var user = await userModel.findOne({email});
+    var user = await userModel.findOne({ email });
     // console.log(` ${email} + ${name} + ${userId} + ${img} + ${user}`);
 
     // if(user.skills == null){
@@ -405,24 +408,24 @@ app.get('/profile', async (req, res) => {
     //     }
     // }
     // var skills = req.session.skills;
-//, name, email, id, img, skills
+    //, name, email, id, img, skills
     console.log(JSON.stringify(user.skills));
 
-    res.render('profile', {user, skills: user.skills });
+    res.render('profile', { user, skills: user.skills });
 });
 
 app.post('/setProfilePic', upload.single('image'), async (req, res, next) => {
     let image_uuid = uuid();
     let email = req.session.email;
-    let doc = await userModel.findOne({email});
+    let doc = await userModel.findOne({ email });
     let buf64 = req.file.buffer.toString('base64');
     stream = cloudinary.uploader.upload("data:image/octet-stream;base64," + buf64, async function (result) {
         try {
             console.log(result);
-            const success = await userModel.updateOne({email: email}, {$set : {image_id: image_uuid}});
+            const success = await userModel.updateOne({ email: email }, { $set: { image_id: image_uuid } });
             if (!success) {
                 console.log("Error uploading to MongoDB");
-            } else{
+            } else {
                 console.log("USER DOCUMENT " + doc);
                 req.session.image = image_uuid;
                 console.log(doc.image_id);
@@ -431,23 +434,23 @@ app.post('/setProfilePic', upload.single('image'), async (req, res, next) => {
                 // console.log(public_id);
             }
         }
-        catch(ex) {
+        catch (ex) {
             console.log("Error connecting to MongoDB");
-			console.log(ex);
+            console.log(ex);
         }
     }, { public_id: image_uuid }
     );
 });
 
-app.post('/setSkill', async (req,res) =>{
+app.post('/setSkill', async (req, res) => {
     try {
         let email = req.session.email;
         const newSkills = req.body.setSkill.split(',').map(skill => skill.trim());
-        let doc = await userModel.findOne({email});
-        const success = await userModel.updateOne({email: email}, {$set : {skills: newSkills}});
+        let doc = await userModel.findOne({ email });
+        const success = await userModel.updateOne({ email: email }, { $set: { skills: newSkills } });
         if (!success) {
             console.log("Error uploading to MongoDB");
-        } else{
+        } else {
             res.redirect('profile');
         }
     } catch (error) {
