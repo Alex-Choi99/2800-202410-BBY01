@@ -1,13 +1,57 @@
 <%- include ("templates/header") %>
-<form action="/setTags" method="post">
-    <label><input type="checkbox" name="skill1" value="Math">Math</label><br>
-    <label><input type="checkbox" name="skill2" value="Sports">Sports</label><br>
-    <label><input type="checkbox" name="skill3" value="Physics">Physics</label><br>
-    <label><input type="checkbox" name="skill4" value="Computer Technology">Computer Technology</label><br>
-    <label><input type="checkbox" name="skill5" value="Social Sciences">Social Sciences</label><br>
-    <label><input type="checkbox" name="skill6" value="Biology">Biology</label><br>
-    <!-- <input type="checkbox" class="btn-check" id="btn-check-outlined" autocomplete="off" name="skill1">
-    <label class="btn btn-outline-primary" for="btn-check-outlined">Single toggle</label><br> -->
-    <button type="submit">hgfgh</button> 
-</form>
+
+<div class="d-flex justify-content-center flex-nowrap">
+  <div class="col-10 col-md-4">
+    <form action="/setTags" method="post">
+      <h1 class="h3 mb-3 fw-normal">Select Skills</h1>
+      <div class="list-group">
+        <label class="list-group-item d-flex gap-2">
+          <input name="skill1" class="form-check-input flex-shrink-0" type="checkbox" value="Math">
+          <span>
+            Math
+            <!-- <small class="d-block text-body-secondary">With support text underneath to add more detail</small> -->
+          </span>
+        </label>
+        <label class="list-group-item d-flex gap-2">
+          <input name="skill2" class="form-check-input flex-shrink-0" type="checkbox" value="Sports">
+          <span>
+            Sports
+            <!-- <small class="d-block text-body-secondary">Some other text goes here</small> -->
+          </span>
+        </label>
+        <label class="list-group-item d-flex gap-2">
+          <input name="skill3" class="form-check-input flex-shrink-0" type="checkbox" value="Physics">
+          <span>
+            Physics
+            <!-- <small class="d-block text-body-secondary">And we end with another snippet of text</small> -->
+          </span>
+        </label>
+        <label class="list-group-item d-flex gap-2">
+          <input name="skill4" class="form-check-input flex-shrink-0" type="checkbox" value="Computer Technology">
+          <span>
+            Computer Technology
+            <!-- <small class="d-block text-body-secondary">And we end with another snippet of text</small> -->
+          </span>
+        </label>
+        <label class="list-group-item d-flex gap-2">
+          <input name="skill5" class="form-check-input flex-shrink-0" type="checkbox" value="Social Sciences">
+          <span>
+            Social Sciences
+            <!-- <small class="d-block text-body-secondary">And we end with another snippet of text</small> -->
+          </span>
+        </label>
+        <label class="list-group-item d-flex gap-2">
+          <input name="skill6" class="form-check-input flex-shrink-0" type="checkbox" value="Biology">
+          <span>
+            Biology
+            <!-- <small class="d-block text-body-secondary">And we end with another snippet of text</small> -->
+          </span>
+        </label>
+      </div>
+        <br>
+        <button class="btn btn-primary w-100 py-2" type="submit">Add Skills</button>
+    </form>
+  </div>
+</div>
+
 <%- include ("templates/footer_before_login") %>
