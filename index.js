@@ -103,6 +103,10 @@ app.get('/', async (req, res) => {
     res.render('index', {users: result, user: isValidSession(req)});
 });
 
+app.get('/aboutus', (req, res) => {
+    res.render('about');
+});
+
 app.get('/login', (req, res) => {
     var forgor = req.query.type;
     console.log('forgor type' + forgor);
@@ -266,7 +270,7 @@ app.post('/signupSubmit', async (req, res) => {
         req.session.name = user.name;
         req.session.id = user.id;
         req.session.cookie.maxAge = expireTime;
-        res.redirect('/login');
+        res.redirect('selectSkills');
         return;
     }
 });
@@ -328,6 +332,43 @@ app.post('/api/sendemail/', function (req, res) {
     sendEmail(name, email, subject, message);
 });
 
+app.use('/selectSkills', sessionValidation);
+app.get('/selectSkills', (req, res) => {
+    res.render('selectSkills');
+});
+
+app.post('/setTags', async (req, res) => {
+    // var userSkill = await userModel.skills;
+
+    // for(let i = 0; i < skills[0].length; i++){
+
+    // }
+    /* const user = await userModel.findOne({email: req.session.email});
+    const {skill1, skill2, skill3, skill4, skill5, skill6} = req.body;
+    const tags = [skill1, skill2, skill3, skill4, skill5, skill6];
+    for (let i = 0; i < tags.length; i++) {
+        if (tags[i].checked) {
+            await userModel.updateOne({email: req.session.email}, {$set : {user.skills: tags[i]}});
+        }
+
+    } */
+    const user = await userModel.findOne({ email: req.session.email });
+        
+        // Extract tags from the request body
+        const { skill1, skill2, skill3, skill4, skill5, skill6 } = req.body;
+
+        // Create an array of selected skills
+        const selectedSkills = [skill1, skill2, skill3, skill4, skill5, skill6].filter(skill => skill);
+
+        // Update user's skills
+        user.skills = selectedSkills;
+        await user.save();
+
+        res.redirect('/');
+
+});
+
+app.use('/profile', sessionValidation);
 app.get('/profile', async (req, res) => {
     let email = req.session.email;
     var user = await userModel.findOne({email});
@@ -351,7 +392,7 @@ app.post('/setProfilePic', upload.single('image'), async (req, res, next) => {
                 req.session.image = image_uuid;
                 console.log(doc.image_id);
                 console.log("IMAGE UUID: " + req.session.image);
-                res.redirect("/profile");
+                res.redirect("profile");
             }
         }
         catch(ex) {
