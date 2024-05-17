@@ -30,7 +30,7 @@
                         <% } %>
                   </div>
                   <h5 class="text-center mb-1"><%= user.name %></h5>
-                  <p class="text-center text-secondary mb-4">Painter</p>
+                  <!-- <p class="text-center text-secondary mb-4">Painter</p> -->
                   <ul class="list-group list-group-flush mb-4">
                   </ul>
                   <div class="d-grid m-0">
@@ -97,39 +97,37 @@
                     
                     </div>
                   </div>
-                  <div class="col-12 col-md-6">
-                    <label for="inputFirstName" class="form-label">Name</label>
-                    <!-- <input type="text" class="form-control" id="inputFirstName" value="Bob Ross"> -->
-                    <p> <%= user.name %>
-                  </div>
-                  <div class="col-12 col-md-6">
-                    <label for="inputSkills" class="form-label">Skills</label>
-                    <% var tag = ''; %>
-                    <% for(let i = 0; i < skills.length; i++) { %>
-                      <% tag += skills[i]; %>
-                      <% if(i != skills.length - 1){ %>
-                        <% tag += ', ' %>
-                      <% } %>
-                      <% } %>
-                    <!-- <input type="text" class="form-control" id="inputSkills"
-                      value="<%= tag %>"> -->
-                      <p><%= tag %><br>
-                      <button type="submit" class="btn btn-primary">Edit</button>
-                  </div>
-                  <div class="col-12 col-md-6">
-                    <label for="inputEmail" class="form-label">Email</label>
-                    <!-- <input type="email" class="form-control" id="inputEmail" value="bob@example.com"> -->
-                    <p> <%= user.email %>
-                  </div>
-                  <div class="col-12">
-                    <label for="inputAbout" class="form-label">About</label>
-                    <!-- <textarea class="form-control" id="inputAbout">Bob Ross is a seasoned and results-driven Project Manager who brings experience and expertise to project management. With a proven track record of successfully delivering complex projects on time and within budget, Bob Ross is the go-to professional for organizations seeking efficient and effective project leadership.</textarea> -->
-                    <p>Bob Ross is a seasoned and results-driven Project Manager who brings experience and expertise to project management. With a proven track record of successfully delivering complex projects on time and within budget, Bob Ross is the go-to professional for organizations seeking efficient and effective project leadership.
-                  </div>
+                  <form action="/setSkill" method="post">
+                    <div class="col-12 col-md-6">
+                      <label for="inputFirstName" class="form-label">Name</label>
+                      <!-- <input type="text" class="form-control" id="inputFirstName" value="Bob Ross"> -->
+                      <p> <%= user.name %>
+                    </div>
+                    <div class="col-12 col-md-6">
+                      <label for="inputSkills" class="form-label">Skills</label>
+                      <% var tag = ''; %>
+                      <% for(let i = 0; i < skills.length; i++) { %>
+                        <% tag += skills[i]; %>
+                        <% if(i != skills.length - 1){ %>
+                          <% tag += ', ' %>
+                        <% } %>
+                        <% } %>
+                      <input type="text" class="form-control" id="inputSkills" name="setSkill" value="<%= tag %>">
+                    </div>
+                    <div class="col-12 col-md-6">
+                      <label for="inputEmail" class="form-label">Email</label>
+                      <!-- <input type="email" class="form-control" id="inputEmail" value="bob@example.com"> -->
+                      <p> <%= user.email %>
+                    </div>
+                    <div class="col-12">
+                      <label for="inputAbout" class="form-label">About</label>
+                      <!-- <textarea class="form-control" id="inputAbout">Bob Ross is a seasoned and results-driven Project Manager who brings experience and expertise to project management. With a proven track record of successfully delivering complex projects on time and within budget, Bob Ross is the go-to professional for organizations seeking efficient and effective project leadership.</textarea> -->
+                      <p>Bob Ross is a seasoned and results-driven Project Manager who brings experience and expertise to project management. With a proven track record of successfully delivering complex projects on time and within budget, Bob Ross is the go-to professional for organizations seeking efficient and effective project leadership.
+                    </div>
                   <div class="col-12">
                     <!-- <button type="submit" class="btn btn-primary">Save Changes</button> -->
                   </div>
-                <!-- </form> -->
+                </form>
 
               </div>
               <div class="tab-pane fade" id="email-tab-pane" role="tabpanel" aria-labelledby="email-tab" tabindex="0">

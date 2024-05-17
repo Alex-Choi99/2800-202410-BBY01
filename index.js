@@ -9,9 +9,11 @@ const bcrypt = require('bcrypt');
 const port = process.env.PORT || 3000;
 const cloudinary = require('cloudinary');
 const {v4: uuid} = require('uuid');
-const multer = require('multer')
-const storage = multer.memoryStorage()
-const upload = multer({ storage: storage })
+const multer = require('multer');
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
+const bodyParser = require('body-parser');
+
 
 const node_session_secret = process.env.NODE_SESSION_SECRET;
 const mongodb_session_secret = process.env.MONGODB_SESSION_SECRET;
@@ -43,7 +45,7 @@ const userModel = require("./user.js");
 
 mongoose.connect(MongoURI, {}).then(res => {
     console.log('MongoDB Connected');
-})
+});
 
 app.set('view engine', 'ejs');
 
@@ -57,6 +59,7 @@ const mongoStore = connectMongo.create({
 app.use(express.static(__dirname + "/public"));
 
 app.use(express.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(session({
     secret: node_session_secret,
@@ -431,6 +434,23 @@ app.post('/setProfilePic', upload.single('image'), async (req, res, next) => {
     );
 });
 
+app.post('/setSkill', async (req,res) =>{
+    try {
+        let email = req.session.email;
+        const newSkills = req.body.setSkill.split(',').map(skill => skill.trim());
+        let doc = await userModel.findOne({email});
+        const success = await userModel.updateOne({email: email}, {$set : {skills: newSkills}});
+        if (!success) {
+            console.log("Error uploading to MongoDB");
+        } else{
+            res.redirect('profile');
+        }
+    } catch (error) {
+        console.error('Error updating skills:', error);
+        res.status(500).send('Error updating skills');
+    }
+});
+
 app.post('/logout', (req, res) => {
     req.session.destroy((err) => {
         if (err) {
@@ -442,7 +462,7 @@ app.post('/logout', (req, res) => {
 
 app.get('/404', (req, res) => {
     res.render('404');
-})
+});
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
