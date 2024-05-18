@@ -300,16 +300,16 @@ app.get('/signup', (req, res) => {
 });
 
 app.post('/signupSubmit', async (req, res) => {
-    const { name, id, email, password } = req.body;
+    const { name, userId, email, password } = req.body;
 
     const schema = Joi.object({
         name: Joi.string().max(40).required(),
-        id: Joi.string().max(40).required(),
+        userId: Joi.string().max(40).required(),
         email: Joi.string().max(40).email().required(),
         password: Joi.string().max(40).required()
     });
 
-    const validationResult = schema.validate({ name, id, email, password });
+    const validationResult = schema.validate({ name, userId, email, password });
     console.log('all good');
     if (validationResult.error != null) {
         //{ name: name, email: email, id: id, password: password }
@@ -330,7 +330,7 @@ app.post('/signupSubmit', async (req, res) => {
         const hashedPass = await bcrypt.hash(password, 12);
         user = new userModel({
             name,
-            id,
+            userId,
             email,
             password: hashedPass,
         });
@@ -339,7 +339,7 @@ app.post('/signupSubmit', async (req, res) => {
         req.session.authenticated = true;
         req.session.email = user.email;
         req.session.name = user.name;
-        req.session.id = user.id;
+        req.session.userId = user.userId;
         req.session.cookie.maxAge = expireTime;
         res.redirect('selectSkills');
         return;
