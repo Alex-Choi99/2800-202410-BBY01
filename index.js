@@ -108,6 +108,7 @@ app.use('/', (req, res, next) => {
     app.locals.user = isValidSession(req);
     next();
 });
+
 app.get('/', async (req, res) => {
 
     const filters = {};
@@ -457,6 +458,14 @@ app.post('/setSkill', async (req, res) => {
         console.error('Error updating skills:', error);
         res.status(500).send('Error updating skills');
     }
+});
+
+app.get('/requestConfirm', (req, res) => {
+    res.render('requestConfirm');
+});
+
+app.post('/requestConfirm', {
+    
 });
 
 app.post('/logout', (req, res) => {
