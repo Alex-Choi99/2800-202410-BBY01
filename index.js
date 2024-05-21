@@ -125,6 +125,10 @@ app.get('/aboutus', (req, res) => {
     res.render('about');
 });
 
+app.get('/circle', (req, res) => {
+  res.render('circle');
+});
+
 app.get('/login', (req, res) => {
     var forgor = req.query.type;
     console.log('forgor type' + forgor);

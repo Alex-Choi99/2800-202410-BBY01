@@ -1,9 +1,12 @@
 /* For Club Page*/
 
 .circle-container{
-  width: 26em;
-  height: 26em;
-  margin: 15em auto;
+  width: 15em;
+  height: 15em;
+  margin-top: 15em;
+  margin-left: 15em;
+  justify-content: center;
+  text-align: center;
 }
 
 .circle-item {
@@ -32,7 +35,7 @@
   width:15em;
   height:15em;
   top: 160px;
-  left: 200px;
+  left: 115px;
 
 }
 /* .circle-item + h2 {padding-bottom:45px;text-align:center;} */
