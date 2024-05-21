@@ -14,6 +14,21 @@
       max-height: 200px;
       overflow-y: auto;
     }
+    .navbar-custom {
+      background-color: rgb(0, 0, 141);
+    }
+    .navbar-brand-hidden {
+      display: none;
+    }
+    .btn-aboutus {
+      border: 1px solid white;
+      background-color: white;
+      color: rgb(5, 5, 80);
+    }
+    .btn-aboutus:hover {
+      background-color: rgb(5, 5, 80);
+      color: white;
+    }
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/cloudinary-jquery@2.11.3/cloudinary-jquery.min.js"></script>
@@ -22,29 +37,23 @@
   <script type="text/javascript"> 
     $.cloudinary.config({ cloud_name: '<%= process.env.CLOUDINARY_CLOUD_NAME %>', secure: true});
   </script>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <nav class="navbar navbar-expand-lg navbar-light navbar-custom">
     <div class="container">
-      <!-- Conditionally render the alert icon and hamburger menu -->
-
       <!-- Website Logo -->
-      <a class="navbar-brand mx-auto" href="/">
+      <a class="navbar-brand <% if (!locals.user) { %>navbar-brand-hidden<% } %>" href="/">
         <img src="/images/Logo_BBY01.png" alt="Website Logo" width="120">
       </a>
 
-      <!-- Conditionally render the navbar links -->
-      <% if (locals.user) { %>
-        <a class="navbar-brand" href="#">
-          <i class="fas fa-bell"></i>
-        </a>
+      <!-- Hamburger Menu -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+              aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-        <!-- Hamburger Menu -->
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ms-auto">
-            <!-- Navbar Links -->
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <!-- Conditionally render the navbar links if the user is logged in -->
+          <% if (locals.user) { %>
             <li class="nav-item">
               <a class="nav-link btn btn-primary me-2" href="/profile">User Profile</a>
             </li>
@@ -56,13 +65,15 @@
             </li>
             <li class="nav-item">
               <!-- Logout button -->
-              <form action="/logout" method="post"><button class="nav-link btn btn-primary me-2">logout</button></form>
+              <form action="/logout" method="post"><button class="nav-link btn btn-primary me-2">Logout</button></form>
             </li>
-          </ul>
-        </div>
-      <% } else { %>
-          <a class="nav-link btn btn-primary me-2 py-2" href="/aboutus">About Us</a>
-      <% } %>
+          <% } %>
+        </ul>
+        <!-- Conditionally render the About Us button if the user is not logged in -->
+        <% if (!locals.user) { %>
+          <a class="nav-link btn btn-aboutus me-2 py-2" href="/aboutus">About Us</a>
+        <% } %>
+      </div>
     </div>
   </nav>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>

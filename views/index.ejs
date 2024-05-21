@@ -1,22 +1,42 @@
 <%- include("templates/header") %>
 
-<div class="container mt-5">
-  <% if (!locals.user) { %>
-    <div class="d-flex justify-content-center mt-5 mb-5">
-      <form action='/signup' method='get' class="mr-3 m-5">
-        <button class="btn btn-secondary btn-lg">Signup</button>
-      </form>
-      <form action='/login' method='get' class="m-5">
-        <button class="btn btn-secondary btn-lg">Login</button>
-      </form>
-    </div>
-  <% } else { %>
-
-    <div class="dropdown">
-      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-        FILTER
-      </button>
-      <form class="dropdown-menu" aria-labelledby="dropdownMenuButton" action="/" method="get">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LearnXchange</title>
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="/styles.css">
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+  <div class="container mt-5">
+    <% if (!locals.user) { %>
+      <div class="text-center mt-5 mb-5">
+        <!-- Central Icon -->
+        <div class="mb-4">
+          <img src="/images/Logo_BBY01.png" class="img-fluid" alt="Central Icon" style="max-width: 400px;">
+        </div>
+        <div class="d-flex flex-column align-items-center">
+          <form action='/login' method='get' class="mb-3">
+            <button class="btn btn-primary btn-lg">Login</button>
+          </form>
+          <form action='/signup' method='get'>
+            <button class="btn btn-primary btn-lg">Signup</button>
+          </form>
+        </div>
+      </div>
+    <% } else { %>
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+          FILTER
+        </button>
+        <form class="dropdown-menu" aria-labelledby="dropdownMenuButton" action="/" method="get">
           <label><input type="checkbox" name="skills" value="Math">Math</label><br>
           <label><input type="checkbox" name="skills" value="Sports">Sports</label><br>
           <label><input type="checkbox" name="skills" value="Physics">Physics</label><br>
@@ -24,28 +44,26 @@
           <label><input type="checkbox" name="skills" value="Social Sciences">Social Sciences</label><br>
           <label><input type="checkbox" name="skills" value="Biology">Biology</label><br>
           <button type="submit" class="btn btn-primary">Save</button>
-      </form>
+        </form>
+      </div>
+      
+      <ul class="list-group mt-3">
+        <% users.forEach(user => { %>
+          <%- include('templates/user', { user }) %>
+        <% }) %>
+      </ul>
+    <% } %>
+  </div>
 
-    </div>
-    
-    <ul class="list-group mt-3">
-      <% users.forEach(user => { %>
-        <%- include('templates/user', { user }) %>
-      <% }) %>
-    </ul>
+  <% if (!user) { %>
+    <%- include("templates/footer_before_login") %>
+  <% } else { %>
+    <%- include("templates/footer_after_login") %>
   <% } %>
-</div>
 
-<% if (!user) { %>
-  <%- include("templates/footer_before_login") %>
-<% } else { %>
-  <%- include("templates/footer_after_login") %>
-<% } %>
-
-<!-- Bootstrap JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-LNSAtfFYg/y4XHVQNISc4V/8e8u/D0tc5Bt7sg6syEBXmW6F7sI0AZpxS+ln6xG" crossorigin="anonymous"></script>
-
+  <!-- Bootstrap JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-LNSAtfFYg/y4XHVQNISc4V/8e8u/D0tc5Bt7sg6syEBXmW6F7sI0AZpxS+ln6xG" crossorigin="anonymous"></script>
 </body>
 </html>
