@@ -1,0 +1,29 @@
+<%- include("templates/header") %>
+
+  <div class="d-flex justify-content-center flex-nowrap">
+    <div class="col-10 col-md-4">
+      <form action="/signupSubmit" method="post">
+        <h1 class="h3 mb-3 fw-normal">Sign Up</h1>
+          <div class="form-floating">
+            <input name="name" type="text" class="form-control" id="floatingInput" placeholder="Name">
+            <label for="floatingInput">Name</label>
+          </div>
+          <div class="form-floating">
+            <input name="userId" type="text" class="form-control" id="floatingInput" placeholder="Login ID">
+            <label for="floatingInput">Login ID</label>
+          </div>
+          <div class="form-floating">
+            <input name="email" type="email" class="form-control" id="floatingInput" placeholder="Email address">
+            <label for="floatingInput">Email address</label>
+          </div>
+          <div class="form-floating">
+            <input name="password" type="password" class="form-control" id="floatingPassword" placeholder="Password">
+            <label for="floatingPassword">Password</label>
+          </div>
+        <br>
+        <button class="btn btn-primary w-100 py-2" type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+
+<%- include("templates/footer_before_login") %>

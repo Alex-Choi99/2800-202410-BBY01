@@ -1,0 +1,51 @@
+<%- include("templates/header") %>
+
+<div class="container mt-5">
+  <% if (!locals.user) { %>
+    <div class="d-flex justify-content-center mt-5 mb-5">
+      <form action='/signup' method='get' class="mr-3 m-5">
+        <button class="btn btn-secondary btn-lg">Signup</button>
+      </form>
+      <form action='/login' method='get' class="m-5">
+        <button class="btn btn-secondary btn-lg">Login</button>
+      </form>
+    </div>
+  <% } else { %>
+
+    <div class="dropdown">
+      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+        FILTER
+      </button>
+      <form class="dropdown-menu" aria-labelledby="dropdownMenuButton" action="/" method="get">
+          <label><input type="checkbox" name="skills" value="Math">Math</label><br>
+          <label><input type="checkbox" name="skills" value="Sports">Sports</label><br>
+          <label><input type="checkbox" name="skills" value="Physics">Physics</label><br>
+          <label><input type="checkbox" name="skills" value="Computer Technology">Computer Technology</label><br>
+          <label><input type="checkbox" name="skills" value="Social Sciences">Social Sciences</label><br>
+          <label><input type="checkbox" name="skills" value="Biology">Biology</label><br>
+          <button type="submit" class="btn btn-primary">Save</button>
+      </form>
+
+    </div>
+    
+    <ul class="list-group mt-3">
+      <% users.forEach(user => { %>
+        <%- include('templates/user', { user }) %>
+      <% }) %>
+    </ul>
+  <% } %>
+</div>
+
+<% if (!user) { %>
+  <%- include("templates/footer_before_login") %>
+<% } else { %>
+  <%- include("templates/footer_after_login") %>
+<% } %>
+
+<!-- Bootstrap JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-LNSAtfFYg/y4XHVQNISc4V/8e8u/D0tc5Bt7sg6syEBXmW6F7sI0AZpxS+ln6xG" crossorigin="anonymous"></script>
+
+</body>
+</html>
