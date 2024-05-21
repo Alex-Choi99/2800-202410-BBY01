@@ -1,0 +1,107 @@
+/* For Club Page*/
+
+.circle-container{
+  width: 26em;
+  height: 26em;
+  margin: 15em auto;
+}
+
+.circle-item {
+  list-style: none;
+}
+
+.circle-item > li > img {
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 10em;
+  height: 10em;
+  border-radius: 50%;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  border: solid 0px tomato;
+  -webkit-transition: .15s;
+  transition: .15s;
+}
+
+.circle-item img:hover {
+  box-shadow: 0 4px 8px 0 tomato;
+}
+
+.circle-item > li:last-child > img {
+  width:15em;
+  height:15em;
+  top: 160px;
+  left: 200px;
+
+}
+/* .circle-item + h2 {padding-bottom:45px;text-align:center;} */
+
+.circle-item > *:nth-of-type(1) {
+  transform: rotate(0deg) translate(13em) rotate(0deg);
+}
+.circle-item > *:nth-of-type(2) {
+  transform: rotate(51deg) translate(13em) rotate(-51deg);
+}
+.circle-item > *:nth-of-type(3) {
+  transform: rotate(102deg) translate(13em) rotate(-102deg);
+}
+.circle-item > *:nth-of-type(4) {
+  transform: rotate(153deg) translate(13em) rotate(-153deg);
+}
+.circle-item > *:nth-of-type(5) {
+  transform: rotate(204deg) translate(13em) rotate(-204deg);
+}
+.circle-item > *:nth-of-type(6) {
+  transform: rotate(255deg) translate(13em) rotate(-255deg);
+}
+/* .circle-item > *:nth-of-type(7) {
+          transform: rotate(306deg) translate(13em) rotate(-306deg);
+} */
+/* .circle-item > *:nth-of-type(8) {
+          transform: rotate(228deg) translate(3.6em) rotate(-228deg);
+} */
+    
+
+
+
+.container{
+  margin:50px;
+  width:250px;
+  height:250px;
+  border-radius:50%;
+  background: rgb(124,12,75);
+}
+
+.item > img{
+  display: block;
+  position:absolute;
+  top: 175px;
+  left: 175px;
+  width : 60px;
+  height : 60px;
+  border-radius:50%;
+  margin: -30px;
+}
+     
+     
+.deg{
+  transform : rotate(45deg) ;
+}
+    
+.deg2{
+  transform : rotate(45deg) translate(125px);
+}
+
+.deg3{
+  transform : rotate(45deg) translate(125px) rotate(-45deg);
+}
+
+.deg4{
+  transform : rotate(180deg) translate(125px) rotate(-180deg);
+}
+
+.deg5{
+  transform : rotate(270deg) translate(200px) rotate(-270deg);
+}
+    
