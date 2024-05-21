@@ -32,7 +32,17 @@ const userSchema = new Schema({
     image_id: {
         type: String,
         required: false,
-    } 
+    },
+    request: {
+        type: Array,
+        default: [{email: 'email', date: 'date'}],
+        required: false,
+    },
+    connected: {
+        type: Array,
+        default: [{email: 'email', date: 'date'}],
+        required: false,
+    },
 });
 
 module.exports = mongoose.mongoose.model('User', userSchema);
