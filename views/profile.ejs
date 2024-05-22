@@ -1,29 +1,85 @@
 <%- include("templates/header") %>
 
-<div class="container d-flex" id="profileHeader">
-  <div>
-    <% if (user.image_id==null) { %>
-      <p>NO IMAGE</p>
-      <% } else { %>
-        <script
-          type="text/javascript">document.write($.cloudinary.imageTag('<%- user.image_id %>', { height: 100, width: 100, crop: "fit" }).toHtml());</script>
-        <% } %>
+  <div class="container d-flex">
+    <div class="container">
+      <!-- PROFILE HEADER -->
+      <div class="container d-flex" id="profileHeader">
+        <!-- IMAGE -->
+        <div id="profileImage">
+          <% if (user.image_id==null) { %>
+            <p>NO IMAGE</p>
+            <% } else { %>
+              <script
+                type="text/javascript">document.write($.cloudinary.imageTag('<%- user.image_id %>', { height: 100, width: 100, crop: "fit" }).toHtml());</script>
+              <% } %>
+        </div>
+        <!-- USERNAME -->
+        <div id="profileUserName">
+          <h4>
+            <%= user.name %>
+          </h4>
+        </div>
+        <!-- INFO -->
+      </div>
+      <div id="profileInfo">
+        <h6><i class="fa-solid fa-calendar-days"></i><span id="joinedText">Joined <%= user.joinDate %></span></h6>
+        <hr>
+      </div>
+
+      <!-- SKILLS DIV -->
+      <div class="card widget-card shadow-sm" id="skillDiv">
+        <div class="card-header d-flex justify-content-between align-items-center"><span id="skillsTitle">
+            Skills</span>
+          <form action="/selectSkills" method="get">
+            <button class="btn btn-primary" id="skillsEditButton">EDIT</button>
+          </form>
+        </div>
+        <div class="card-body">
+          <% console.log(skills) %>
+            <% skills.forEach(skill=> { %>
+              <%- include('templates/eachSkill', { skill }) %>
+                <% }) %>
+        </div>
+      </div>
+
+      <div class="card widget-card shadow-sm" id="reviewDiv">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <span id="reviewTitle">Reviews</span>
+        </div>
+        <div class="card-body">
+          <!-- WHERE WE WILL PRINT OUT ALL OF THE REVIEWS -->
+        </div>
+      </div>
+    </div>
   </div>
-  <div id="profileUserName">
-    <h4>
-      <%= user.name %>
-    </h4>
+
+  <div class="settingsDiv" id="settingsDiv">
+    <div class="card">
+      <div class="card-header">
+        <span id="settingsTitle">Change Image</span>
+      </div>
+      <div class="card-body">
+        <!-- UPLOAD IMAGE FORM -->
+        <form action="/setProfilePic" method="post" enctype="multipart/form-data">
+          <div class="container d-flex">
+            <% if (user.image_id==null) { %>
+              <p>NO IMAGE</p>
+              <% } else { %>
+                <script
+                  type="text/javascript">document.write($.cloudinary.imageTag('<%- user.image_id %>', { height: 100, width: 100, crop: "fit" }).toHtml());</script>
+                <% } %>
+                <div id="uploadButtonDiv">
+                  <input id="uploadImageButton" type="file" name="image">
+                </div>
+                  
+          </div>
+          <div id="imageButtonDiv">
+            <input id="saveButton" type="submit" value="Upload">
+          </div>
+        </form>
+        <!-- ADD OTHER INFO TO PROFILE SETTINGS TAB -->
+      </div>
+    </div>
   </div>
-</div>
-<div class="card widget-card border-light shadow-sm">
-  <div class="card-header text-bg-primary">Skills</div>
-  <div class="card-body">
-    <% console.log(skills) %>
-    <% skills.forEach(skill => { %>
-      <%- include('templates/eachSkill', { skill }) %>
-    <% }) %>
-  </div>
-</div>
-  
 
   <%- include("templates/footer_after_login") %>

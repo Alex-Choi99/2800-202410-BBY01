@@ -301,6 +301,12 @@ app.get('/signup', (req, res) => {
 
 app.post('/signupSubmit', async (req, res) => {
     const { name, id, email, password } = req.body;
+    const date = new Date();
+
+    let day = date.getDate();
+    let month = date.getMonth() + 1;
+    let year = date.getFullYear();
+    let currentDate = `${day}-${month}-${year}`;
 
     const schema = Joi.object({
         name: Joi.string().max(40).required(),
@@ -333,6 +339,7 @@ app.post('/signupSubmit', async (req, res) => {
             id,
             email,
             password: hashedPass,
+            joinDate: currentDate
         });
 
         await user.save();
