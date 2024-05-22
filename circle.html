@@ -8,22 +8,24 @@
   <link  rel = "stylesheet" href = "/circle.css"/>
   </head>
   <body>
-
   <div class = "circle-container" style = "display:block;">
-    <ul class="circle-item">
-      <li><img src="/images/Alex.jpg"></li>
-      <li><img src="/images/Alfredo.jpg"></li>
-      <li><img src="/images/Daniil.png"></li>
-      <li><img src="/images/Mark.jfif"></li>
-      <li><img src="/images/Wayne.png" id="wwButton"></li>
-      <li><img src="/images/Logo2_BBY01.png"></li>
-      <!-- <li><img src="7.png"></li> -->
-      <!-- <li><img src="8.png"></li> -->
-    </ul>
-  </div> 
+    
+  <ul class="circle-item">
+	  <li><img src="/images/Alex.jpg"></li>
+	  <li><img src="/images/Alfredo.jpg"></li>
+	  <li><img src="/images/Daniil.png"></li>
+	  <li><img src="/images/Mark.jfif"></li>
+	  <li><button id="wwButton"><img src="/images/Wayne.png"></button></li>
+	  <li><img src="/images/Logo2_BBY01.png"></li>
+	  <!-- <li><img src="7.png"></li> -->
+	  <!-- <li><img src="8.png"></li> -->
+  </ul>
+    </div> 
+    <script>
+      var wwSound = new Audio()
 
-<script>
-  $(function() {
+
+$(function() {
 
     var deg = 0;
     var rotate = 1;
@@ -58,15 +60,8 @@
         else return deg0
     }
 });
-
-  var wwSound = new Audio("https://wow.zamimg.com/sound-ids/live/enus/64/558144/PeonPissed2.ogg");
-  var wwButton = document.getElementById('wwButton');
-  wwButton.addEventListener('click', function() {
-    wwSound.play();
-  });
-
-</script>
-
+    
+    </script>
     <div class = "container" style="display:none">
     <div class = "item">
      <!-- <img src = "4.png" class = "deg3" > -->
@@ -75,6 +70,5 @@
      <img src = "4.png" class = "deg5" -->
     </div>
     </div>
-
   </body>
 </html>
