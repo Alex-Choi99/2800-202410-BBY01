@@ -14,7 +14,7 @@
       <li><img src="/images/Alex.jpg"></li>
       <li><img src="/images/Alfredo.jpg"></li>
       <li><img src="/images/Daniil.png" id="dyButton"></li>
-      <li><img src="/images/Mark.jfif"></li>
+      <li><img src="/images/Mark.jfif" id="mpButton"></li>
       <li><img src="/images/Wayne.png" id="wwButton"></li>
       <li><img src="/images/Logo2_BBY01.png"></li>
       <!-- <li><img src="7.png"></li> -->
@@ -59,7 +59,7 @@
     }
 });
 
-var dySound = new Audio("whistle_haaa.mp3");
+var dySound = new Audio("/audio/whistle_haaa.mp3");
   var dyButton = document.getElementById('dyButton');
   dyButton.addEventListener('click', function() {
     dySound.play();
@@ -67,12 +67,17 @@ var dySound = new Audio("whistle_haaa.mp3");
 
 
 // var wwSound = new Audio("https://wow.zamimg.com/sound-ids/live/enus/64/558144/PeonPissed2.ogg");
-  var wwSound = new Audio("PeonPissed2.ogg");
+  var wwSound = new Audio("/audio/PeonPissed2.ogg");
   var wwButton = document.getElementById('wwButton');
   wwButton.addEventListener('click', function() {
     wwSound.play();
   });
 
+  var mpSound = new Audio("/audio/final_60a626b637d6cf006f9cebb9_881985_p9h3WM4.mp3");
+  var mpButton = document.getElementById('mpButton');
+  mpButton.addEventListener('click', function() {
+    mpSound.play();
+  });
 
 </script>
 

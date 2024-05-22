@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (clickSequence.length === correctSequence.length) {
                 if (clickSequence.every((value, index) => value === correctSequence[index])) {
                     console.log('Correct sequence entered. Redirecting...');
-                    window.location.href = '/newpage'; // Redirect to the new page
+                    window.location.href = '/circle'; // Redirect to the new page
                 } else {
                     console.log('Incorrect sequence. Resetting...');
                     alert('Incorrect sequence. Please try again.');
