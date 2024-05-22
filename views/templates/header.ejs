@@ -16,6 +16,18 @@
     }
     .navbar-custom {
       background-color: rgb(0, 0, 141);
+      position: relative;
+      z-index: 1;
+    }
+    .navbar-custom::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -20px; /* Adjust to control the fade height */
+      width: 100%;
+      height: 20px; /* Adjust to control the fade height */
+      background: linear-gradient(to bottom, rgba(0, 0, 141, 1), rgba(0, 0, 141, 0));
+      z-index: -1;
     }
     .navbar-brand-hidden {
       display: none;
@@ -29,6 +41,25 @@
       background-color: rgb(5, 5, 80);
       color: white;
     }
+    .navbar-toggler-icon {
+      color: white; /* Ensure the icon is white */
+    }
+    .navbar-light .navbar-toggler-icon {
+      background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba%28%255, %255, %255, 1%29' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+    }
+    .nav-link.btn-primary {
+      background-color: white;
+      color: rgb(5, 5, 80);
+      border: 1px solid white;
+    }
+    .nav-link.btn-primary:hover {
+      background-color: rgb(5, 5, 80);
+      color: white;
+    }
+    body {
+      background-color: #f0f0f0; /* Different background color for the body */
+      margin: 0;
+    }
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/cloudinary-jquery@2.11.3/cloudinary-jquery.min.js"></script>
@@ -37,7 +68,7 @@
   <script type="text/javascript"> 
     $.cloudinary.config({ cloud_name: '<%= process.env.CLOUDINARY_CLOUD_NAME %>', secure: true});
   </script>
-  <nav class="navbar navbar-expand-lg navbar-light navbar-custom">
+  <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
     <div class="container">
       <!-- Website Logo -->
       <a class="navbar-brand <% if (!locals.user) { %>navbar-brand-hidden<% } %>" href="/">
