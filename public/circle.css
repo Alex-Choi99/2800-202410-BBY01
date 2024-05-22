@@ -28,7 +28,7 @@
 }
 
 .circle-item img:hover {
-  box-shadow: 0 4px 8px 0 tomato;
+  box-shadow: 0 10px 8px 0 rgb(0, 0, 118);
 }
 
 .circle-item > li:last-child > img {
