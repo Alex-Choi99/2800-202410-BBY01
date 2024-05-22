@@ -2,9 +2,9 @@
     <% user.image %>
     <%= user.name %>
     <div class="ms-auto d-flex">
-        <form action="/profile" method="get">
-            <input type="hidden" name="email" value="<%= user.email %>">
-            <button class="btn btn-success">Match</button>
+        <form action="/requestSent" method="post">
+            <input type="hidden" name="<%= user.email %>" value="<%= user.email %>">
+            <button class="btn btn-success requestBTN">Match</button>
         </form>
     </div>
 </li>

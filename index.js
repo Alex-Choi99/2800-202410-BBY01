@@ -460,12 +460,13 @@ app.post('/setSkill', async (req, res) => {
     }
 });
 
-app.get('/requestConfirm', (req, res) => {
+app.get('/requestSent', (req, res) => {
     res.render('requestConfirm');
 });
 
-app.post('/requestConfirm', {
-    
+app.post('/requestSent', async (req, res) => {
+    const request = req.body.
+
 });
 
 app.post('/logout', (req, res) => {
