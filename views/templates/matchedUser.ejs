@@ -9,5 +9,8 @@
             <input type="hidden" name="rate<%  %>" value="<%= user.email %>">
             <button class="btn btn-success requestBTN">Rate</button>
         </form>
+        <form action="/chat/<%= chatId %>" method="get">
+            <button type="submit">Chat</button>
+          </form>
     </div>
 </li>

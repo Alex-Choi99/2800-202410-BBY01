@@ -35,7 +35,6 @@ const userSchema = new Schema({
     },
     connected: {
         type: Array,
-        default: [{name: 'name', email: 'email', date: 'date', chatID: 'chatID'}],
         required: false,
     }
 });
