@@ -1,0 +1,22 @@
+<%- include('templates/header'), { pageName: 'newPW' } %>
+  <div class="d-flex justify-content-center flex-nowrap">
+    <p>Rate <%= user.name %>
+    </p>
+  </div>
+  <div class="d-flex justify-content-center flex-nowrap">
+    <form action="/rate" method="post">
+        <label class="rating-label">
+          <input
+            class="rating"
+            max="5"
+            oninput="this.style.setProperty('--value', `${this.valueAsNumber}`)"
+            step="0.5"
+            style="--value:2.5"
+            type="range"
+            value="2.5">
+        </label>
+    </form>
+  </div>
+  <script>
+  </script>
+  <%- include('templates/footer_before_login') %>

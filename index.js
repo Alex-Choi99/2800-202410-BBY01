@@ -118,10 +118,10 @@ io.on('connection', (socket) => {
     });
 
     socket.on('sendMessage', async (data) => {
-        console.log(data);
+        console.log(`Send Message data: ` + data);
 
         const { chatId, senderName, message } = data;
-        console.log(senderName);
+        console.log(`Sender Name: ` + senderName);
 
         try {
             await Chat.updateOne({ _id: chatId }, {
@@ -135,7 +135,7 @@ io.on('connection', (socket) => {
     
 
     socket.on('reconnect', async (email) => {
-        console.log(email);
+        console.log(`line 138: ` + email);
         try {
             const chat = await Chat.findOne({ participants: email });
             if (chat) {
@@ -179,7 +179,7 @@ app.get('/', async (req, res) => {
 
         // Find users based on filters
         const result = await userModel.find(filters);
-        console.log(result);
+        console.log(`line 182, found user based on filters: ` + result);
         const user = await userModel.findOne({ email: req.session.email });
 
         if (!isValidSession(req)) {
@@ -213,7 +213,7 @@ app.post('/loginSubmit', async (req, res) => {
     })
     const validationResult = schema.validate({ loginID, password });
     if (validationResult.error != null) {
-        console.log(validationResult.error);
+        console.log(`Validation error: ` + validationResult.error);
         res.render("login", { forgor: 'know', errorMessage: "Input must be less than 30 characters." });
         return;
     }
@@ -458,6 +458,7 @@ app.post('/setTags', async (req, res) => {
 });
 
 app.use('/profile', sessionValidation);
+
 app.get('/profile', async (req, res) => {
     req.session.cookie.maxAge = expireTime;
     var email = req.session.email;
@@ -658,6 +659,13 @@ app.get('/chat/:id', async (req, res) => {
 
 app.post('/unmatch', async (req, res) => {
     const matchedUser = req.body
+});
+
+app.get('/rate/:id', async (req, res) => {
+    const id = req.params.id;
+    const email = req.session.email;
+    const user = await userModel.findOne({ email: email });
+    res.render('rate', { id, user });
 });
 
 app.post('/logout', (req, res) => {

@@ -5,12 +5,11 @@
             <input type="hidden" name="recipientEmail" value="<%= user.email %>">
             <button class="btn btn-success requestBTN">Unmatch</button>
         </form>
-        <form action="/requestSent" method="post">
-            <input type="hidden" name="rate<%  %>" value="<%= user.email %>">
-            <button class="btn btn-success requestBTN">Rate</button>
+        <form action="/rate/<%= user.email %>" method="get">
+            <button type="submit" class="btn btn-success requestBTN">Rate</button>
         </form>
         <form action="/chat/<%= chatId %>" method="get">
-            <button type="submit">Chat</button>
-          </form>
+            <button type="submit" class="btn btn-success requestBTN">Chat</button>
+        </form>
     </div>
 </li>
