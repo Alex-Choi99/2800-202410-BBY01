@@ -1,8 +1,10 @@
+
 const express = require('express');
 const session = require('express-session');
 const mongoose = require('mongoose');
 const connectMongo = require('connect-mongo');
 const app = express();
+const http = require('http')
 require('dotenv').config();
 const Joi = require("joi");
 const bcrypt = require('bcrypt');
@@ -13,8 +15,15 @@ const multer = require('multer');
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 const bodyParser = require('body-parser');
+const Notification = require('./notifications');
+const Chat = require('./chat');
+const socketIO = require('socket.io');
+const path = require('path');
+const cors = require('cors');
+const httpServer = http.createServer(app);
+const io = socketIO(httpServer);
 
-
+app.use(cors())
 const node_session_secret = process.env.NODE_SESSION_SECRET;
 const mongodb_session_secret = process.env.MONGODB_SESSION_SECRET;
 const mongodb_host = process.env.MONGODB_HOST;
@@ -35,10 +44,11 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_CLOUD_SECRET
 });
 
+
 const expireTime = 1 * 60 * 60 * 1000;
 
 const MongoURI = `mongodb+srv://${mongodb_user}:${mongodb_password}@${mongodb_host}/${mongodb_dt_user}`;
-const MongoDBSessionURI = `mongodb+srv://${mongodb_user}:${mongodb_password}@${mongodb_host}/${mongodb_dt_sessions}`;
+const MongoDBSessionURI = `mongodb+srv://${mongodb_user}:${mongodb_password}@${mongodb_host}/?retryWrites=true&w=majority&appName=Cluster0/${mongodb_dt_sessions}`;
 const MongoDBSkillsURI = `mongodb+srv://${mongodb_user}:${mongodb_password}@${mongodb_host}/${mongodb_dt_skills}`;
 
 const userModel = require("./user.js");
@@ -56,7 +66,7 @@ const mongoStore = connectMongo.create({
     }
 });
 
-app.use(express.static(__dirname + "/public"));
+app.use(express.static(path.join(__dirname, 'public')));;
 
 app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -100,25 +110,87 @@ function generateRandomPassword(length) {
     return password;
 };
 
-// app.get('/login', (req, res) => {
-//     console.log(req.session);
-//     res.render('login', { forgor: 'know' , user: isValidSession(req) });
-// });
+io.on('connection', (socket) => {
+    console.log('a user connected');
+
+    socket.on('joinRoom', (chatId) => {
+        socket.join(chatId);
+    });
+
+    socket.on('sendMessage', async (data) => {
+        console.log(data);
+
+        const { chatId, senderName, message } = data;
+        console.log(senderName);
+
+        try {
+            await Chat.updateOne({ _id: chatId }, {
+                $push: { messages: { sender: senderName, message, timestamp: new Date() } }
+            });
+            console.log("REACHED HERE");
+        } catch (error) {
+            console.error('Error saving message:', error);
+        }
+        io.to(chatId).emit('receiveMessage', { senderName, message, timestamp: new Date() });
+    
+
+    socket.on('reconnect', async (email) => {
+        console.log(email);
+        try {
+            const chat = await Chat.findOne({ participants: email });
+            if (chat) {
+                const chatId = chat._id.toString(); // Ensure chatId is a string
+                socket.emit('chatId', chatId);
+            } else {
+                console.log('Chat not found');
+            }
+        } catch (error) {
+            console.error('Error retrieving chat:', error);
+        }
+    });
+
+    socket.on('disconnect', () => {
+        console.log('user disconnected');
+    });
+})});
+
 app.use('/', (req, res, next) => {
     app.locals.user = isValidSession(req);
     next();
 });
+
 app.get('/', async (req, res) => {
+    try {
+        // Get the user's email from the session
+        const userEmail = req.session.email;
 
-    const filters = {};
+        // Find the chat where the user is a participant
+        const chat = await Chat.findOne({ participants: userEmail })
 
-    if (req.query.skills) {
-        filters.skills = { $in: req.query.skills.split(',') };
-    }
+        // Extract the chat ID from the chat data
+        const chatId = chat ? chat._id : null;
 
-    const result = await userModel.find(filters);
-    console.log(result);
-    res.render('index', { users: result });
+        // Apply any additional filters if needed
+        const filters = {};
+
+        if (req.query.skills) {
+            filters.skills = { $in: req.query.skills.split(',') };
+        }
+
+        // Find users based on filters
+        const result = await userModel.find(filters);
+        console.log(result);
+        const user = await userModel.findOne({ email: req.session.email });
+
+        if (!isValidSession(req)) {
+            res.render('index', { users: result });
+        } else {
+            res.render('index', { users: result, connectedArray: user.connected, chatId });
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Server error');
+    }    
 });
 
 app.get('/aboutus', (req, res) => {
@@ -167,10 +239,6 @@ app.post('/loginSubmit', async (req, res) => {
         req.session.userId = result.userId;
         req.session.image_id = result.image_id;
         req.session.cookie.maxAge = expireTime;
-        // for(let i = 0; i < result.skills.length; i++){
-        //     req.session.skills[i] = result.skills[i];
-        //     console.log("Result: ", result.skills[i]);
-        // }
         req.session.image = result.image;
         console.log("Result:", result.skills);
         // console.log(req.session);
@@ -459,6 +527,139 @@ app.post('/setSkill', async (req, res) => {
     }
 });
 
+app.get('/requestSent', (req, res) => {
+    res.render('requestConfirm');
+});
+
+app.post('/requestSent', async (req, res) => {
+    const recipientEmail = req.body.recipientEmail; // Assuming recipientEmail is sent in the request body
+    console.log(recipientEmail);
+    const senderEmail = req.session.email; // Assuming the sender is the logged-in user
+
+    const notification = new Notification({
+        recipientEmail,
+        senderEmail,
+        message: `${senderEmail} has sent you a match request.`
+    });
+
+    await notification.save();
+
+    // Send an email notification
+    const request = mailjet.post('send', { version: 'v3.1' }).request({
+        Messages: [
+            {
+                From: {
+                    Email: 'bby01.290124@gmail.com',
+                    Name: 'LearnXchange',
+                },
+                To: [
+                    {
+                        Email: recipientEmail,
+                        Name: recipientEmail, // You can customize the recipient's name if available
+                    },
+                ],
+                Subject: 'New Match Request',
+                TextPart: `You have received a new match request from ${senderEmail}.`,
+            },
+        ],
+    });
+
+    request.then((result) => {
+        console.log('Email sent successfully:', result.body);
+    }).catch((err) => {
+        console.error('Error sending email:', err);
+    });
+
+    res.redirect('/');
+});
+
+app.use('/notifications', sessionValidation); // Ensure user is logged in
+app.get('/notifications', async (req, res) => {
+    const email = req.session.email;
+    const notifications = await Notification.find({ recipientEmail: email, read: false });
+
+    res.render('notifications', { notifications });
+});
+
+app.post('/acceptRequest', async (req, res) => {
+    const { notificationId } = req.body;
+    const recipientEmail = req.session.email; // Assuming the recipient's email is stored in the session
+    console.log(`email: ` + recipientEmail);
+    try {
+        // Find the notification
+        const notification = await Notification.findById(notificationId);
+        const senderEmail = notification.senderEmail;
+        const recipient = await userModel.findOne({ email: recipientEmail });
+        const sender = await userModel.findOne({ email: senderEmail });
+        console.log(`email: ` + senderEmail);
+        // Check if chat already exists between these users
+        let chat = await Chat.findOne({
+            participants: { $all: [notification.senderEmail, notification.recipientEmail] }
+        });
+        console.log(chat);
+
+        if (!notification || notification.recipientEmail !== recipientEmail) {
+            return res.status(404).send('Notification not found or unauthorized');
+        }
+        // If chat doesn't exist, create a new one
+        if (!chat) {
+
+            chat = new Chat({
+                participants: [notification.senderEmail, notification.recipientEmail],
+                messages: []
+            });
+            await chat.save();
+            await userModel.updateOne({ email: recipientEmail }, {
+                $set:
+                    { connected: [{ name: sender.name, email: senderEmail, date: new Date(), chatID: chat.id }] }
+            });
+            console.log(userModel.findOne({ connected: recipientEmail }));
+    
+            await userModel.updateOne({ email: senderEmail }, { 
+                $set: { connected: [{ name: recipient.name, email: recipientEmail, date: new Date(), chatID: chat.id }] } 
+            });
+            console.log(userModel.findOne({ email: senderEmail }));
+        }
+
+        await Notification.deleteOne(notification);
+
+        res.redirect(`/chat/${chat._id}`);
+        console.log(chat._id);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Server error');
+    }
+});
+
+app.post('/denyRequest', async (req, res) => {
+    const notificationId = req.body.notificationId;
+    await Notification.deleteOne({ _id: notificationId });
+    res.redirect('/notifications');
+});
+
+app.get('/chat/:id', async (req, res) => {
+    const ID = req.params.id;
+    const email = req.session.email;
+    console.log(email);
+    const user = await userModel.findOne({ email: email});
+    try {
+      const chat = await Chat.findById(ID);
+      if (!chat) {
+        return res.status(404).send('Chat not found');
+      }
+      console.log('Received chatId:', ID);
+      console.log(user);
+      res.render('chat', { chat, chatId: ID, user }); // Assuming user info is stored in session
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Server error');
+    }
+});
+
+app.post('/unmatch', async (req, res) => {
+    const matchedUser = req.body
+});
+
 app.post('/logout', (req, res) => {
     req.session.destroy((err) => {
         if (err) {
@@ -472,6 +673,10 @@ app.get('/404', (req, res) => {
     res.render('404');
 });
 
-app.listen(port, () => {
+/* app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
+}); */
+
+httpServer.listen(port, () => {
+    console.log(`Listening on port ${port}`)
 });

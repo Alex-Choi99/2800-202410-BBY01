@@ -36,7 +36,11 @@ const userSchema = new Schema({
     rate: {
         type: Array,
         required: false,
-    } 
+    },
+    connected: {
+        type: Array,
+        required: false,
+    }
 });
 
 module.exports = mongoose.mongoose.model('User', userSchema);
