@@ -133,7 +133,7 @@ io.on('connection', (socket) => {
         } catch (error) {
             console.error('Error saving message:', error);
         }
-    
+    });
 
     socket.on('reconnect', async (email) => {
         console.log(email);
@@ -153,7 +153,7 @@ io.on('connection', (socket) => {
     socket.on('disconnect', () => {
         console.log('user disconnected');
     });
-})});
+});
 
 app.use('/', (req, res, next) => {
     app.locals.user = isValidSession(req);

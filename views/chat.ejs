@@ -31,8 +31,7 @@
                 const message = document.getElementById('messageInput').value;
 
                 console.log("message: " + message);
-                var tree = socket.emit('sendMessage', { chatId, message, senderName });
-                console.log(tree);
+                socket.emit('sendMessage', { chatId, message, senderName });
 
                 // Clear the input field after sending the message
                 document.getElementById('messageInput').value = '';
