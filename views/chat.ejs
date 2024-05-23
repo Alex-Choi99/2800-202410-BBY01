@@ -15,17 +15,34 @@
             console.log(socket);
 
             const chatId = "<%= chatId %>";
-            let sender = "<%= user.name %>";
 
             socket.on('connect', () => {
-                sender = socket.id; // Use the socket.id as the sender's email
-                console.log("sender: " + sender);
+                console.log("CONNECTED");
                 socket.emit('joinRoom', chatId);
             });
 
 
             let senderName = "<%= user.name %>";
-            
+
+            socket.on('receiveMessage', (data) => {
+                console.log("MADE IT INSIDE RECEIVE MESSAGE");
+                const { sender, message, timestamp } = data;
+                
+                console.log(data);
+                
+                const messageDiv = document.createElement('div');
+                messageDiv.classList.add('message', 'mb-2');
+                messageDiv.innerHTML = `
+                    <div class="d-flex justify-content-between">
+                        <strong>${senderName}:</strong>
+                        <small class="text-muted">${new Date(timestamp).toLocaleTimeString()}</small>
+                    </div>
+                    <div>${message}</div>
+                `;
+                
+                document.getElementById('chat').appendChild(messageDiv);
+                console.log(document.getElementById('chat'));
+            });
 
             document.getElementById('messageForm').addEventListener('submit', async function (event) {
                 event.preventDefault();
@@ -36,21 +53,6 @@
 
                 // Clear the input field after sending the message
                 document.getElementById('messageInput').value = '';
-            });
-
-            socket.on('receiveMessage', (data) => {
-                const { sender, message, timestamp } = data;
-                console.log(data);
-                const messageDiv = document.createElement('div');
-                messageDiv.classList.add('message', 'mb-2');
-                messageDiv.innerHTML = `
-                    <div class="d-flex justify-content-between">
-                        <strong>${senderName}:</strong>
-                        <small class="text-muted">${new Date(timestamp).toLocaleTimeString()}</small>
-                    </div>
-                    <div>${message}</div>
-                `;
-                document.getElementById('chat').appendChild(messageDiv);
             });
         });
     </script>

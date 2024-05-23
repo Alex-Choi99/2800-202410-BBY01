@@ -114,21 +114,24 @@ io.on('connection', (socket) => {
     console.log('a user connected');
 
     socket.on('joinRoom', (chatId) => {
+        console.log(`Client ${socket.id} joining room: ${chatId}`);
         socket.join(chatId);
     });
 
     socket.on('sendMessage', async (data) => {
         console.log(data);
+        const timestamp = new Date();
 
-        const { chatId, senderName, message } = data;
+        const { chatId, message, senderName } = data;
         console.log(senderName);
+        console.log(chatId);
 
         await Chat.updateOne({ _id: chatId }, {
-            $push: { messages: { sender: senderName, message, timestamp: new Date() } }
+            $push: { messages: { sender: senderName, message, timestamp } }
         });
-        
+
         console.log("REACHED HERE");
-        await io.to(chatId).emit('receiveMessage', { sender: senderName, message, timestamp: new Date() });
+        await io.to(chatId).emit('receiveMessage', { sender: senderName, message: message, timestamp: timestamp });
         console.log("MADE PAST RECIEVE MESSAGE");
     });
 
@@ -188,7 +191,7 @@ app.get('/', async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).send('Server error');
-    }    
+    }
 });
 
 app.get('/aboutus', (req, res) => {
@@ -612,9 +615,9 @@ app.post('/acceptRequest', async (req, res) => {
                     { connected: [{ name: sender.name, email: senderEmail, date: new Date(), chatID: chat.id }] }
             });
             console.log(userModel.findOne({ connected: recipientEmail }));
-    
-            await userModel.updateOne({ email: senderEmail }, { 
-                $set: { connected: [{ name: recipient.name, email: recipientEmail, date: new Date(), chatID: chat.id }] } 
+
+            await userModel.updateOne({ email: senderEmail }, {
+                $set: { connected: [{ name: recipient.name, email: recipientEmail, date: new Date(), chatID: chat.id }] }
             });
             console.log(userModel.findOne({ email: senderEmail }));
         }
@@ -639,15 +642,15 @@ app.get('/chat/:id', async (req, res) => {
     const ID = req.params.id;
     const email = req.session.email;
     console.log(email);
-    const user = await userModel.findOne({ email: email});
+    const user = await userModel.findOne({ email: email });
     try {
-      const chat = await Chat.findById(ID);
-      if (!chat) {
-        return res.status(404).send('Chat not found');
-      }
-      console.log('Received chatId:', ID);
-      console.log(user);
-      res.render('chat', { chat, chatId: ID, user }); // Assuming user info is stored in session
+        const chat = await Chat.findById(ID);
+        if (!chat) {
+            return res.status(404).send('Chat not found');
+        }
+        console.log('Received chatId:', ID);
+        console.log(user);
+        res.render('chat', { chat, chatId: ID, user }); // Assuming user info is stored in session
     } catch (error) {
         console.error(error);
         res.status(500).send('Server error');
@@ -671,9 +674,9 @@ app.get('/404', (req, res) => {
     res.render('404');
 });
 
-/* app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
-}); */
+// app.listen(port, () => {
+//     console.log(`Server is running on port ${port}`);
+// });
 
 httpServer.listen(port, () => {
     console.log(`Listening on port ${port}`)
