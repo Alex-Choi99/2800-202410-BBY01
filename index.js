@@ -128,10 +128,11 @@ io.on('connection', (socket) => {
                 $push: { messages: { sender: senderName, message, timestamp: new Date() } }
             });
             console.log("REACHED HERE");
+            io.to(chatId).emit('receiveMessage', { senderName, message, timestamp: new Date() });
+
         } catch (error) {
             console.error('Error saving message:', error);
         }
-        io.to(chatId).emit('receiveMessage', { senderName, message, timestamp: new Date() });
     
 
     socket.on('reconnect', async (email) => {
