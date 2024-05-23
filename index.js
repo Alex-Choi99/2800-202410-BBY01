@@ -128,7 +128,8 @@ io.on('connection', (socket) => {
                 $push: { messages: { sender: senderName, message, timestamp: new Date() } }
             });
             console.log("REACHED HERE");
-            io.to(chatId).emit('receiveMessage', { senderName, message, timestamp: new Date() });
+            await io.to(chatId).emit('receiveMessage', { senderName, message, timestamp: new Date() });
+            console.log("MADE PAST RECIEVE MESSAGE");
 
         } catch (error) {
             console.error('Error saving message:', error);
