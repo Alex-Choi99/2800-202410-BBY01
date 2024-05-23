@@ -42,6 +42,7 @@
 
             socket.on('receiveMessage', (data) => {
                 const { sender, message, timestamp } = data;
+                console.log(data);
                 const messageDiv = document.createElement('div');
                 messageDiv.classList.add('message', 'mb-2');
                 messageDiv.innerHTML = `
