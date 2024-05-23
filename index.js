@@ -109,17 +109,12 @@ function generateRandomPassword(length) {
     return password;
 };
 
-// app.get('/login', (req, res) => {
-//     console.log(req.session);
-//     res.render('login', { forgor: 'know' , user: isValidSession(req) });
-// });
 app.use('/', (req, res, next) => {
     app.locals.user = isValidSession(req);
     next();
 });
 
 app.get('/', async (req, res) => {
-
     const filters = {};
 
     if (req.query.skills) {
@@ -127,8 +122,13 @@ app.get('/', async (req, res) => {
     }
 
     const result = await userModel.find(filters);
-    console.log(result);
-    res.render('index', { users: result });
+    const user = await userModel.findOne({ email: req.session.email });
+
+    if (!isValidSession(req)) {
+        res.render('index', { users: result });
+    } else {
+        res.render('index', { users: result, connectedArray: user.connected });
+    }
 });
 
 app.get('/aboutus', (req, res) => {
@@ -177,10 +177,6 @@ app.post('/loginSubmit', async (req, res) => {
         req.session.userId = result.userId;
         req.session.image_id = result.image_id;
         req.session.cookie.maxAge = expireTime;
-        // for(let i = 0; i < result.skills.length; i++){
-        //     req.session.skills[i] = result.skills[i];
-        //     console.log("Result: ", result.skills[i]);
-        // }
         req.session.image = result.image;
         console.log("Result:", result.skills);
         // console.log(req.session);
@@ -474,7 +470,7 @@ app.get('/requestSent', (req, res) => {
 });
 
 app.post('/requestSent', async (req, res) => {
-    const recipientEmail  = req.body.recipientEmail; // Assuming recipientEmail is sent in the request body
+    const recipientEmail = req.body.recipientEmail; // Assuming recipientEmail is sent in the request body
     console.log(recipientEmail);
     const senderEmail = req.session.email; // Assuming the sender is the logged-in user
 
@@ -516,7 +512,6 @@ app.post('/requestSent', async (req, res) => {
 });
 
 app.use('/notifications', sessionValidation); // Ensure user is logged in
-
 app.get('/notifications', async (req, res) => {
     const email = req.session.email;
     const notifications = await Notification.find({ recipientEmail: email, read: false });
@@ -527,22 +522,27 @@ app.get('/notifications', async (req, res) => {
 app.post('/acceptRequest', async (req, res) => {
     const { notificationId } = req.body;
     const recipientEmail = req.session.email; // Assuming the recipient's email is stored in the session
-
+    console.log(`email: ` + recipientEmail);
     try {
         // Find the notification
         const notification = await Notification.findById(notificationId);
-        if (!notification || notification.recipientEmail !== recipientEmail) {
-            return res.status(404).send('Notification not found or unauthorized');
-        }
-
-        // Update notification status
-        notification.status = 'accepted';
-        await notification.save();
-
+        const senderEmail = notification.senderEmail;
+        const recipient = await userModel.findOne({ email: recipientEmail });
+        const sender = await userModel.findOne({ email: senderEmail });
+        console.log(`email: ` + senderEmail);
         // Check if chat already exists between these users
         let chat = await Chat.findOne({
             participants: { $all: [notification.senderEmail, notification.recipientEmail] }
         });
+
+        if (!notification || notification.recipientEmail !== recipientEmail) {
+            return res.status(404).send('Notification not found or unauthorized');
+        }
+        //const success = await userModel.updateOne({ email: email }, { $set: { skills: newSkills } });
+        
+
+
+
 
         // If chat doesn't exist, create a new one
         if (!chat) {
@@ -551,7 +551,19 @@ app.post('/acceptRequest', async (req, res) => {
                 messages: []
             });
             await chat.save();
+            await userModel.updateOne({ email: recipientEmail }, {
+                $set:
+                    { connected: [{ name: sender.name, email: senderEmail, date: new Date(), chatID: chat.id }] }
+            });
+            console.log(userModel.findOne({ connected: recipientEmail }));
+    
+            await userModel.updateOne({ email: senderEmail }, { 
+                $set: { connected: [{ name: recipient.name, email: recipientEmail, date: new Date(), chatID: chat.id }] } 
+            });
+            console.log(userModel.findOne({ email: senderEmail }));
         }
+
+        await Notification.deleteOne(notification);
 
         res.redirect(`/chat/${chat._id}`);
     } catch (error) {
@@ -562,8 +574,7 @@ app.post('/acceptRequest', async (req, res) => {
 
 app.post('/denyRequest', async (req, res) => {
     const notificationId = req.body.notificationId;
-    await Notification.updateOne({ _id: notificationId }, { $set: { read: true } });
-
+    await Notification.deleteOne({ _id: notificationId });
     res.redirect('/notifications');
 });
 
@@ -572,14 +583,14 @@ io.on('connection', () => {
 
     socket.on('joinRoom', (chatId) => {
         socket.join(chatId);
-      });
-    
-      socket.on('sendMessage', (data) => {
+    });
+
+    socket.on('sendMessage', (data) => {
         const { chatId, sender, message } = data;
         // Save the message to the database or wherever you store chat messages
         // Emit the message to all clients in the chat room
         io.to(chatId).emit('receiveMessage', { sender, message, timestamp: new Date() });
-      });
+    });
 
     socket.on('disconnect', () => {
         console.log('user disconnected');
@@ -587,19 +598,23 @@ io.on('connection', () => {
 });
 app.get('/chat/:chatId', async (req, res) => {
     const { chatId } = req.params;
-  
+
     try {
-      const chat = await Chat.findById(chatId);
-      if (!chat) {
-        return res.status(404).send('Chat not found');
-      }
-  
-      res.render('chat', { chat }); // Assuming user info is stored in session
+        const chat = await Chat.findById(chatId);
+        if (!chat) {
+            return res.status(404).send('Chat not found');
+        }
+
+        res.render('chat', { chat }); // Assuming user info is stored in session
     } catch (error) {
-      console.error(error);
-      res.status(500).send('Server error');
+        console.error(error);
+        res.status(500).send('Server error');
     }
-  });
+});
+
+app.post('/unmatch', async (req, res) => {
+    const matchedUser = req.body
+});
 
 app.post('/logout', (req, res) => {
     req.session.destroy((err) => {

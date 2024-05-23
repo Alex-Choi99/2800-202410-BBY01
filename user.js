@@ -33,16 +33,11 @@ const userSchema = new Schema({
         type: String,
         required: false,
     },
-    request: {
-        type: Array,
-        default: [{email: 'email', date: 'date'}],
-        required: false,
-    },
     connected: {
         type: Array,
-        default: [{email: 'email', date: 'date'}],
+        default: [{name: 'name', email: 'email', date: 'date', chatID: 'chatID'}],
         required: false,
-    },
+    }
 });
 
 module.exports = mongoose.mongoose.model('User', userSchema);
