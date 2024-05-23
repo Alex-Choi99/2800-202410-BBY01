@@ -27,7 +27,9 @@
       </form>
 
     </div>
-    
+    <form action="/chat/<%= chatId %>" method="get">
+      <button type="submit">Chat</button>
+    </form>
     <ul class="list-group mt-3">
       <% users.forEach(user => { %>
         <%- include('templates/user', { user }) %>

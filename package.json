@@ -28,6 +28,7 @@
     "node-mailjet": "^6.0.5",
     "nodemon": "^3.1.0",
     "socket.io": "^4.7.5",
+    "socket.io-client": "^4.7.5",
     "uuid": "^9.0.1"
   }
 }

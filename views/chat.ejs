@@ -2,30 +2,39 @@
 <html>
 <head>
     <title>Chat</title>
-    <script src="../node_modules/socket.io/client-dist/socket.io.js"></script>
+    <script src="https://cdn.socket.io/3.1.3/socket.io.min.js" integrity="sha384-cPwlPLvBTa3sKAgddT6krw0cJat7egBga3DJepJyrLl4Q9/5WLra3rrnMcyTyOnh" crossorigin="anonymous"></script>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             console.log("cheese");
-            const socket = io();
+            const socket = io('http://localhost:3025');
+            console.log(socket);
 
-            const chatId = "<%= chat._id %>";
-            const sender = "<%= locals.user.email %>";
+            const chatId = "<%= chatId %>";
+            let sender = "";
+
+            socket.on('connect', () => {
+                sender = socket.id; // Use the socket.id as the sender's email
+                console.log("sender: " + sender);
+            });
+            
 
             socket.emit('joinRoom', chatId);
 
             document.getElementById('messageForm').addEventListener('submit', async function(event) {
                 event.preventDefault();
-                document.getElementById('messageInput').value = "2";
                 const message = document.getElementById('messageInput').value;
 
-                console.log(socket.emit('sendMessage', { chatId, sender, message }));
-                await socket.emit('sendMessage', { chatId, sender, message });
-                console.log(message);
+                console.log("message: " + message);
+                var tree = socket.emit('sendMessage', { chatId, message });
+                console.log(tree);
+
+                // Clear the input field after sending the message
+                document.getElementById('messageInput').value = '';
             });
-            document.getElementById('messageInput').value = '';
             
             socket.on('receiveMessage', (data) => {
                 const { sender, message, timestamp } = data;
+                console.log(data);
                 const messageDiv = document.createElement('div');
                 messageDiv.innerHTML = `<strong>${sender}:</strong> <span>${message}</span> <small>${new Date(timestamp).toLocaleTimeString()}</small>`;
                 document.getElementById('chat').appendChild(messageDiv);
