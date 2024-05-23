@@ -207,7 +207,20 @@
         </div>
       </div>
     </div>
-
+    <div class="container">
+      <% var sum = 0; %>
+      <% var countRates = 0; %>
+      <% for (let i = 0; i < user.rate.length; i++) { %>
+        <% let rateString = user.rate[i]; %>
+        <% let match = rateString.match(/(\d+\.\d+)/); %>
+        <% if (match) { %>
+          <% sum += parseFloat(match[1]); %>
+          <% countRates++; %>
+        <% } %>
+      <% } %>
+      <% let avg = (countRates > 0) ? (sum / countRates) : 0; %>
+      Average rate: <%= avg.toFixed(2) %>
+    </div>    
   </section>
 
 

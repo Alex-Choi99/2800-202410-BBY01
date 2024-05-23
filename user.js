@@ -32,6 +32,10 @@ const userSchema = new Schema({
     image_id: {
         type: String,
         required: false,
+    } ,
+    rate: {
+        type: Array,
+        required: false,
     } 
 });
 
