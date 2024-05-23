@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat</title>
+    <script src="../node_modules/socket.io/client-dist/socket.io.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            console.log("cheese");
+            const socket = io();
+
+            const chatId = "<%= chat._id %>";
+            const sender = "<%= locals.user.email %>";
+
+            socket.emit('joinRoom', chatId);
+
+            document.getElementById('messageForm').addEventListener('submit', async function(event) {
+                event.preventDefault();
+                document.getElementById('messageInput').value = "2";
+                const message = document.getElementById('messageInput').value;
+
+                console.log(socket.emit('sendMessage', { chatId, sender, message }));
+                await socket.emit('sendMessage', { chatId, sender, message });
+                console.log(message);
+            });
+            document.getElementById('messageInput').value = '';
+            
+            socket.on('receiveMessage', (data) => {
+                const { sender, message, timestamp } = data;
+                const messageDiv = document.createElement('div');
+                messageDiv.innerHTML = `<strong>${sender}:</strong> <span>${message}</span> <small>${new Date(timestamp).toLocaleTimeString()}</small>`;
+                document.getElementById('chat').appendChild(messageDiv);
+            });
+        });
+    </script>
+</head>
+<body>
+    <div id="chat">
+        <% chat.messages.forEach(msg => { %>
+            <div>
+                <strong><%= msg.sender %>:</strong>
+                <span><%= msg.message %></span>
+                <small><%= new Date(msg.timestamp).toLocaleTimeString() %></small>
+            </div>
+        <% }); %>
+    </div>
+    <form id="messageForm">
+        <input type="text" id="messageInput" required>
+        <button type="submit">Send</button>
+    </form>
+</body>
+</html>

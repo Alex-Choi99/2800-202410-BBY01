@@ -1,3 +1,4 @@
+const http = require('http');
 const express = require('express');
 const session = require('express-session');
 const mongoose = require('mongoose');
@@ -13,6 +14,10 @@ const multer = require('multer');
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 const bodyParser = require('body-parser');
+const Notification = require('./notifications');
+const server = http.createServer(app);
+const socketIo = require('socket.io')
+const Chat = require('./chat');
 
 
 const node_session_secret = process.env.NODE_SESSION_SECRET;
@@ -34,6 +39,10 @@ cloudinary.config({
     api_key: process.env.CLOUDINARY_CLOUD_KEY,
     api_secret: process.env.CLOUDINARY_CLOUD_SECRET
 });
+
+
+const io = socketIo(server);
+const socket = require('socket.io')(server);
 
 const expireTime = 1 * 60 * 60 * 1000;
 
@@ -465,9 +474,132 @@ app.get('/requestSent', (req, res) => {
 });
 
 app.post('/requestSent', async (req, res) => {
-    const request = req.body.
+    const recipientEmail  = req.body.recipientEmail; // Assuming recipientEmail is sent in the request body
+    console.log(recipientEmail);
+    const senderEmail = req.session.email; // Assuming the sender is the logged-in user
 
+    const notification = new Notification({
+        recipientEmail,
+        senderEmail,
+        message: `${senderEmail} has sent you a match request.`
+    });
+
+    await notification.save();
+
+    // Send an email notification
+    const request = mailjet.post('send', { version: 'v3.1' }).request({
+        Messages: [
+            {
+                From: {
+                    Email: 'bby01.290124@gmail.com',
+                    Name: 'LearnXchange',
+                },
+                To: [
+                    {
+                        Email: recipientEmail,
+                        Name: recipientEmail, // You can customize the recipient's name if available
+                    },
+                ],
+                Subject: 'New Match Request',
+                TextPart: `You have received a new match request from ${senderEmail}.`,
+            },
+        ],
+    });
+
+    request.then((result) => {
+        console.log('Email sent successfully:', result.body);
+    }).catch((err) => {
+        console.error('Error sending email:', err);
+    });
+
+    res.redirect('/');
 });
+
+app.use('/notifications', sessionValidation); // Ensure user is logged in
+
+app.get('/notifications', async (req, res) => {
+    const email = req.session.email;
+    const notifications = await Notification.find({ recipientEmail: email, read: false });
+
+    res.render('notifications', { notifications });
+});
+
+app.post('/acceptRequest', async (req, res) => {
+    const { notificationId } = req.body;
+    const recipientEmail = req.session.email; // Assuming the recipient's email is stored in the session
+
+    try {
+        // Find the notification
+        const notification = await Notification.findById(notificationId);
+        if (!notification || notification.recipientEmail !== recipientEmail) {
+            return res.status(404).send('Notification not found or unauthorized');
+        }
+
+        // Update notification status
+        notification.status = 'accepted';
+        await notification.save();
+
+        // Check if chat already exists between these users
+        let chat = await Chat.findOne({
+            participants: { $all: [notification.senderEmail, notification.recipientEmail] }
+        });
+
+        // If chat doesn't exist, create a new one
+        if (!chat) {
+            chat = new Chat({
+                participants: [notification.senderEmail, notification.recipientEmail],
+                messages: []
+            });
+            await chat.save();
+        }
+
+        res.redirect(`/chat/${chat._id}`);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Server error');
+    }
+});
+
+app.post('/denyRequest', async (req, res) => {
+    const notificationId = req.body.notificationId;
+    await Notification.updateOne({ _id: notificationId }, { $set: { read: true } });
+
+    res.redirect('/notifications');
+});
+
+io.on('connection', () => {
+    console.log('a user connected');
+
+    socket.on('joinRoom', (chatId) => {
+        socket.join(chatId);
+      });
+    
+      socket.on('sendMessage', (data) => {
+        const { chatId, sender, message } = data;
+        // Save the message to the database or wherever you store chat messages
+        // Emit the message to all clients in the chat room
+        io.to(chatId).emit('receiveMessage', { sender, message, timestamp: new Date() });
+      });
+
+    socket.on('disconnect', () => {
+        console.log('user disconnected');
+    });
+});
+app.get('/chat/:chatId', async (req, res) => {
+    const { chatId } = req.params;
+  
+    try {
+      const chat = await Chat.findById(chatId);
+      if (!chat) {
+        return res.status(404).send('Chat not found');
+      }
+  
+      res.render('chat', { chat }); // Assuming user info is stored in session
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('Server error');
+    }
+  });
 
 app.post('/logout', (req, res) => {
     req.session.destroy((err) => {
