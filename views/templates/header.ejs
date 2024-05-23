@@ -51,6 +51,8 @@
       background-color: white;
       color: rgb(5, 5, 80);
       border: 1px solid white;
+      width: 100%; /* Ensure full width */
+      text-align: center; /* Center align text */
     }
     .nav-link.btn-primary:hover {
       background-color: rgb(5, 5, 80);
@@ -59,6 +61,12 @@
     body {
       background-color: #f0f0f0; /* Different background color for the body */
       margin: 0;
+    }
+    .navbar-nav .nav-item form {
+      width: 100%; /* Ensure form takes full width */
+    }
+    .navbar-nav .nav-item form .nav-link {
+      width: 100%; /* Ensure button takes full width */
     }
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -96,7 +104,9 @@
             </li>
             <li class="nav-item">
               <!-- Logout button -->
-              <form action="/logout" method="post"><button class="nav-link btn btn-primary me-2">Logout</button></form>
+              <form action="/logout" method="post" class="w-100">
+                <button class="nav-link btn btn-primary w-100">Logout</button>
+              </form>
             </li>
           <% } %>
         </ul>
