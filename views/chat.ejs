@@ -22,19 +22,19 @@
             socket.on('connect', () => {
                 sender = socket.id; // Use the socket.id as the sender's email
                 console.log("sender: " + sender);
+                socket.emit('joinRoom', chatId);
             });
 
 
             let senderName = "<%= user.name %>";
-            socket.emit('joinRoom', chatId);
+            
 
             document.getElementById('messageForm').addEventListener('submit', async function (event) {
                 event.preventDefault();
                 const message = document.getElementById('messageInput').value;
 
                 console.log("message: " + message);
-                var tree = socket.emit('sendMessage', { chatId, message, senderName });
-                console.log(tree);
+                socket.emit('sendMessage', { chatId, message, senderName });
 
                 // Clear the input field after sending the message
                 document.getElementById('messageInput').value = '';

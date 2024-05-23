@@ -123,17 +123,14 @@ io.on('connection', (socket) => {
         const { chatId, senderName, message } = data;
         console.log(senderName);
 
-        try {
-            await Chat.updateOne({ _id: chatId }, {
-                $push: { messages: { sender: senderName, message, timestamp: new Date() } }
-            });
-            console.log("REACHED HERE");
-            io.to(chatId).emit('receiveMessage', { senderName, message, timestamp: new Date() });
-
-        } catch (error) {
-            console.error('Error saving message:', error);
-        }
-    
+        await Chat.updateOne({ _id: chatId }, {
+            $push: { messages: { sender: senderName, message, timestamp: new Date() } }
+        });
+        
+        console.log("REACHED HERE");
+        await io.to(chatId).emit('receiveMessage', { sender: senderName, message, timestamp: new Date() });
+        console.log("MADE PAST RECIEVE MESSAGE");
+    });
 
     socket.on('reconnect', async (email) => {
         console.log(email);
@@ -153,7 +150,7 @@ io.on('connection', (socket) => {
     socket.on('disconnect', () => {
         console.log('user disconnected');
     });
-})});
+});
 
 app.use('/', (req, res, next) => {
     app.locals.user = isValidSession(req);
