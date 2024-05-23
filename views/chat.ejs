@@ -1,7 +1,9 @@
-<!DOCTYPE html>
+<%- include("templates/header") %>
+
+<!-- <!DOCTYPE html>
 <html>
 
-<head>
+<head> -->
     <title>Chat</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
@@ -55,7 +57,8 @@
     </script>
     <style>
         .chat-container {
-            height: calc(100vh - 100px); /* Adjust as needed */
+            min-height: calc(50vh - 100px); /* Adjust as needed */
+            max-height: calc(72vh - 100px); /* Adjust as needed */
             overflow-y: auto;
         }
     </style>
@@ -65,7 +68,7 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">
+                    <div class="card-header text-bg-primary">
                         Chat Room
                     </div>
                     <div class="card-body">
@@ -91,5 +94,7 @@
             </div>
         </div>
     </div>
-</body>
-</html>
+<!-- </body> -->
+<!-- </html> -->
+
+<%- include("templates/footer_after_login") %>
