@@ -1,5 +1,14 @@
 /* For Club Page*/
 
+body {
+  background-image: url(/images/circle.jpg);
+  background-size: cover;
+  /* background-position: center; */
+  background-repeat: no-repeat;
+  height: 100%;
+  overflow-y: hidden;
+}
+
 .circle-container{
   width: 15em;
   height: 15em;
