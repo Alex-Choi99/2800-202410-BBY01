@@ -10,22 +10,23 @@
             console.log(socket);
 
             const chatId = "<%= chatId %>";
-            let sender = "";
+            let sender = "<%= user.name %>";
 
             socket.on('connect', () => {
                 sender = socket.id; // Use the socket.id as the sender's email
                 console.log("sender: " + sender);
             });
             
-
+            
+            let senderName = "<%= user.name %>";
             socket.emit('joinRoom', chatId);
 
             document.getElementById('messageForm').addEventListener('submit', async function(event) {
                 event.preventDefault();
                 const message = document.getElementById('messageInput').value;
-
+                
                 console.log("message: " + message);
-                var tree = socket.emit('sendMessage', { chatId, message });
+                var tree = socket.emit('sendMessage', { chatId, message, senderName });
                 console.log(tree);
 
                 // Clear the input field after sending the message
@@ -36,7 +37,8 @@
                 const { sender, message, timestamp } = data;
                 console.log(data);
                 const messageDiv = document.createElement('div');
-                messageDiv.innerHTML = `<strong>${sender}:</strong> <span>${message}</span> <small>${new Date(timestamp).toLocaleTimeString()}</small>`;
+                
+                messageDiv.innerHTML = `<strong>${senderName}:</strong> <span>${message}</span> <small>${new Date(timestamp).toLocaleTimeString()}</small>`;
                 document.getElementById('chat').appendChild(messageDiv);
             });
         });

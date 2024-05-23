@@ -119,15 +119,19 @@ io.on('connection', (socket) => {
 
     socket.on('sendMessage', async (data) => {
         console.log(data);
-        const { chatId, sender, message } = data;
+
+        const { chatId, senderName, message } = data;
+        console.log(senderName);
+
         try {
             await Chat.updateOne({ _id: chatId }, {
-                $push: { messages: { sender, message, timestamp: new Date() } }
+                $push: { messages: { sender: senderName, message, timestamp: new Date() } }
             });
+            console.log("REACHED HERE");
         } catch (error) {
             console.error('Error saving message:', error);
         }
-        io.to(chatId).emit('receiveMessage', { sender, message, timestamp: new Date() });
+        io.to(chatId).emit('receiveMessage', { senderName, message, timestamp: new Date() });
     
 
     socket.on('reconnect', async (email) => {
@@ -633,15 +637,17 @@ app.post('/denyRequest', async (req, res) => {
 
 app.get('/chat/:id', async (req, res) => {
     const ID = req.params.id;
-  
-
+    const email = req.session.email;
+    console.log(email);
+    const user = await userModel.findOne({ email: email});
     try {
       const chat = await Chat.findById(ID);
       if (!chat) {
         return res.status(404).send('Chat not found');
       }
       console.log('Received chatId:', ID);
-      res.render('chat', { chat, chatId: ID }); // Assuming user info is stored in session
+      console.log(user);
+      res.render('chat', { chat, chatId: ID, user }); // Assuming user info is stored in session
     } catch (error) {
       console.error(error);
       res.status(500).send('Server error');
