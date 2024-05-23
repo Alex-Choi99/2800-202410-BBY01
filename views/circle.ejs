@@ -7,80 +7,15 @@
   <link rel="stylesheet" href="/circle.css">
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script>
-    // Spinning Circle
-    $(function() {
 
-      var deg = 0;
-      var rotate = 1;
-      var club_rotate = setInterval(club_rotate, 5);
-      $('.circle-item > li').not(".circle-item > *:nth-of-type(6)").mouseenter(function() {
-          rotate = 0
-      });
-      $('.circle-item > li').not(".circle-item > *:nth-of-type(6)").mouseleave(function() {
-          rotate = 1
-      });
-  
-      function club_rotate() {
-        if (rotate == 0) {
-            return
-        }
-        deg = get_deg(deg + 1);
-        var deg0 = deg;
-        var $data = $('.circle-item').children().not(".circle-item > *:nth-of-type(6)");
-        var length = 14;
-        if ($(window).width() <= 540) {
-            length = 14
-        }
-        $data.each(function() { 
-            $(this).css("-webkit-transform", "rotate(" + deg0 + "deg) translate(" + length + "em) rotate(-" + deg0 + "deg)").css("transform", "rotate(" + deg0 + "deg) translate(" + length + "em) rotate(-" + deg0 + "deg)");
-            deg0 = get_deg(deg0 + 72)
-        })
-      }
-  
-      function get_deg(deg0) {
-        if (deg0 > 360)
-            return (deg0 - 360);
-        else return deg0
-      }
-    });
-  
-    // Sound Files
-    var acSound = new Audio("");
-    var acButton = document.getElementById('acButton');
-    acButton.addEventListener('click', function() {
-      acSound.play();
-    });
-  
-    var alSound = new Audio("");
-    var alButton = document.getElementById('alButton');
-    alButton.addEventListener('click', function() {
-      alSound.play();
-    });
-  
-    var dySound = new Audio("/audio/whistle_haaa.mp3");
-    var dyButton = document.getElementById('dyButton');
-    dyButton.addEventListener('click', function() {
-      dySound.play();
-    });
-  
-    var mpSound = new Audio("/audio/final_60a626b637d6cf006f9cebb9_881985_p9h3WM4.mp3");
-    var mpButton = document.getElementById('mpButton');
-    mpButton.addEventListener('click', function() {
-      mpSound.play();
-    });
-  
-    var wwSound = new Audio("/audio/PeonPissed2.ogg");
-    var wwButton = document.getElementById('wwButton');
-    wwButton.addEventListener('click', function() {
-      wwSound.play();
-    });
-  
-  </script>
+  <!-- <audio id="background_audio" src="/audio/Circus_Theme_Song.mp3" loop="loop"></audio> -->
   </head>
   
   <body>
-
+    <audio loop autoplay>
+      <source src="/audio/Circus_Theme_Song.mp3" type="audio/mp3">
+    </audio>
+    
     <div class = "circle-container" style = "display:block;">
       <ul class="circle-item">
         <li><img src="/images/Alex.jpg" id="acButton"></li>
@@ -88,7 +23,7 @@
         <li><img src="/images/Daniil.png" id="dyButton"></li>
         <li><img src="/images/Mark.jfif" id="mpButton"></li>
         <li><img src="/images/Wayne.png" id="wwButton"></li>
-        <li><img src="/images/Logo2_BBY01.png"></li>
+        <li><a href="/"><img src="/images/Logo2_BBY01.png"></a></li>
       </ul>
     </div> 
 
@@ -102,6 +37,84 @@
      <img src = "4.png" class = "deg5"
     </div>
     </div> -->
+    <script>
+      // Spinning Circle
+      $(function() {
+  
+        var deg = 0;
+        var rotate = 1;
+        var club_rotate = setInterval(club_rotate, 5);
+        $('.circle-item > li').not(".circle-item > *:nth-of-type(6)").mouseenter(function() {
+            rotate = 0
+        });
+        $('.circle-item > li').not(".circle-item > *:nth-of-type(6)").mouseleave(function() {
+            rotate = 1
+        });
+    
+        function club_rotate() {
+          if (rotate == 0) {
+              return
+          }
+          deg = get_deg(deg + 1);
+          var deg0 = deg;
+          var $data = $('.circle-item').children().not(".circle-item > *:nth-of-type(6)");
+          var length = 14;
+          if ($(window).width() <= 540) {
+              length = 14
+          }
+          $data.each(function() { 
+              $(this).css("-webkit-transform", "rotate(" + deg0 + "deg) translate(" + length + "em) rotate(-" + deg0 + "deg)").css("transform", "rotate(" + deg0 + "deg) translate(" + length + "em) rotate(-" + deg0 + "deg)");
+              deg0 = get_deg(deg0 + 72)
+          })
+        }
+    
+        function get_deg(deg0) {
+          if (deg0 > 360)
+              return (deg0 - 360);
+          else return deg0
+        }
+      });
+    
+      // Sound Files
+      // window.onload = function() {
+      //   document.getElementById("background_audio").play();
+      // }
+
+      // $(document).ready(function() {
+      //   $("#background_audio").get(0).play();
+      // });
+
+      var acSound = new Audio("/audio/223467-f07c9cf3-4f95-409e-bf9b-062956b4d6b3.mp3");
+      var acButton = document.getElementById('acButton');
+      acButton.addEventListener('click', function() {
+        acSound.play();
+      });
+    
+      var alSound = new Audio("/audio/lisan-al-gaib.mp3");
+      var alButton = document.getElementById('alButton');
+      alButton.addEventListener('click', function() {
+        alSound.play();
+      });
+    
+      var dySound = new Audio("/audio/whistle_haaa.mp3");
+      var dyButton = document.getElementById('dyButton');
+      dyButton.addEventListener('click', function() {
+        dySound.play();
+      });
+    
+      var mpSound = new Audio("/audio/final_60a626b637d6cf006f9cebb9_881985_p9h3WM4.mp3");
+      var mpButton = document.getElementById('mpButton');
+      mpButton.addEventListener('click', function() {
+        mpSound.play();
+      });
+    
+      var wwSound = new Audio("/audio/PeonPissed2.ogg");
+      var wwButton = document.getElementById('wwButton');
+      wwButton.addEventListener('click', function() {
+        wwSound.play();
+      });
+    
+    </script>
 
   </body>
 </html>
