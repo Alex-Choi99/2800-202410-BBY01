@@ -177,10 +177,24 @@ app.get('/', async (req, res) => {
 
         // Apply any additional filters if needed
         const filters = {};
+        
 
         if (req.query.skills) {
-            filters.skills = { $in: req.query.skills.split(',') };
+            let skillsArray;
+            if (Array.isArray(req.query.skills)) {
+                skillsArray = req.query.skills;
+            } else if (typeof req.query.skills === 'string') {
+                skillsArray = req.query.skills.split(',');
+            } else {
+                skillsArray = [];
+            }
+            filters.skills = { $in: skillsArray };
         }
+
+
+        // if (req.query.skills) {
+        //     filters.skills = { $in: req.query.skills.split(',') };
+        // }
 
         // Find users based on filters
         const result = await userModel.find(filters);
@@ -207,7 +221,7 @@ app.get('/', async (req, res) => {
         if (!isValidSession(req)) {
             res.render('index', { users: result });
         } else {
-            res.render('index', { users: result, connectedArray: user.connected, chat, matchedUsers, sessionEmail: req.session.email });
+            res.render('index', { users: result, connectedArray: user.connected, chat, matchedUsers, sessionEmail: req.session.email, user });
         }
     } catch (error) {
         console.error(error);
