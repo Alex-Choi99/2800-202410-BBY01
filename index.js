@@ -172,11 +172,8 @@ app.get('/', async (req, res) => {
         // Get the user's email from the session
         const userEmail = req.session.email;
 
-        // Find the chat where the user is a participant
-        const chat = await Chat.findOne({ participants: userEmail })
-
-        // Extract the chat ID from the chat data
-        const chatId = chat ? chat._id : null;
+        // Find the chats where the user is a participant
+        const chat = await Chat.find({ participants: userEmail })
 
         // Apply any additional filters if needed
         const filters = {};
@@ -193,7 +190,7 @@ app.get('/', async (req, res) => {
         if (!isValidSession(req)) {
             res.render('index', { users: result });
         } else {
-            res.render('index', { users: result, connectedArray: user.connected, chatId });
+            res.render('index', { users: result, connectedArray: user.connected, chat });
         }
     } catch (error) {
         console.error(error);
