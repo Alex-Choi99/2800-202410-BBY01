@@ -18,20 +18,20 @@ const Notification = require('./notifications');
 const Chat = require('./chat');
 const path = require('path');
 
-const httpServer = http.createServer(app);
+// const httpServer = http.createServer(app);
 const socketIO = require('socket.io');
+app.use(express.static(path.join(__dirname, 'public')));
 
-const io = socketIO(httpServer, {
+const expressServer = app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
+});
+
+const io = socketIO(expressServer, {
     cors: {
         origin: process.env.NODE_ENV === 'production' ? false :
-        ["http://localhost:3025", "http://127.0.0.1:3025"]
+        ["http://localhost:3025", "https://two800-202410-bby01.onrender.com/"]
     }
 });
-// const cors = require('cors');
-// const io = socketIO(httpServer);
-// app.use(cors());
-
-
 
 const node_session_secret = process.env.NODE_SESSION_SECRET;
 const mongodb_session_secret = process.env.MONGODB_SESSION_SECRET;
@@ -53,7 +53,6 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_CLOUD_SECRET
 });
 
-
 const expireTime = 1 * 60 * 60 * 1000;
 
 const MongoURI = `mongodb+srv://${mongodb_user}:${mongodb_password}@${mongodb_host}/${mongodb_dt_user}`;
@@ -74,8 +73,6 @@ const mongoStore = connectMongo.create({
         secret: mongodb_session_secret
     }
 });
-
-app.use(express.static(path.join(__dirname, 'public')));;
 
 app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -621,18 +618,18 @@ app.post('/acceptRequest', async (req, res) => {
             });
             await chat.save();
             await userModel.updateOne({ email: recipientEmail }, {
-                $set:
-                    { connected: [{ name: sender.name, email: senderEmail, date: new Date(), chatID: chat.id }] }
+                $push:
+                    { connected: { name: sender.name, email: senderEmail, date: new Date(), chatID: chat.id } }
             });
             console.log(userModel.findOne({ connected: recipientEmail }));
 
             await userModel.updateOne({ email: senderEmail }, {
-                $set: { connected: [{ name: recipient.name, email: recipientEmail, date: new Date(), chatID: chat.id }] }
+                $push: { connected: { name: recipient.name, email: recipientEmail, date: new Date(), chatID: chat.id } }
             });
             console.log(userModel.findOne({ email: senderEmail }));
         }
 
-        await Notification.deleteOne(notification);
+        await Notification.deleteOne({ _id: notificationId });
 
         res.redirect(`/chat/${chat._id}`);
         console.log(chat._id);
@@ -688,6 +685,6 @@ app.get('/404', (req, res) => {
 //     console.log(`Server is running on port ${port}`);
 // });
 
-httpServer.listen(port, () => {
-    console.log(`Listening on port ${port}`)
-});
+// httpServer.listen(port, () => {
+//     console.log(`Listening on port ${port}`)
+// });
