@@ -1,9 +1,7 @@
-<%- include("templates/header") %>
-
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 
-<head> -->
+<head>
     <title>Chat</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
@@ -12,8 +10,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.5/socket.io.min.js" integrity="sha512-11t8Q+vY9JlCrr+PveZKTYJq8n7O09Y5X/pk/aMd3vJugSvu4xOunGEUzaADqL3I8cZKE/pBwwCfXzDkRJh2sQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <style>
         .chat-container {
-            min-height: calc(50vh - 100px); /* Adjust as needed */
-            max-height: calc(72vh - 100px); /* Adjust as needed */
+            height: calc(100vh - 100px); /* Adjust as needed */
             overflow-y: auto;
         }
     </style>
@@ -23,7 +20,7 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header text-bg-primary">
+                    <div class="card-header">
                         Chat Room
                     </div>
                     <div class="card-body">
