@@ -3,7 +3,7 @@
   <div class="container d-flex">
     <div class="container">
       <!-- PROFILE HEADER -->
-      <div class="container d-flex" id="profileHeader">
+      <div class="container" id="profileHeader">
         <!-- IMAGE -->
         <div id="profileImage">
           <% if (user.image_id==null) { %>
@@ -57,6 +57,9 @@
     <div class="card">
       <div class="card-header">
         <span id="settingsTitle">Change Image</span>
+        <div class="float-end" id="exitIcon">
+          <i class="fa-solid fa-x"></i>
+        </div>
       </div>
       <div class="card-body">
         <!-- UPLOAD IMAGE FORM -->
@@ -65,21 +68,26 @@
             <% if (user.image_id==null) { %>
               <p>NO IMAGE</p>
               <% } else { %>
-                <script
-                  type="text/javascript">document.write($.cloudinary.imageTag('<%- user.image_id %>', { height: 100, width: 100, crop: "fit" }).toHtml());</script>
+                <div id="editImagePicture">
+                  <script type="text/javascript">document.write($.cloudinary.imageTag('<%- user.image_id %>', { height: 100, width: 100, crop: "fit" }).toHtml());</script>
+                </div>
                 <% } %>
                 <div id="uploadButtonDiv">
-                  <input id="uploadImageButton" type="file" name="image">
+                  <input id="uploadImageButton" type="file" name="image" onchange="previewImage(event)">
+                  <label for="uploadImageButton" class="custom-file-upload">
+                    UPLOAD FILE
+                  </label>
+            
                 </div>
                   
           </div>
           <div id="imageButtonDiv">
-            <input id="saveButton" type="submit" value="Upload">
+            <input id="saveButton" type="submit" value="Save">
           </div>
         </form>
         <!-- ADD OTHER INFO TO PROFILE SETTINGS TAB -->
       </div>
     </div>
   </div>
-
+  
   <%- include("templates/footer_after_login") %>

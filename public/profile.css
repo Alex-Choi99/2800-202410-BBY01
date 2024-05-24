@@ -1,0 +1,160 @@
+#profileUserName {
+    margin-top: 35pt;
+    margin-left: 20pt;
+}
+
+#profileHeader {
+    display:flex;
+    margin-left: 20pt;
+    margin-top: 20pt;
+    margin-bottom: 20pt;
+}
+
+#skillDiv {
+    width: 35%;
+}
+
+#reviewDiv {
+    margin-top: 10pt;
+    width: 35%;
+}
+
+#skillsEditButton {
+    float: right;
+}
+
+#skillsTitle, #reviewTitle, #settingsTitle {
+    font-weight: bold;
+    font-size: 20pt;
+}
+
+#profileInfo {
+    text-align: center;
+    width: 35%;
+    color: gray;
+}
+
+#joinedText {
+    margin-left: 5pt;
+}
+
+#eachSkill {
+    color: white;
+    background-color:#228cdd;
+}
+
+#profileImage:hover {
+    opacity: 0.7;
+}
+
+.settingsDiv .card {
+    height: 35%;
+    width: 25%;
+}
+
+.settingsDiv {
+    position: fixed; /* Use fixed to cover the entire viewport */
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(128, 128, 128, 0.5);
+    display: none;
+    justify-content: center; /* Center content vertically */
+    align-items: center; /* Center content horizontally */
+}
+
+.settingsDiv.active {
+    display: flex;
+}
+
+#saveButton {
+    background-color: #0888d8;;
+    border: none;
+    color: white;
+    margin-top: 15pt;
+    padding: 5pt 10pt;
+    text-align: center;
+    border-radius: 12px;
+    transition: 0.3s;
+}
+
+#saveButton:hover {
+    background-color: #0467a5;
+}
+
+#imageButtonDiv {
+    text-align: center;
+}
+
+#exitIcon {
+    margin-top:3pt;
+    border-radius: 25px;
+    padding-left: 4pt;
+    padding-right: 4pt;
+    transition: 0.5s;
+}
+
+#exitIcon:hover {
+    background-color: rgb(204, 204, 204);
+    scale: 1.3;
+}
+
+#uploadImageButton {
+    display: none;
+}
+
+.custom-file-upload {
+    margin-top: 30pt;
+    border-radius: 5px;
+    padding: 6pt;
+    color: white;
+    background-color: rgb(104, 104, 104);
+    margin-left:30pt;
+    transition: 0.3s;
+}
+
+.custom-file-upload:hover {
+    background-color: rgb(70, 70, 70);
+}
+
+#editImagePicture {
+    margin-top: 10pt;
+    margin-left: 10pt;
+}
+
+@media only screen and (max-width: 768px) {
+
+
+    #profileInfo {
+        width: 100%;
+    }
+
+    #reviewDiv {
+        width: 100%;
+    }
+
+    #skillDiv {
+        width: 100%;
+    }
+
+    .settingsDiv .card {
+        width: 80%;
+        height: 30%;
+    }
+
+    .custom-file-upload {
+        margin-left:20pt;
+        font-size: 12pt;
+    }
+
+    #profileHeader {
+        margin-left: 0;
+        text-align: center;
+        display: block;
+    }
+
+    #profileUserName {
+        margin-left: 0;
+        margin-top: 12pt;
+    }
+}
