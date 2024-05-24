@@ -32,7 +32,11 @@ const userSchema = new Schema({
     image_id: {
         type: String,
         required: false,
-    } 
+    },
+    joinDate: {
+        type: String,
+        required: true,
+    }
 });
 
 module.exports = mongoose.mongoose.model('User', userSchema);
