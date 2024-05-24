@@ -463,6 +463,10 @@ app.post('/setSkill', async (req, res) => {
     }
 });
 
+app.get('/settings', (req, res) => {
+    res.render('settings');
+})
+
 app.post('/logout', (req, res) => {
     req.session.destroy((err) => {
         if (err) {
