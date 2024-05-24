@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link rel="stylesheet" href="profile.css">
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="chat.css">
   <style>
     .dropdown-menu {
       max-height: 200px;
@@ -56,13 +57,18 @@
     }
     .navbar-nav .nav-item form .nav-link {
       width: 100%; /* Ensure button takes full width */
-      text-align: left; /* Align text to the left */
+      text-align: center; /* Align text to the left */
       padding-left: 15px; /* Add padding for better alignment */
     }
 
     @media only screen and (max-width: 768px){
+      #navtop{
+        
+      }
       .nav-link.btn-primary {
         text-align: left;
+      }
+      .fa-bell {
       }
     }
     .rating {
@@ -158,14 +164,16 @@
     $.cloudinary.config({ cloud_name: '<%= process.env.CLOUDINARY_CLOUD_NAME %>', secure: true });
   </script>
   <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
-    <div class="container">
+    <div class="container" id="navtop">
       <!-- Website Logo -->
       <a class="navbar-brand <% if (!locals.user) { %>navbar-brand-hidden<% } %>" href="/">
         <img src="/images/Logo_BBY01.png" alt="Website Logo" width="120">
       </a>
-
+      <a href="/notifications">
+        <i class="fa-solid fa-bell"> </i>
+      </a>
       <!-- Hamburger Menu -->
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="navbarNav"
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
               aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>

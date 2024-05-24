@@ -1,5 +1,5 @@
-#defaultProfilePicture img, #mainDefaultProfilePicture {
-    width: 100px;                                                      
+#defaultProfilePicture img, #mainDefaultProfilePicture img{
+    width: 100px;
 }
 
 #profileUserName {
