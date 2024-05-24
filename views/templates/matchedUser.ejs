@@ -6,6 +6,17 @@
             <button class="btn btn-success requestBTN">Unmatch</button>
         </form>
         <% var hasReviewed = false; %>
+        <% for(let i = 0; i < matchedUsers.length; i++) { %>
+            <% let rateList = matchedUsers[i].rate; %>
+            <% console.log(`session email`, sessionEmail); %>
+            <% for(let j = 0; j < rateList.length; j++) { %>
+                <% console.log(`rateList[j].email`, rateList[j].email); %>
+                <% if(rateList[j].email == sessionEmail) { %>
+                    <% hasReviewed = true; %>
+                    <% console.log(hasReviewed); %>
+                <% } %>
+            <% } %>
+        <% } %>
         <% if (!hasReviewed) { %>
             <form action="/rate/<%= matchedUser.email %>" method="get">
                 <button type="submit" class="btn btn-success requestBTN">Rate</button>

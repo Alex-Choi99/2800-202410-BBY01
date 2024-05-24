@@ -52,7 +52,7 @@
 
               <% connectedArray.forEach(matchedUser=> { %>
                 <% console.log(connectedArray) %>
-                  <%- include('templates/matchedUser', { matchedUser }) %>
+                  <%- include('templates/matchedUser', { matchedUser, matchedUsers, sessionEmail }) %>
                     <% }); %>
             </div>
           <% } %>
