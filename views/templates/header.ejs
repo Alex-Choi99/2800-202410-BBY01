@@ -15,27 +15,18 @@
       overflow-y: auto;
     }
     .navbar-custom {
-      background-color: rgb(0, 0, 141);
+      background-color: rgb(29, 105, 171);
       position: relative;
       z-index: 1;
-    }
-    .navbar-custom::after {
-      content: '';
-      position: absolute;
-      left: 0;
-      bottom: -20px; /* Adjust to control the fade height */
-      width: 100%;
-      height: 20px; /* Adjust to control the fade height */
-      background: linear-gradient(to bottom, rgba(0, 0, 141, 1), rgba(0, 0, 141, 0));
-      z-index: -1;
+      border-bottom: 5px solid rgb(29, 105, 171); /* Added border for a sharp look */
     }
     .navbar-brand-hidden {
       display: none;
     }
     .btn-aboutus {
       border: 1px solid white;
-      background-color: white;
-      color: rgb(5, 5, 80);
+      background-color: rgb(29, 105, 171);
+      color: white; /* Changed text color to white */
     }
     .btn-aboutus:hover {
       background-color: rgb(5, 5, 80);
@@ -47,12 +38,17 @@
     .navbar-light .navbar-toggler-icon {
       background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba%28%255, %255, %255, 1%29' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
     }
+    .nav-link {
+      color: white; /* Changed text color to white */
+      text-align: left; /* Align text to the left */
+    }
     .nav-link.btn-primary {
-      background-color: white;
-      color: rgb(5, 5, 80);
-      border: 1px solid white;
+      background-color: rgb(29, 105, 171);
+      color: white; /* Changed text color to white */
+      border: 1px solid rgb(29, 105, 171);
       width: 100%; /* Ensure full width */
-      text-align: center; /* Center align text */
+      text-align: left; /* Align text to the left */
+      padding-left: 15px; /* Add padding for better alignment */
     }
     .nav-link.btn-primary:hover {
       background-color: rgb(5, 5, 80);
@@ -67,11 +63,12 @@
     }
     .navbar-nav .nav-item form .nav-link {
       width: 100%; /* Ensure button takes full width */
+      text-align: left; /* Align text to the left */
+      padding-left: 15px; /* Add padding for better alignment */
     }
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/cloudinary-jquery@2.11.3/cloudinary-jquery.min.js"></script>
-  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <script type="text/javascript"> 
@@ -122,3 +119,4 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-ho+y8US3+Yb9GP+pCiH+3+sh2Ftah5MZsY3DZ/TuuT9oQXh1Ukr7nD7D5U5CVnE9" crossorigin="anonymous"></script>
 </body>
 </html>
+
