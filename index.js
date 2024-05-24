@@ -143,7 +143,7 @@ io.on('connection', (socket) => {
     });
 
     socket.on('reconnect', async (email) => {
-        console.log(email);
+        console.log(`line 138: ` + email);
         try {
             const chat = await Chat.findOne({ participants: email });
             if (chat) {
@@ -184,8 +184,9 @@ app.get('/', async (req, res) => {
 
         // Find users based on filters
         const result = await userModel.find(filters);
-        console.log(result);
+        console.log(`list of users based on filters: ` + result);
         const user = await userModel.findOne({ email: req.session.email });
+        console.log(`connected user list: ` + user.connected);
 
         if (!isValidSession(req)) {
             res.render('index', { users: result });
@@ -222,7 +223,7 @@ app.post('/loginSubmit', async (req, res) => {
     })
     const validationResult = schema.validate({ loginID, password });
     if (validationResult.error != null) {
-        console.log(validationResult.error);
+        console.log(`Validation error: ` + validationResult.error);
         res.render("login", { forgor: 'know', errorMessage: "Input must be less than 30 characters." });
         return;
     }
@@ -474,6 +475,7 @@ app.post('/setTags', async (req, res) => {
 });
 
 app.use('/profile', sessionValidation);
+
 app.get('/profile', async (req, res) => {
     req.session.cookie.maxAge = expireTime;
     var email = req.session.email;
@@ -693,6 +695,38 @@ app.post('/unmatch', async (req, res) => {
 
     await Chat.deleteOne({ participants: { $all: [email, unmatchedEmail] } });
     res.redirect('/');
+});
+
+app.get('/rate/:email', async (req, res) => {
+    const ratedUserEmail = req.params.email;
+    const user = await userModel.findOne({ email: ratedUserEmail });
+    console.log(`rated User: `+ user);
+    res.render('rate', { user });
+});
+
+app.post('/rateSubmit', async (req, res) => {
+    const rateValue = req.body.rateValue;
+    const ratedUserEmail = req.body.ratedUserEmail;
+    console.log('rated user email:'+ ratedUserEmail);
+    const ratedUser = await userModel.findOne({ email: ratedUserEmail });
+
+    if (ratedUser) {
+        ratedUser.rate.push({
+            email: req.session.email,
+            rating: rateValue,
+            date: new Date()
+        });
+        await ratedUser.save();
+
+        const filters = {};
+
+        if (req.query.skills) {
+            filters.skills = { $in: req.query.skills.split(',') };
+        }
+        res.redirect('/');
+    } else {
+        res.status(404).send('User not found');
+    }
 });
 
 app.post('/logout', (req, res) => {

@@ -89,6 +89,17 @@
         <!-- ADD OTHER INFO TO PROFILE SETTINGS TAB -->
       </div>
     </div>
-  </div>
-  
+    <div class="container mt-4">
+      <p>Number of review: <%= user.rate.length %></p>
+      <% var sum = 0; %>
+      <% var countRates = 0; %>
+      <% user.rate.forEach(rating => { %>
+        <% sum += parseFloat(rating.rating); %>
+        <% countRates++; %>
+      <% }); %>
+      <% var avg = (countRates > 0) ? (sum / countRates) : 0; %>
+      <p>Average rate: <%= avg.toFixed(2) %></p>
+    </div>
+  </section>
+
   <%- include("templates/footer_after_login") %>
