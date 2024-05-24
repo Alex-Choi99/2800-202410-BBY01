@@ -1,4 +1,3 @@
-
 const express = require('express');
 const session = require('express-session');
 const mongoose = require('mongoose');
@@ -17,13 +16,23 @@ const upload = multer({ storage: storage });
 const bodyParser = require('body-parser');
 const Notification = require('./notifications');
 const Chat = require('./chat');
-const socketIO = require('socket.io');
 const path = require('path');
-const cors = require('cors');
-const httpServer = http.createServer(app);
-const io = socketIO(httpServer);
 
-app.use(cors())
+// const httpServer = http.createServer(app);
+const socketIO = require('socket.io');
+app.use(express.static(path.join(__dirname, 'public')));
+
+const expressServer = app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
+});
+
+const io = socketIO(expressServer, {
+    cors: {
+        origin: process.env.NODE_ENV === 'production' ? false :
+        ["http://localhost:3025", "https://two800-202410-bby01.onrender.com/"]
+    }
+});
+
 const node_session_secret = process.env.NODE_SESSION_SECRET;
 const mongodb_session_secret = process.env.MONGODB_SESSION_SECRET;
 const mongodb_host = process.env.MONGODB_HOST;
@@ -43,7 +52,6 @@ cloudinary.config({
     api_key: process.env.CLOUDINARY_CLOUD_KEY,
     api_secret: process.env.CLOUDINARY_CLOUD_SECRET
 });
-
 
 const expireTime = 1 * 60 * 60 * 1000;
 
@@ -65,8 +73,6 @@ const mongoStore = connectMongo.create({
         secret: mongodb_session_secret
     }
 });
-
-app.use(express.static(path.join(__dirname, 'public')));;
 
 app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -111,18 +117,19 @@ function generateRandomPassword(length) {
 };
 
 io.on('connection', (socket) => {
-    console.log('a user connected');
+    console.log(`user ${socket.id} connected`);
 
     socket.on('joinRoom', (chatId) => {
-        console.log(`Client ${socket.id} joining room: ${chatId}`);
+        console.log(`user ${socket.id} joining room: ${chatId}`);
         socket.join(chatId);
     });
 
     socket.on('sendMessage', async (data) => {
-        console.log(data);
+        console.log('inside send message');
         const timestamp = new Date();
-
         const { chatId, message, senderName } = data;
+        
+        console.log(data);
         console.log(senderName);
         console.log(chatId);
 
@@ -130,8 +137,8 @@ io.on('connection', (socket) => {
             $push: { messages: { sender: senderName, message, timestamp } }
         });
 
-        console.log("REACHED HERE");
-        await io.to(chatId).emit('receiveMessage', { sender: senderName, message: message, timestamp: timestamp });
+        io.to(chatId).emit('receiveMessage', {sender: senderName, message, timestamp});
+
         console.log("MADE PAST RECIEVE MESSAGE");
     });
 
@@ -611,18 +618,18 @@ app.post('/acceptRequest', async (req, res) => {
             });
             await chat.save();
             await userModel.updateOne({ email: recipientEmail }, {
-                $set:
-                    { connected: [{ name: sender.name, email: senderEmail, date: new Date(), chatID: chat.id }] }
+                $push:
+                    { connected: { name: sender.name, email: senderEmail, date: new Date(), chatID: chat.id } }
             });
             console.log(userModel.findOne({ connected: recipientEmail }));
 
             await userModel.updateOne({ email: senderEmail }, {
-                $set: { connected: [{ name: recipient.name, email: recipientEmail, date: new Date(), chatID: chat.id }] }
+                $push: { connected: { name: recipient.name, email: recipientEmail, date: new Date(), chatID: chat.id } }
             });
             console.log(userModel.findOne({ email: senderEmail }));
         }
 
-        await Notification.deleteOne(notification);
+        await Notification.deleteOne({ _id: notificationId });
 
         res.redirect(`/chat/${chat._id}`);
         console.log(chat._id);
@@ -658,7 +665,20 @@ app.get('/chat/:id', async (req, res) => {
 });
 
 app.post('/unmatch', async (req, res) => {
-    const matchedUser = req.body
+    const email = req.session.email;
+    const unmatchedEmail = req.body.unmatch;
+    console.log(unmatchedEmail);
+
+    await userModel.updateOne({ email: email }, {
+        $pull: { connected: { email: unmatchedEmail } }
+    });
+
+    await userModel.updateOne({ email: unmatchedEmail }, {
+        $pull: { connected: { email: email } }
+    });
+
+    await Chat.deleteOne({ participants: { $all: [email, unmatchedEmail] } });
+    res.redirect('/');
 });
 
 app.post('/logout', (req, res) => {
@@ -678,6 +698,6 @@ app.get('/404', (req, res) => {
 //     console.log(`Server is running on port ${port}`);
 // });
 
-httpServer.listen(port, () => {
-    console.log(`Listening on port ${port}`)
-});
+// httpServer.listen(port, () => {
+//     console.log(`Listening on port ${port}`)
+// });
