@@ -7,14 +7,20 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.5/socket.io.min.js" integrity="sha512-11t8Q+vY9JlCrr+PveZKTYJq8n7O09Y5X/pk/aMd3vJugSvu4xOunGEUzaADqL3I8cZKE/pBwwCfXzDkRJh2sQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.5/socket.io.min.js"
+        integrity="sha512-11t8Q+vY9JlCrr+PveZKTYJq8n7O09Y5X/pk/aMd3vJugSvu4xOunGEUzaADqL3I8cZKE/pBwwCfXzDkRJh2sQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <style>
         .chat-container {
-            height: calc(100vh - 100px); /* Adjust as needed */
+            min-height: calc(50vh - 100px);
+            /* Adjust as needed */
+            max-height: calc(72vh - 100px);
+            /* Adjust as needed */
             overflow-y: auto;
         }
     </style>
 </head>
+
 <body class="bg-light">
     <div class="container-fluid py-3">
         <div class="row justify-content-center">
@@ -25,20 +31,27 @@
                     </div>
                     <div class="card-body">
                         <div id="chat" class="chat-container">
-                            <% chat.messages.forEach(msg => { %>
+                            <% chat.messages.forEach(msg=> { %>
                                 <div class="message mb-2">
                                     <div class="d-flex justify-content-between">
-                                        <strong><%= msg.sender %>:</strong>
-                                        <small class="text-muted"><%= new Date(msg.timestamp).toLocaleTimeString() %></small>
+                                        <strong>
+                                            <%= msg.sender %>:
+                                        </strong>
+                                        <small class="text-muted">
+                                            <%= new Date(msg.timestamp).toLocaleTimeString() %>
+                                        </small>
                                     </div>
-                                    <div><%= msg.message %></div>
+                                    <div>
+                                        <%= msg.message %>
+                                    </div>
                                 </div>
-                            <% }); %>
+                                <% }); %>
                         </div>
                     </div>
                     <div class="card-footer">
                         <form id="messageForm" class="form-inline">
-                            <input type="text" id="messageInput" class="form-control flex-grow-1 mr-2" placeholder="Type your message..." required>
+                            <input type="text" id="messageInput" class="form-control flex-grow-1 mr-2"
+                                placeholder="Type your message..." required>
                             <button type="submit" class="btn btn-primary">Send</button>
                         </form>
                     </div>
@@ -68,7 +81,7 @@
                 console.log("INPUT: " + message);
 
                 if (message) {
-                    await socket.emit('sendMessage', {chatId, message, senderName});
+                    await socket.emit('sendMessage', { chatId, message, senderName });
                     input.value = '';
                 }
                 input.focus();
@@ -97,21 +110,21 @@
 
             // socket.on('receiveMessage', (data) => {
             //     console.log("MADE IT INSIDE RECEIVE MESSAGE");
-                // const { sender, message, timestamp } = data;
-                
+            // const { sender, message, timestamp } = data;
+
             //     console.log(data);
-                
-                // const messageDiv = document.createElement('div');
-                // messageDiv.classList.add('message', 'mb-2');
-                // messageDiv.innerHTML = `
-                //     <div class="d-flex justify-content-between">
-                //         <strong>${senderName}:</strong>
-                //         <small class="text-muted">${new Date(timestamp).toLocaleTimeString()}</small>
-                //     </div>
-                //     <div>${message}</div>
-                // `;
-                
-                // document.getElementById('chat').appendChild(messageDiv);
+
+            // const messageDiv = document.createElement('div');
+            // messageDiv.classList.add('message', 'mb-2');
+            // messageDiv.innerHTML = `
+            //     <div class="d-flex justify-content-between">
+            //         <strong>${senderName}:</strong>
+            //         <small class="text-muted">${new Date(timestamp).toLocaleTimeString()}</small>
+            //     </div>
+            //     <div>${message}</div>
+            // `;
+
+            // document.getElementById('chat').appendChild(messageDiv);
             //     console.log(socket);
             //     console.log(document.getElementById('chat'));
             // });
@@ -129,4 +142,5 @@
         });
     </script>
 </body>
+
 </html>
