@@ -34,31 +34,20 @@
       background-color: rgb(5, 5, 80);
       color: white;
     }
-    .navbar-toggler-icon {
-      color: white; /* Ensure the icon is white */
-    }
-    .navbar-light .navbar-toggler-icon {
-      background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba%28%255, %255, %255, 1%29' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
-    }
-    .nav-link {
-      color: white; /* Changed text color to white */
-      text-align: left; /* Align text to the left */
-    }
+
+    /* NAVBAR */
     .nav-link.btn-primary {
       background-color: rgb(29, 105, 171);
-      color: white; /* Changed text color to white */
+      color: white; 
       border: 1px solid rgb(29, 105, 171);
       width: 100%; /* Ensure full width */
-      text-align: left; /* Align text to the left */
       padding-left: 15px; /* Add padding for better alignment */
+      transition:0.3s;
     }
     .nav-link.btn-primary:hover {
-      background-color: rgb(5, 5, 80);
+      scale: 1.05;
+      background-color: rgb(20, 74, 122);;
       color: white;
-    }
-    body {
-      background-color: #ffffff; /* Different background color for the body */
-      margin: 0;
     }
     .navbar-nav .nav-item form {
       width: 100%; /* Ensure form takes full width */
@@ -67,6 +56,12 @@
       width: 100%; /* Ensure button takes full width */
       text-align: left; /* Align text to the left */
       padding-left: 15px; /* Add padding for better alignment */
+    }
+
+    @media only screen and (max-width: 768px){
+      .nav-link.btn-primary {
+        text-align: left;
+      }
     }
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -94,7 +89,7 @@
           <!-- Conditionally render the navbar links if the user is logged in -->
           <% if (locals.user) { %>
             <li class="nav-item">
-              <a class="nav-link btn btn-primary me-2" href="/index">Home</a>
+              <a class="nav-link btn btn-primary me-2" href="/">Home</a>
             </li>
             <li class="nav-item">
               <a class="nav-link btn btn-primary me-2" href="/profile">User Profile</a>

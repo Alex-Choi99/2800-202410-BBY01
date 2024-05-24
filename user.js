@@ -36,6 +36,10 @@ const userSchema = new Schema({
     joinDate: {
         type: String,
         required: true,
+    },
+    connected: {
+        type: Array,
+        required: false,
     }
 });
 
