@@ -59,16 +59,29 @@
         <div class="card widget-card border-light shadow-sm">
           <div class="card-header text-bg-primary">Skills</div>
             <div class="card-body">
-              <span class="badge text-bg-primary">Painting</span>
-              <span class="badge text-bg-primary">HTML</span>
-              <span class="badge text-bg-primary">SCSS</span>
-              <span class="badge text-bg-primary">Javascript</span>
-              <span class="badge text-bg-primary">React</span>
-              <span class="badge text-bg-primary">Vue</span>
-              <span class="badge text-bg-primary">Angular</span>
-              <span class="badge text-bg-primary">UI</span>
-              <span class="badge text-bg-primary">UX</span>
-            </div>
+              <form action="/selectSkills" method="get">
+                <div class="col-12">
+                  Review Data
+                </div>
+                <br>
+                <div class="col-12">
+                  <span class="badge text-bg-primary">Painting</span>
+                  <span class="badge text-bg-primary">HTML</span>
+                  <span class="badge text-bg-primary">SCSS</span>
+                  <span class="badge text-bg-primary">Javascript</span>
+                  <span class="badge text-bg-primary">React</span>
+                  <span class="badge text-bg-primary">Vue</span>
+                  <span class="badge text-bg-primary">Angular</span>
+                  <span class="badge text-bg-primary">UI</span>
+                  <span class="badge text-bg-primary">UX</span>
+                </div>
+                <br>
+                <div class="col-12">
+                  <button id="skillsEditButton" type="submit" class="btn btn-primary">Edit</button>
+                </div>
+            </form>
+
+          </div>
         </div>
       </div>
 
