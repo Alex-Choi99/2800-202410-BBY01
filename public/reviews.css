@@ -1,0 +1,18 @@
+/* styles.css */
+
+.box {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.star-rating .fa-star {
+    font-size: 1.5em;
+    color: lightgray;
+    cursor: pointer;
+}
+
+.star-rating .fa-star.checked {
+    color: gold;
+}
