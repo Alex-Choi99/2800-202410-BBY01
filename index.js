@@ -665,7 +665,20 @@ app.get('/chat/:id', async (req, res) => {
 });
 
 app.post('/unmatch', async (req, res) => {
-    const matchedUser = req.body
+    const email = req.session.email;
+    const unmatchedEmail = req.body.unmatch;
+    console.log(unmatchedEmail);
+
+    await userModel.updateOne({ email: email }, {
+        $pull: { connected: { email: unmatchedEmail } }
+    });
+
+    await userModel.updateOne({ email: unmatchedEmail }, {
+        $pull: { connected: { email: email } }
+    });
+
+    await Chat.deleteOne({ participants: { $all: [email, unmatchedEmail] } });
+    res.redirect('/');
 });
 
 app.post('/logout', (req, res) => {
