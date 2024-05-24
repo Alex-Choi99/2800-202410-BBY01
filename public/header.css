@@ -1,0 +1,58 @@
+/* custom-styles.css */
+
+.dropdown-menu {
+    max-height: 200px;
+    overflow-y: auto;
+  }
+  
+  .navbar-custom {
+    background-color: rgb(29, 105, 171);
+    border-bottom: 5px solid rgb(29, 105, 171);
+  }
+  
+  .navbar-brand-hidden {
+    display: none;
+  }
+  
+  .btn-aboutus {
+    border: 1px solid white;
+    background-color: rgb(29, 105, 171);
+    color: white;
+  }
+  
+  .btn-aboutus:hover {
+    background-color: rgb(5, 5, 80);
+    color: white;
+  }
+  
+  .nav-link.btn-primary {
+    background-color: rgb(29, 105, 171);
+    color: white;
+    border: 1px solid rgb(29, 105, 171);
+    width: 100%;
+    padding-left: 15px;
+    transition: 0.3s;
+  }
+  
+  .nav-link.btn-primary:hover {
+    transform: scale(1.05);
+    background-color: rgb(20, 74, 122);
+    color: white;
+  }
+  
+  .navbar-nav .nav-item form {
+    width: 100%;
+  }
+  
+  .navbar-nav .nav-item form .nav-link {
+    width: 100%;
+    text-align: left;
+    padding-left: 15px;
+  }
+  
+  @media only screen and (max-width: 768px) {
+    .nav-link.btn-primary {
+      text-align: left;
+    }
+  }
+  
