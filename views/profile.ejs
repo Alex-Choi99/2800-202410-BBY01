@@ -7,10 +7,11 @@
         <!-- IMAGE -->
         <div id="profileImage">
           <% if (user.image_id==null) { %>
-            <p>NO IMAGE</p>
+            <div id="defaultProfilePicture">
+              <img src="/images/defaultProfilePicture.png" alt="default">
+            </div>
             <% } else { %>
-              <script
-                type="text/javascript">document.write($.cloudinary.imageTag('<%- user.image_id %>', { height: 100, width: 100, crop: "fit" }).toHtml());</script>
+              <img src="<%= user.imageUrl %>" alt="Profile Image" />
               <% } %>
         </div>
         <!-- USERNAME -->
@@ -65,15 +66,15 @@
         <!-- UPLOAD IMAGE FORM -->
         <form action="/setProfilePic" method="post" enctype="multipart/form-data">
           <div class="container d-flex">
-            <% if (user.image_id==null) { %>
-              <p>NO IMAGE</p>
-              <% } else { %>
-                <div id="editImagePicture">
-                  <script type="text/javascript">document.write($.cloudinary.imageTag('<%- user.image_id %>', { height: 100, width: 100, crop: "fit" }).toHtml());</script>
-                </div>
+              <div id="defaultProfilePicture">
+                <% if (user.image_id==null) { %>
+                <img src="/images/defaultProfilePicture.png" alt="default">
+                <% } else { %>
+                <img src="<%= user.imageUrl %>" alt="Profile Image" />
                 <% } %>
+              </div>
                 <div id="uploadButtonDiv">
-                  <input id="uploadImageButton" type="file" name="image" onchange="previewImage(event)">
+                  <input id="uploadImageButton" type="file" name="image" onchange="previewImage(event)" accept="image/*">
                   <label for="uploadImageButton" class="custom-file-upload">
                     UPLOAD FILE
                   </label>

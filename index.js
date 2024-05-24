@@ -400,23 +400,19 @@ app.use('/profile', sessionValidation);
 app.get('/profile', async (req, res) => {
     req.session.cookie.maxAge = expireTime;
     var email = req.session.email;
-    // var name = req.session.name;
-    // var userId = req.session.userId;
-    // var img = req.session.image_id;
     var user = await userModel.findOne({ email });
-    // console.log(` ${email} + ${name} + ${userId} + ${img} + ${user}`);
-
-    // if(user.skills == null){
-    //     skills = [''];
-    // } else{
-    //     for(let i = 0; i < user.skills.length; i++){
-    //         req.session.skills[i] = user.skills[i];
-    //         console.log("Result: ", user.skills[i]);
-    //     }
-    // }
-    // var skills = req.session.skills;
-    //, name, email, id, img, skills
     console.log(JSON.stringify(user.skills));
+
+    if (user && user.image_id) {
+        const imageUrl = cloudinary.url(user.image_id, {
+            transformation: [
+                { aspect_ratio: "1:1", gravity: "auto", width: 120, crop: "fill" },
+                { radius: "max", border: "5px_solid_grey" }
+            ]
+        });
+
+        user.imageUrl = imageUrl;
+    }
 
     res.render('profile', { user, skills: user.skills });
 });
@@ -425,6 +421,13 @@ app.post('/setProfilePic', upload.single('image'), async (req, res, next) => {
     let image_uuid = uuid();
     let email = req.session.email;
     let doc = await userModel.findOne({ email });
+
+    if (!req.file) {
+        console.log('No file uploaded');
+        res.redirect('profile');
+        return;
+    }
+
     let buf64 = req.file.buffer.toString('base64');
     stream = cloudinary.uploader.upload("data:image/octet-stream;base64," + buf64, async function (result) {
         try {

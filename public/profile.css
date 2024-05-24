@@ -1,3 +1,7 @@
+#defaultProfilePicture img {
+    width: 100px;                                                      
+}
+
 #profileUserName {
     margin-top: 35pt;
     margin-left: 20pt;

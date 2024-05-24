@@ -1,7 +1,7 @@
 const showImagePopup = document.getElementById('profileImage');
 const popupContainer = document.querySelector('.settingsDiv');
 const exitIcon = document.getElementById('exitIcon');
-var imageDiv = document.getElementById('editImagePicture');
+var imageDiv = document.getElementById('defaultProfilePicture');
 let originalImageSource = '<script type="text/javascript">document.write($.cloudinary.imageTag(\'<%- user.image_id %>\', { height: 100, width: 100, crop: "fit" }).toHtml());</script>';
 
 showImagePopup.onclick = () => {
