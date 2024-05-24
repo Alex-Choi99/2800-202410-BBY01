@@ -179,8 +179,9 @@ app.get('/', async (req, res) => {
 
         // Find users based on filters
         const result = await userModel.find(filters);
-        console.log(`Found user based on filters: ` + result);
+        console.log(`list of users based on filters: ` + result);
         const user = await userModel.findOne({ email: req.session.email });
+        console.log(`connected user list: ` + user.connected);
 
         if (!isValidSession(req)) {
             res.render('index', { users: result });
@@ -687,13 +688,7 @@ app.post('/rateSubmit', async (req, res) => {
         if (req.query.skills) {
             filters.skills = { $in: req.query.skills.split(',') };
         }
-
-        const chat = await Chat.findOne({ participants: req.session.email });
-        const chatId = chat ? chat._id : null;
-        const result = await userModel.find(filters);
-        const user = await userModel.findOne({ email: req.session.email });
-
-        res.render('index', { users: result, connectedArray: user.connected, chatId });
+        res.redirect('/');
     } else {
         res.status(404).send('User not found');
     }

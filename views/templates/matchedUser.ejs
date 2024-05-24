@@ -6,12 +6,6 @@
             <button class="btn btn-success requestBTN">Unmatch</button>
         </form>
         <% var hasReviewed = false; %>
-        <% console.log(`selected matched user: `, matchedUser); %>
-
-        <% for (let i = 0; i < matchedUser.rate.length; i++) {} %>
-        <% if (matchedUser.rate.includes(req.session.email)) { %>
-            <% hasReviewed = true; %>
-        <% } %>
         <% if (!hasReviewed) { %>
             <form action="/rate/<%= matchedUser.email %>" method="get">
                 <button type="submit" class="btn btn-success requestBTN">Rate</button>
