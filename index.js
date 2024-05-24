@@ -1,4 +1,3 @@
-
 const express = require('express');
 const session = require('express-session');
 const mongoose = require('mongoose');
@@ -17,13 +16,23 @@ const upload = multer({ storage: storage });
 const bodyParser = require('body-parser');
 const Notification = require('./notifications');
 const Chat = require('./chat');
-const socketIO = require('socket.io');
 const path = require('path');
-const cors = require('cors');
-const httpServer = http.createServer(app);
-const io = socketIO(httpServer);
 
-app.use(cors())
+const httpServer = http.createServer(app);
+const socketIO = require('socket.io');
+
+const io = socketIO(httpServer, {
+    cors: {
+        origin: process.env.NODE_ENV === 'production' ? false :
+        ["http://localhost:3025", "http://127.0.0.1:3025"]
+    }
+});
+// const cors = require('cors');
+// const io = socketIO(httpServer);
+// app.use(cors());
+
+
+
 const node_session_secret = process.env.NODE_SESSION_SECRET;
 const mongodb_session_secret = process.env.MONGODB_SESSION_SECRET;
 const mongodb_host = process.env.MONGODB_HOST;
@@ -111,18 +120,19 @@ function generateRandomPassword(length) {
 };
 
 io.on('connection', (socket) => {
-    console.log('a user connected');
+    console.log(`user ${socket.id} connected`);
 
     socket.on('joinRoom', (chatId) => {
-        console.log(`Client ${socket.id} joining room: ${chatId}`);
+        console.log(`user ${socket.id} joining room: ${chatId}`);
         socket.join(chatId);
     });
 
     socket.on('sendMessage', async (data) => {
-        console.log(data);
+        console.log('inside send message');
         const timestamp = new Date();
-
         const { chatId, message, senderName } = data;
+        
+        console.log(data);
         console.log(senderName);
         console.log(chatId);
 
@@ -130,8 +140,8 @@ io.on('connection', (socket) => {
             $push: { messages: { sender: senderName, message, timestamp } }
         });
 
-        console.log("REACHED HERE");
-        await io.to(chatId).emit('receiveMessage', { sender: senderName, message: message, timestamp: timestamp });
+        io.to(chatId).emit('receiveMessage', {sender: senderName, message, timestamp});
+
         console.log("MADE PAST RECIEVE MESSAGE");
     });
 
