@@ -185,13 +185,29 @@ app.get('/', async (req, res) => {
         // Find users based on filters
         const result = await userModel.find(filters);
         console.log(`list of users based on filters: ` + result);
-        const user = await userModel.findOne({ email: req.session.email });
-        console.log(`connected user list: ` + user.connected);
+    
+        if(req.session.email) {
+            var user = await userModel.findOne({ email: req.session.email });
+            console.log(`connected user list: `, user.connected);
+            var matchedUsers = [];
+
+            for (let i = 0; i < result.length; i++) {
+                console.log(result[i].email);
+                let connectedUser = user.connected; 
+                console.log(connectedUser);
+                connectedUser.forEach(usr => { 
+                    usr.email == result[i].email? matchedUsers.push(result[i]) : null
+                    console.log(usr.email);
+                });
+            }
+            console.log(`matched users: ` + matchedUsers);
+        }
+
 
         if (!isValidSession(req)) {
             res.render('index', { users: result });
         } else {
-            res.render('index', { users: result, connectedArray: user.connected, chat });
+            res.render('index', { users: result, connectedArray: user.connected, chat, matchedUsers, sessionEmail: req.session.email });
         }
     } catch (error) {
         console.error(error);

@@ -46,9 +46,21 @@
       <div class="card widget-card shadow-sm" id="reviewDiv">
         <div class="card-header d-flex justify-content-between align-items-center">
           <span id="reviewTitle">Reviews</span>
+          <span id="amountDiv">Amount: <%= user.rate.length %></span>
         </div>
         <div class="card-body">
-          <!-- WHERE WE WILL PRINT OUT ALL OF THE REVIEWS -->
+          <section>
+            <div class="container mt-4">
+              <% var sum = 0; %>
+              <% var countRates = 0; %>
+              <% user.rate.forEach(rating => { %>
+                <% sum += parseFloat(rating.rating); %>
+                <% countRates++; %>
+              <% }); %>
+              <% var avg = (countRates > 0) ? (sum / countRates) : 0; %>
+              <p>Average Rating: <span id="averageRatingSpan"><%= avg.toFixed(2) %></span></p>
+            </div>
+          </section>
         </div>
       </div>
     </div>
@@ -89,17 +101,5 @@
         <!-- ADD OTHER INFO TO PROFILE SETTINGS TAB -->
       </div>
     </div>
-    <div class="container mt-4">
-      <p>Number of review: <%= user.rate.length %></p>
-      <% var sum = 0; %>
-      <% var countRates = 0; %>
-      <% user.rate.forEach(rating => { %>
-        <% sum += parseFloat(rating.rating); %>
-        <% countRates++; %>
-      <% }); %>
-      <% var avg = (countRates > 0) ? (sum / countRates) : 0; %>
-      <p>Average rate: <%= avg.toFixed(2) %></p>
-    </div>
-  </section>
 
   <%- include("templates/footer_after_login") %>

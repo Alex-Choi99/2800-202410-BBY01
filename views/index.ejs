@@ -64,14 +64,14 @@
                 <% }) %>
           </ul>
         </div>
-        <% if (connectedArray !=null) { %>
-          <div class="tab-pane fade" id="matchedUsers" role="tabpanel" aria-labelledby="matchedUsers-tab">
+          <% if (connectedArray !=null) { %>
+            <div class="tab-pane fade" id="matchedUsers" role="tabpanel" aria-labelledby="matchedUsers-tab">
 
-            <% connectedArray.forEach(user=> { %>
-              <% console.log(connectedArray) %>
-                <%- include('templates/matchedUser', { user }) %>
-                  <% }) %>
-          </div>
+              <% connectedArray.forEach(matchedUser=> { %>
+                <% console.log(connectedArray) %>
+                  <%- include('templates/matchedUser', { matchedUser, matchedUsers, sessionEmail }) %>
+                    <% }); %>
+            </div>
           <% } %>
       </div>
       <% } %>
