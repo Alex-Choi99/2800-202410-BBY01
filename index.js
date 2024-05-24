@@ -165,7 +165,7 @@ app.get('/', async (req, res) => {
         const userEmail = req.session.email;
 
         // Find the chat where the user is a participant
-        const chat = await Chat.findOne({ participants: userEmail })
+        const chat = await Chat.findOne({ participants: userEmail });
 
         // Extract the chat ID from the chat data
         const chatId = chat ? chat._id : null;
@@ -179,7 +179,7 @@ app.get('/', async (req, res) => {
 
         // Find users based on filters
         const result = await userModel.find(filters);
-        console.log(`line 182, found user based on filters: ` + result);
+        console.log(`Found user based on filters: ` + result);
         const user = await userModel.findOne({ email: req.session.email });
 
         if (!isValidSession(req)) {
@@ -661,11 +661,42 @@ app.post('/unmatch', async (req, res) => {
     const matchedUser = req.body
 });
 
-app.get('/rate/:id', async (req, res) => {
-    const id = req.params.id;
-    const email = req.session.email;
-    const user = await userModel.findOne({ email: email });
-    res.render('rate', { id, user });
+app.get('/rate/:email', async (req, res) => {
+    const ratedUserEmail = req.params.email;
+    const user = await userModel.findOne({ email: ratedUserEmail });
+    console.log(`rated User: `+ user);
+    res.render('rate', { user });
+});
+
+app.post('/rateSubmit', async (req, res) => {
+    const rateValue = req.body.rateValue;
+    const ratedUserEmail = req.body.ratedUserEmail;
+    console.log('rated user email:'+ ratedUserEmail);
+    const ratedUser = await userModel.findOne({ email: ratedUserEmail });
+
+    if (ratedUser) {
+        ratedUser.rate.push({
+            email: req.session.email,
+            rating: rateValue,
+            date: new Date()
+        });
+        await ratedUser.save();
+
+        const filters = {};
+
+        if (req.query.skills) {
+            filters.skills = { $in: req.query.skills.split(',') };
+        }
+
+        const chat = await Chat.findOne({ participants: req.session.email });
+        const chatId = chat ? chat._id : null;
+        const result = await userModel.find(filters);
+        const user = await userModel.findOne({ email: req.session.email });
+
+        res.render('index', { users: result, connectedArray: user.connected, chatId });
+    } else {
+        res.status(404).send('User not found');
+    }
 });
 
 app.post('/logout', (req, res) => {

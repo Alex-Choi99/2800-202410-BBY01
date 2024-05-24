@@ -44,16 +44,16 @@
             <ul class="list-group mt-3">
               <% users.forEach(user=> { %>
                 <%- include('templates/user', { user }) %>
-                  <% }) %>
+                  <% }); %>
             </ul>
           </div>
           <% if (connectedArray !=null) { %>
             <div class="tab-pane fade" id="matchedUsers" role="tabpanel" aria-labelledby="matchedUsers-tab">
 
-              <% connectedArray.forEach(user=> { %>
+              <% connectedArray.forEach(matchedUser=> { %>
                 <% console.log(connectedArray) %>
-                  <%- include('templates/matchedUser', { user }) %>
-                    <% }) %>
+                  <%- include('templates/matchedUser', { matchedUser }) %>
+                    <% }); %>
             </div>
           <% } %>
         </div>

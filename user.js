@@ -36,6 +36,9 @@ const userSchema = new Schema({
     connected: {
         type: Array,
         required: false,
+    }, rate: {
+        type: Array,
+        required: false,
     }
 });
 

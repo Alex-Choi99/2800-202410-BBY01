@@ -1,13 +1,22 @@
 <li class="d-flex list-group-item justify-content-between align-items-center">
-    <%= user.name %>
+    <%= matchedUser.name %>
     <div class="ms-auto d-flex">
         <form action="/" method="post">
-            <input type="hidden" name="recipientEmail" value="<%= user.email %>">
+            <input type="hidden" name="recipientEmail" value="<%= matchedUser.email %>">
             <button class="btn btn-success requestBTN">Unmatch</button>
         </form>
-        <form action="/rate/<%= user.email %>" method="get">
-            <button type="submit" class="btn btn-success requestBTN">Rate</button>
-        </form>
+        <% var hasReviewed = false; %>
+        <% console.log(`selected matched user: `, matchedUser); %>
+
+        <% for (let i = 0; i < matchedUser.rate.length; i++) {} %>
+        <% if (matchedUser.rate.includes(req.session.email)) { %>
+            <% hasReviewed = true; %>
+        <% } %>
+        <% if (!hasReviewed) { %>
+            <form action="/rate/<%= matchedUser.email %>" method="get">
+                <button type="submit" class="btn btn-success requestBTN">Rate</button>
+            </form>
+        <% } %>
         <form action="/chat/<%= chatId %>" method="get">
             <button type="submit" class="btn btn-success requestBTN">Chat</button>
         </form>

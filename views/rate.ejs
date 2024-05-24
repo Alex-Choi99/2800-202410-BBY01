@@ -1,21 +1,24 @@
 <%- include('templates/header'), { pageName: 'newPW' } %>
   <div class="d-flex justify-content-center flex-nowrap">
-    <p>Rate <%= user.name %>
-    </p>
+    <h1>Rating the user "<%= user.name %>"</h1>
   </div>
   <div class="d-flex justify-content-center flex-nowrap">
-    <form action="/rate" method="post">
-        <label class="rating-label">
+    <form action="/rateSubmit" method="post">
+      <input type="hidden" name="ratedUserEmail" value="<%= user.email %>">
+      <label class="rating-label">
           <input
-            class="rating"
-            max="5"
-            oninput="this.style.setProperty('--value', `${this.valueAsNumber}`)"
-            step="0.5"
-            style="--value:2.5"
-            type="range"
-            value="2.5">
-        </label>
-    </form>
+              class="rating"
+              max="5"
+              oninput="this.style.setProperty('--value', `${this.valueAsNumber}`)"
+              step="0.5"
+              style="--value:5"
+              type="range"
+              name="rateValue"
+              value="5">
+      </label>
+      <button class="btn btn-primary w-100 py-2" type="submit">Submit</button>
+  </form>
+  
   </div>
   <script>
   </script>
