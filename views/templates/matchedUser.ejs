@@ -2,7 +2,7 @@
     <%= matchedUser.name %>
     <div class="ms-auto d-flex">
         <form action="/unmatch" method="post">
-            <input type="hidden" name="unmatch" value="<%= user.email %>">
+            <input type="hidden" name="unmatch" value="<%= matchedUser.email %>">
             <button class="btn btn-success requestBTN">Unmatch</button>
         </form>
         <% var hasReviewed = false; %>
