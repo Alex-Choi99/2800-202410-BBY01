@@ -1,22 +1,40 @@
 <%- include("templates/header") %>
-
-<div class="container mt-5">
-  <% if (!locals.user) { %>
-    <div class="d-flex justify-content-center mt-5 mb-5">
-      <form action='/signup' method='get' class="mr-3 m-5">
-        <button class="btn btn-secondary btn-lg">Signup</button>
-      </form>
-      <form action='/login' method='get' class="m-5">
-        <button class="btn btn-secondary btn-lg">Login</button>
-      </form>
-    </div>
-  <% } else { %>
-
-    <div class="dropdown">
-      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-        FILTER
-      </button>
-      <form class="dropdown-menu" aria-labelledby="dropdownMenuButton" action="/" method="get">
+<!-- <head>
+  <style>
+    .btn-aboutus {
+      border: 1px solid white;
+      background-color: white;
+      color: rgb(5, 5, 80);
+    }
+    .btn-aboutus:hover {
+      background-color: rgb(5, 5, 80);
+      color: white;
+    }
+  </style>
+</head> -->
+<body>
+  <div class="container mt-5">
+    <% if (!locals.user) { %>
+      <div class="text-center mt-5 mb-5">
+        <!-- Central Icon -->
+        <div class="mb-4">
+          <img src="/images/Logo_BBY01.png" class="img-fluid" alt="Central Icon" style="max-width: 400px;">
+        </div>
+        <div class="d-flex flex-column align-items-center">
+          <form action='/login' method='get' class="mb-3">
+            <button class="btn btn-primary btn-lg">Login</button>
+          </form>
+          <form action='/signup' method='get'>
+            <button class="btn btn-primary btn-lg">Signup</button>
+          </form>
+        </div>
+      </div>
+    <% } else { %>
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+          FILTER
+        </button>
+        <form class="dropdown-menu" aria-labelledby="dropdownMenuButton" action="/" method="get">
           <label><input type="checkbox" name="skills" value="Math">Math</label><br>
           <label><input type="checkbox" name="skills" value="Sports">Sports</label><br>
           <label><input type="checkbox" name="skills" value="Physics">Physics</label><br>
@@ -24,28 +42,53 @@
           <label><input type="checkbox" name="skills" value="Social Sciences">Social Sciences</label><br>
           <label><input type="checkbox" name="skills" value="Biology">Biology</label><br>
           <button type="submit" class="btn btn-primary">Save</button>
-      </form>
+        </form>
+      </div>
+      
+      <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button class="nav-link active" id="allUsers-tab" data-bs-toggle="tab" data-bs-target="#allUsers"
+            type="button" role="tab" aria-controls="allUsers" aria-selected="true">All Users</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="matchedUsers-tab" data-bs-toggle="tab" data-bs-target="#matchedUsers"
+            type="button" role="tab" aria-controls="matchedUsers" aria-selected="false">Matched Users</button>
+        </li>
+      </ul>
 
-    </div>
-    
-    <ul class="list-group mt-3">
-      <% users.forEach(user => { %>
-        <%- include('templates/user', { user }) %>
-      <% }) %>
-    </ul>
-  <% } %>
+      <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="allUsers" role="tabpanel" aria-labelledby="allUsers-tab">
+          <ul class="list-group mt-3">
+            <% let email = user.email %>
+            <% users.forEach(user=> { %>
+              <% if (email != user.email) { %>
+              <%- include('templates/user', { user }) %>
+              <% } %>
+              <% }) %>
+          </ul>
+        </div>
+          <% if (connectedArray !=null) { %>
+            <div class="tab-pane fade" id="matchedUsers" role="tabpanel" aria-labelledby="matchedUsers-tab">
+
+              <% connectedArray.forEach(matchedUser=> { %>
+                <% console.log(connectedArray) %>
+                  <%- include('templates/matchedUser', { matchedUser, matchedUsers, sessionEmail }) %>
+                    <% }); %>
+            </div>
+          <% } %>
+      </div>
+      <% } %>
 </div>
 
 <% if (!user) { %>
   <%- include("templates/footer_before_login") %>
-<% } else { %>
-  <%- include("templates/footer_after_login") %>
-<% } %>
+    <% } else { %>
+      <%- include("templates/footer_after_login") %>
+        <% } %>
 
 <!-- Bootstrap JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-LNSAtfFYg/y4XHVQNISc4V/8e8u/D0tc5Bt7sg6syEBXmW6F7sI0AZpxS+ln6xG" crossorigin="anonymous"></script>
-
-</body>
-</html>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+  integrity="sha384-LNSAtfFYg/y4XHVQNISc4V/8e8u/D0tc5Bt7sg6syEBXmW6F7sI0AZpxS+ln6xG"
+  crossorigin="anonymous"></script>

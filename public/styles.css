@@ -1,0 +1,12 @@
+/* public/styles.css */
+/* body {
+    background-color: rgb(255, 255, 255);
+  } */
+  
+.box {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
