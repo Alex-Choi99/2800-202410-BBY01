@@ -1,7 +1,8 @@
 /* public/styles.css */
-/* body {
-    background-color: rgb(255, 255, 255);
-  } */
+body {
+  background: url('/images/main1.jpg') no-repeat center center fixed;
+  background-size: cover;
+}
   
 .box {
     border: 1px solid #ccc;

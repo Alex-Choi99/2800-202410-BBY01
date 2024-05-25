@@ -1,31 +1,27 @@
 <%- include("templates/header") %>
 
-  <div class="container d-flex">
-    <div class="container">
-      <!-- PROFILE HEADER -->
-      <div class="container" id="profileHeader">
-        <!-- IMAGE -->
+<div class="container d-flex">
+  <div class="container">
+    <!-- PROFILE HEADER -->
+    <div class="container" id="profileContainer">
+      <!-- IMAGE -->
+      <div id="profileInfoWrapper">
         <div id="profileImage">
           <% if (user.image_id==null) { %>
-            <div id="mainDefaultProfilePicture">
-              <img src="/images/defaultProfilePicture.png" alt="default">
-            </div>
-            <% } else { %>
-              <img src="<%= user.imageUrl %>" alt="Profile Image" />
-              <% } %>
+          <div id="mainDefaultProfilePicture">
+            <img src="/images/defaultProfilePicture.png" alt="default">
+          </div>
+          <% } else { %>
+          <img src="<%= user.imageUrl %>" alt="Profile Image" />
+          <% } %>
         </div>
         <!-- USERNAME -->
         <div id="profileUserName">
-          <h4>
-            <%= user.name %>
-          </h4>
+          <h4><%= user.name %></h4>
+          <h6><i class="fa-solid fa-calendar-days"></i><span id="joinedText">Joined <%= user.joinDate %></span></h6>
         </div>
-        <!-- INFO -->
       </div>
-      <div id="profileInfo">
-        <h6><i class="fa-solid fa-calendar-days"></i><span id="joinedText">Joined <%= user.joinDate %></span></h6>
-        <hr>
-      </div>
+    </div>
 
       <!-- SKILLS DIV -->
       <div class="card widget-card shadow-sm" id="skillDiv">
@@ -102,4 +98,4 @@
       </div>
     </div>
 
-  <%- include("templates/footer_after_login") %>
+    <%- include("templates/footer_after_login") %>

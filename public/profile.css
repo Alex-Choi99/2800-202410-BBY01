@@ -14,6 +14,32 @@
     margin-bottom: 20pt;
 }
 
+#profileContainer {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  #profileImage {
+    margin-bottom: 20px;
+  }
+  
+  #profileInfoWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  #profileUserName {
+    text-align: center;
+  }
+  
+  #profileUserName h4,
+  #profileUserName h6 {
+    margin: 0;
+  }
+
 #skillDiv {
     width: 35%;
 }
@@ -165,4 +191,28 @@
         margin-left: 0;
         margin-top: 12pt;
     }
+}
+
+#profileContainer {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-top: 20px; /* Add margin at the top */
+  margin-bottom: 20px; /* Add margin at the bottom */
+}
+
+#profileInfoWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#profileUserName {
+  text-align: center;
+}
+
+#profileUserName h4,
+#profileUserName h6 {
+  margin: 0;
 }

@@ -1,10 +1,14 @@
+<head>
+    <link rel="stylesheet" href="settings.css">
+</head>
 <body>
 
 <!-- Include header.ejs -->
 <%- include('templates/header.ejs') %>
 
 <div class="container mt-5">
-    <h1 class="text-center mb-4">Settings</h1>
+    <h1 class="text-center mb-4 settings-title">Settings</h1>
+
 
     <!-- Settings options -->
     <div class="row">
@@ -36,7 +40,7 @@
 </div>
 
 <!-- Include footer.ejs -->
-<%- include ("templates/footer") %>
+<%- include ("templates/footer_after_login") %>
 
 <!-- Bootstrap JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
