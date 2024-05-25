@@ -223,8 +223,6 @@ app.get('/', async (req, res) => {
         } else {
             res.render('index', { users: result, connectedArray: user.connected, chat, matchedUsers, sessionEmail: req.session.email, user });
         }
-
-        
     } catch (error) {
         console.error(error);
         res.status(500).send('Server error');
