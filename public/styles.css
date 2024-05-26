@@ -1,15 +1,210 @@
-/* public/styles.css */
-/* body {
-    background-color: rgb(255, 255, 255);
-  } */
-  
-.box {
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 20px;
-    margin-bottom: 20px;
+/* HEADER */
+.dropdown-menu {
+  max-height: 200px;
+  overflow-y: auto;
 }
+.navbar-custom {
+  background-color: rgb(29, 105, 171);
+  position: relative;
+  z-index: 1;
+  border-bottom: 5px solid rgb(29, 105, 171); /* Added border for a sharp look */
+}
+.navbar-brand-hidden {
+  display: none;
+}
+.btn-aboutus {
+  border: 1px solid white;
+  background-color: rgb(29, 105, 171);
+  color: white; /* Changed text color to white */
+}
+.btn-aboutus:hover {
+  background-color: rgb(5, 5, 80);
+  color: white;
+}
+
+/* NAVBAR */
+.nav-link.btn-primary {
+  background-color: rgb(29, 105, 171);
+  color: white; 
+  border: 1px solid rgb(29, 105, 171);
+  width: 100%; /* Ensure full width */
+  padding-left: 15px; /* Add padding for better alignment */
+  transition:0.3s;
+}
+.nav-link.btn-primary:hover {
+  scale: 1.05;
+  background-color: rgb(20, 74, 122);;
+  color: white;
+}
+.navbar-nav .nav-item form {
+  width: 100%; /* Ensure form takes full width */
+}
+.navbar-nav .nav-item form .nav-link {
+  width: 100%; /* Ensure button takes full width */
+  text-align: center; /* Align text to the left */
+  padding-left: 15px; /* Add padding for better alignment */
+}
+
+@media only screen and (max-width: 768px){
+  #navtop{
+    
+  }
+  .nav-link.btn-primary {
+    text-align: left;
+  }
+  .fa-bell {
+  }
+}
+.rating {
+  --dir: right;
+  --fill: gold;
+  --fillbg: rgba(100, 100, 100, 0.15);
+  --star: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 17.25l-6.188 3.75 1.641-7.031-5.438-4.734 7.172-0.609 2.813-6.609 2.813 6.609 7.172 0.609-5.438 4.734 1.641 7.031z"/></svg>');
+  --stars: 5;
+  --starsize: 3rem;
+  --symbol: var(--star);
+  --value: 1;
+  --w: calc(var(--stars) * var(--starsize));
+  --x: calc(100% * (var(--value) / var(--stars)));
+  block-size: var(--starsize);
+  inline-size: var(--w);
+  position: relative;
+  touch-action: manipulation;
+  -webkit-appearance: none;
+}
+
+[dir="rtl"] .rating {
+  --dir: left;
+}
+
+.rating::-moz-range-track {
+  background: linear-gradient(to var(--dir), var(--fill) 0 var(--x), var(--fillbg) 0 var(--x));
+  block-size: 100%;
+  mask: repeat left center/var(--starsize) var(--symbol);
+}
+
+.rating::-webkit-slider-runnable-track {
+  background: linear-gradient(to var(--dir), var(--fill) 0 var(--x), var(--fillbg) 0 var(--x));
+  block-size: 100%;
+  mask: repeat left center/var(--starsize) var(--symbol);
+  -webkit-mask: repeat left center/var(--starsize) var(--symbol);
+}
+
+.rating::-moz-range-thumb {
+  height: var(--starsize);
+  opacity: 0;
+  width: var(--starsize);
+}
+
+.rating::-webkit-slider-thumb {
+  height: var(--starsize);
+  opacity: 0;
+  width: var(--starsize);
+  -webkit-appearance: none;
+}
+
+.rating,
+.rating-label {
+  display: block;
+  font-family: ui-sans-serif, system-ui, sans-serif;
+}
+
+.rating-label {
+  margin-block-end: 1rem;
+}
+
+/* NO JS */
+.rating--nojs::-moz-range-track {
+  background: var(--fillbg);
+}
+
+.rating--nojs::-moz-range-progress {
+  background: var(--fill);
+  block-size: 100%;
+  mask: repeat left center/var(--starsize) var(--star);
+}
+
+.rating--nojs::-webkit-slider-runnable-track {
+  background: var(--fillbg);
+}
+
+.rating--nojs::-webkit-slider-thumb {
+  background-color: var(--fill);
+  box-shadow: calc(0rem - var(--w)) 0 0 var(--w) var(--fill);
+  opacity: 1;
+  width: 1px;
+}
+
+[dir="rtl"] .rating--nojs::-webkit-slider-thumb {
+  box-shadow: var(--w) 0 0 var(--w) var(--fill);
+}
+
+
+/* OTHER STUFF */
 
 .fa-bell{
   color: rgb(255, 255, 255);
 }
+
+
+/* FOOTER */
+.footer-left > a > img:hover, .footer-right > img:hover {
+  /* background: #ff0404; */
+  /* color: red; */
+  /* filter: drop-shadow(8px 8px 10px gray); */
+  opacity: 0.5;
+}
+
+
+/* ABOUT US */
+.box {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.box > button > img {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.box > button > img:hover {
+  filter: drop-shadow(#ccc 3px 3px 3px);
+}
+
+.img-btn {
+  background-color: white;
+  border: none;
+}
+
+
+/* GENERIC FORM */
+.genericFormDiv {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-top: 10px;
+  padding: 10px;
+}
+
+.genericFormDiv > form > h1 {
+  text-align: center;
+}
+
+
+/* BOOTSTRAP BUTTON OVERRIDES */
+/* .btn-primary, .btn-outline-primary, .text-bg-primary, .card-header {
+  background-color: rgb(00,32,91) !important;
+  border-color: rgb(10,134,61) !important;
+  border-style: solid;
+  border-width: 1px;
+  color: white !important;
+}
+
+.btn-secondary {
+  background-color: rgb(10,134,61) !important;
+  border-color: rgb(00,32,91) !important;
+  border-style: solid;
+  border-width: 1px;
+  color: white !important;
+} */
