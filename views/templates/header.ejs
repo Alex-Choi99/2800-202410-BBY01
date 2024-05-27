@@ -19,20 +19,26 @@
       max-height: 200px;
       overflow-y: auto;
     }
+
     .navbar-custom {
       background-color: rgb(29, 105, 171);
       position: relative;
       z-index: 1;
-      border-bottom: 5px solid rgb(29, 105, 171); /* Added border for a sharp look */
+      border-bottom: 5px solid rgb(29, 105, 171);
+      /* Added border for a sharp look */
     }
+
     .navbar-brand-hidden {
       display: none;
     }
+
     .btn-aboutus {
       border: 1px solid white;
       background-color: rgb(29, 105, 171);
-      color: white; /* Changed text color to white */
+      color: white;
+      /* Changed text color to white */
     }
+
     .btn-aboutus:hover {
       background-color: rgb(5, 5, 80);
       color: white;
@@ -41,36 +47,42 @@
     /* NAVBAR */
     .nav-link.btn-primary {
       background-color: rgb(29, 105, 171);
-      color: white; 
-      border: 1px solid rgb(29, 105, 171);
-      width: 100%; /* Ensure full width */
-      padding-left: 15px; /* Add padding for better alignment */
-      transition:0.3s;
-    }
-    .nav-link.btn-primary:hover {
-      scale: 1.05;
-      background-color: rgb(20, 74, 122);;
       color: white;
-    }
-    .navbar-nav .nav-item form {
-      width: 100%; /* Ensure form takes full width */
-    }
-    .navbar-nav .nav-item form .nav-link {
-      width: 100%; /* Ensure button takes full width */
-      text-align: center; /* Align text to the left */
-      padding-left: 15px; /* Add padding for better alignment */
+      border: 1px solid rgb(29, 105, 171);
+      width: 100%;
+      /* Ensure full width */
+      padding-left: 15px;
+      /* Add padding for better alignment */
+      transition: 0.3s;
     }
 
-    @media only screen and (max-width: 768px){
-      #navtop{
-        
-      }
+    .nav-link.btn-primary:hover {
+      scale: 1.05;
+      background-color: rgb(20, 74, 122);
+      ;
+      color: white;
+    }
+
+    .navbar-nav .nav-item form {
+      width: 100%;
+      /* Ensure form takes full width */
+    }
+
+    .navbar-nav .nav-item form .nav-link {
+      width: 100%;
+      /* Ensure button takes full width */
+      text-align: center;
+      /* Align text to the left */
+      padding-left: 15px;
+      /* Add padding for better alignment */
+    }
+
+    @media only screen and (max-width: 768px) {
       .nav-link.btn-primary {
         text-align: left;
       }
-      .fa-bell {
-      }
     }
+
     .rating {
       --dir: right;
       --fill: gold;
@@ -166,15 +178,20 @@
   <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
     <div class="container" id="navtop">
       <!-- Website Logo -->
-      <a class="navbar-brand <% if (!locals.user) { %>navbar-brand-hidden<% } %>" href="/">
-        <img src="/images/Logo_BBY01.png" alt="Website Logo" width="120">
-      </a>
-      <a href="/notifications">
-        <i class="fa-solid fa-bell"> </i>
-      </a>
+      <div id="logoNotif">
+        <a class="navbar-brand <% if (!locals.user) { %>navbar-brand-hidden<% } %>" href="/">
+          <img src="/images/Logo_BBY01.png" alt="Website Logo" width="120">
+        </a>
+        <% if (locals.user) { %>
+          <a href="/notifications">
+            <i class="fa-solid fa-bell"> </i>
+          </a>
+        <% } %>
+      </div>
+
       <!-- Hamburger Menu -->
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-              aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
 
@@ -200,14 +217,16 @@
                 <button class="nav-link btn btn-primary w-100">Logout</button>
               </form>
             </li>
-          <% } %>
+            <% } %>
         </ul>
         <!-- Conditionally render the About Us button if the user is not logged in -->
         <% if (!locals.user) { %>
           <a class="nav-link btn btn-aboutus me-2 py-2" href="/aboutus">About Us</a>
-        <% } %>
+          <% } %>
       </div>
     </div>
   </nav>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-ho+y8US3+Yb9GP+pCiH+3+sh2Ftah5MZsY3DZ/TuuT9oQXh1Ukr7nD7D5U5CVnE9" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+    integrity="sha384-ho+y8US3+Yb9GP+pCiH+3+sh2Ftah5MZsY3DZ/TuuT9oQXh1Ukr7nD7D5U5CVnE9"
+    crossorigin="anonymous"></script>

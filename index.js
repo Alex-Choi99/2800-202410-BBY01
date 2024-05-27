@@ -735,16 +735,24 @@ app.get('/rate/:email', async (req, res) => {
 });
 
 app.post('/rateSubmit', async (req, res) => {
+    const currentUser = req.session.email;
     const rateValue = req.body.rateValue;
+    const feedback = req.body.feedback;
     const ratedUserEmail = req.body.ratedUserEmail;
     console.log('rated user email:'+ ratedUserEmail);
     const ratedUser = await userModel.findOne({ email: ratedUserEmail });
+    ratedUser.rate.forEach((rate) => {
+        if (currentUser === rate.email) {
+            
+        }
+    });
 
     if (ratedUser) {
         ratedUser.rate.push({
-            email: req.session.email,
+            email: currentUser,
             rating: rateValue,
-            date: new Date()
+            date: new Date(),
+            feedback: feedback
         });
         await ratedUser.save();
 

@@ -7,7 +7,7 @@
       <input type="hidden" name="ratedUserEmail" value="<%= user.email %>">
       <label class="rating-label">
           <input
-              class="rating"
+              class="rating mx-auto"
               max="5"
               oninput="this.style.setProperty('--value', `${this.valueAsNumber}`)"
               step="0.5"
@@ -16,6 +16,7 @@
               name="rateValue"
               value="5">
       </label>
+      <textarea id="feedback" name="feedback" placeholder="Leave a message!" class="mx-auto form-control my-2" rows="3"></textarea>
       <button class="btn btn-primary w-100 py-2" type="submit">Submit</button>
   </form>
   
