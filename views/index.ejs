@@ -3,9 +3,10 @@
   <link rel="stylesheet" href="index.css">
 </head>
 <body>
-  <div class="container mt-5">
-    <% if (!locals.user) { %>
-      <!-- If user is not logged in -->
+  <% if (!locals.user) { %>
+    <!-- If user is not logged in -->
+    <div class="new-box"></div>
+    <div class="container mt-5">
       <div class="text-center mt-5 mb-5">
         <!-- Central Icon -->
         <div class="mb-4">
@@ -13,15 +14,17 @@
         </div>
         <div class="d-flex flex-column align-items-center">
           <form action='/login' method='get' class="mb-3">
-            <button class="btn btn-primary btn-lg">Login</button>
+            <button class="teal-btn btn-lg">Login</button>
           </form>
           <form action='/signup' method='get'>
-            <button class="btn btn-primary btn-lg">Signup</button>
+            <button class="teal-btn btn-lg">Signup</button>
           </form>
         </div>
       </div>
-    <% } else { %>
-      <!-- If user is logged in -->
+    </div>
+  <% } else { %>
+    <!-- If user is logged in -->
+    <div class="container mt-5">
       <div class="dropdown">
         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
           FILTER
@@ -71,8 +74,8 @@
           </div>
         <% } %>
       </div>
-    <% } %>
-  </div>
+    </div>
+  <% } %>
 
   <% if (!user) { %>
     <%- include("templates/footer_before_login") %>

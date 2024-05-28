@@ -1,10 +1,10 @@
 body {
   position: relative;
-  background-color: #333; /* Set background to dark grey */
+  background-color: #5e5e5f; /* Set background to dark grey */
   background-size: cover;
   margin: 0; /* Remove default margin */
   height: 100%; /* Ensure the background covers the full viewport height */
-  color: rgb(68, 68, 68);
+  color: #757474;
 }
 
 .box {
