@@ -54,6 +54,15 @@
     display: flex;
 }
 
+h6 {
+    text-align: center;
+    margin-bottom: 15pt;
+}
+
+.notificationAmount {
+    font-weight: bold;
+}
+
 @media only screen and (max-width: 768px) {
     #notificationCardBody {
         width: 100%;

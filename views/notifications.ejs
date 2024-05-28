@@ -1,31 +1,45 @@
 <!-- Include header.ejs -->
 <%- include('templates/header.ejs') %>
 
-    <div class="container mt-5">
-        <h1 class="text-center mb-4">NOTIFICATIONS</h1>
-        <div class="container">
-            <div id="border">
-                <% notifications.forEach(notification=> { %>
-                    <div class="card" id="notificationCard">
-                        <div class="card-body" id="notificationCardBody">
-                            <div>
-                                <span id="email"> <%= notification.senderEmail %></span><%= notification.message %>
-                            </div>
-                            <div id="notificationButtonDiv" class="ms-auto d-flex">
-                                <form action="/acceptRequest" method="post" id="acceptButtonForm">
-                                    <input type="hidden" name="notificationId" value="<%= notification._id %>">
-                                    <button type="submit" id="acceptButton">ACCEPT</button>
-                                </form>
-                                <form action="/denyRequest" method="post" id="denyButtonForm">
-                                    <input type="hidden" name="notificationId" value="<%= notification._id %>">
-                                    <button type="submit"  id="denyButton">DENY</button>
-                                </form>
+    <div class="container mt-3">
+        <h1 class="text-center mb-3">NOTIFICATIONS</h1>
+        <hr>
+        <% if (notifications.length == 0) { %>
+            <div>
+                <h6>You currently have <span class="notificationAmount">0</span> notifications.</h6>
+            </div>
+        <% } else { %>
+            <div>
+                <% if (notifications.length == 1) { %>
+                    <h6><span class="notificationAmount"><%= notifications.length %></span> new notification</h6>
+                <% } else { %>
+                    <h6><span class="notificationAmount"><%= notifications.length %></span> new notifications</h6>
+                <% } %>
+            </div>
+            <div class="container">
+                <div id="border">
+                    <% notifications.forEach(notification=> { %>
+                        <div class="card" id="notificationCard">
+                            <div class="card-body" id="notificationCardBody">
+                                <div>
+                                    <span id="email"> <%= notification.senderEmail %></span><%= notification.message %>
+                                </div>
+                                <div id="notificationButtonDiv" class="ms-auto d-flex">
+                                    <form action="/acceptRequest" method="post" id="acceptButtonForm">
+                                        <input type="hidden" name="notificationId" value="<%= notification._id %>">
+                                        <button type="submit" id="acceptButton">ACCEPT</button>
+                                    </form>
+                                    <form action="/denyRequest" method="post" id="denyButtonForm">
+                                        <input type="hidden" name="notificationId" value="<%= notification._id %>">
+                                        <button type="submit"  id="denyButton">DENY</button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                <% }); %>
+                    <% }); %>
+                </div>
             </div>
-        </div>
+        <% } %>
 
 <!-- Include footer.ejs -->
 <%- include ("templates/footer_after_login") %>
