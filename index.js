@@ -630,9 +630,30 @@ app.post('/requestSent', async (req, res) => {
 app.use('/notifications', sessionValidation); // Ensure user is logged in
 app.get('/notifications', async (req, res) => {
     const email = req.session.email;
-    const notifications = await Notification.find({ recipientEmail: email, read: false });
+    var page = req.query.page || 1;
+    const PAGE_SIZE = 10;
+    const notifications = await Notification.find({ recipientEmail: email, read: false })
+        .skip((page - 1) * PAGE_SIZE).limit(PAGE_SIZE);
+    const totalPages = Math.ceil(notifications.length / PAGE_SIZE);
+    let startPage = Math.max(1, page - 2);
+    let endPage = Math.min(totalPages, page + 2)
+    switch (page) {
+        case 1:
+            endPage = page + 4;
+            break;
+        case 2:
+            endPage = page + 3;
+            break;
+        case totalPages:
+            startPage = totalPages - 4;
+            break;
+        case totalPages - 1:
+            startPage = totalPages - 4;
+            break;
+    }
+    
 
-    res.render('notifications', { notifications });
+    res.render('notifications', { startPage, endPage, notifications, currentPage: page, totalPages });
 });
 
 app.post('/acceptRequest', async (req, res) => {

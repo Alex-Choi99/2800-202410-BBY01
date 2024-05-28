@@ -1,33 +1,46 @@
-
 <!-- Include header.ejs -->
 <%- include('templates/header.ejs') %>
 
-<div class="container mt-5">
-    <h1 class="text-center mb-4">Notifications</h1>
-    <ul>
-        <% notifications.forEach(notification => { %>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Notifications</h1>
+        <% notifications.forEach(notification=> { %>
             <li>
                 <%= notification.message %>
-                <form action="/acceptRequest" method="post">
-                    <input type="hidden" name="notificationId" value="<%= notification._id %>">
-                    <button type="submit">Accept</button>
-                </form>
-                <form action="/denyRequest" method="post">
-                    <input type="hidden" name="notificationId" value="<%= notification._id %>">
-                    <button type="submit">Deny</button>
-                </form>
+                    <form action="/acceptRequest" method="post">
+                        <input type="hidden" name="notificationId" value="<%= notification._id %>">
+                        <button type="submit">Accept</button>
+                    </form>
+                    <form action="/denyRequest" method="post">
+                        <input type="hidden" name="notificationId" value="<%= notification._id %>">
+                        <button type="submit">Deny</button>
+                    </form>
             </li>
-        <% }); %>
-    </ul>
+            <% }) %>
 
-    
+                <div id="pagination">
+                    <% console.log("Pagination Current Page: " + currentPage) %>
+    <% console.log(" StartPage: " + startPage) %>
+    <% console.log(" EndPage: " + endPage) %>
+    <% if (currentPage > 1) { %>
+        <button class=" btn btn-primary page ml-1" id="prevButton">PREVIOUS</button>
+                        <% } %>
+                            <% for (let i=startPage; i <=endPage; i++) { %>
+                                <% if (i==currentPage) { %>
+                                    <button class="btn btn-success page ml-1 numberedButtons" value="<%= i %>">
+                                        <%= i %>
+                                    </button>
+                                    <% } else { %>
+                                        <button class="btn btn-primary page ml-1 numberedButtons" value="<%= i %>">
+                                            <%= i %>
+                                        </button>
+                                        <% } %>
+                                            <% } %>
+                                                <% if (currentPage < totalPages) { %>
+                                                    <button class="btn btn-primary page ml-1"
+                                                        id="nextButton">NEXT</button>
+                                                    <% } %>
+                </div>
 
+<script src="notificationPagination.js"></script>
 <!-- Include footer.ejs -->
 <%- include ("templates/footer_after_login") %>
-
-<!-- Bootstrap JS -->
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-LNSAtfFYg/y4XHVQNISc4V/8e8u/D0tc5Bt7sg6syEBXmW6F7sI0AZpxS+ln6xG" crossorigin="anonymous"></script> -->
-
-
