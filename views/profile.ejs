@@ -65,7 +65,7 @@
       </div>
       <div id="commentList">
         <% user.rate.forEach(feedback => { %>
-          <% if(feedback){ %>
+          <% if(feedback.feedback){ %>
             <div class="comments list-group-item bg-body-tertiary"><%= feedback.feedback %></div>
           <% } %>
         <% }); %>
@@ -109,4 +109,6 @@
       </div>
     </div>
   </div>
+  
+  <script src="profile.js"></script>
   <%- include("templates/footer_after_login") %>
