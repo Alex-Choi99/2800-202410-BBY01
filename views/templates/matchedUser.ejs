@@ -1,29 +1,29 @@
 <li class="d-flex list-group-item justify-content-between align-items-center">
     <%= matchedUser.name %>
     <div class="ms-auto d-flex">
-        <form action="/unmatch" method="post">
-            <input type="hidden" name="unmatch" value="<%= matchedUser.email %>">
-            <button class="btn btn-success requestBTN">Unmatch</button>
+      <form action="/unmatch" method="post">
+        <input type="hidden" name="unmatch" value="<%= matchedUser.email %>">
+        <button class="btn btn-danger requestBTN">Unmatch</button>
+      </form>
+      <% var hasReviewed = false; %>
+      <% for(let i = 0; i < matchedUsers.length; i++) { %>
+        <% let rateList = matchedUsers[i].rate; %>
+        <% console.log(`session email`, sessionEmail); %>
+        <% for(let j = 0; j < rateList.length; j++) { %>
+          <% console.log(`rateList[j].email`, rateList[j].email); %>
+          <% if(rateList[j].email == sessionEmail) { %>
+            <% hasReviewed = true; %>
+            <% console.log(hasReviewed); %>
+          <% } %>
+        <% } %>
+      <% } %>
+      <% if (!hasReviewed) { %>
+        <form action="/rate/<%= matchedUser.email %>" method="get">
+          <button type="submit" class="btn btn-warning requestBTN">Rate</button>
         </form>
-        <% var hasReviewed = false; %>
-        <% for(let i = 0; i < matchedUsers.length; i++) { %>
-            <% let rateList = matchedUsers[i].rate; %>
-            <% console.log(`session email`, sessionEmail); %>
-            <% for(let j = 0; j < rateList.length; j++) { %>
-                <% console.log(`rateList[j].email`, rateList[j].email); %>
-                <% if(rateList[j].email == sessionEmail) { %>
-                    <% hasReviewed = true; %>
-                    <% console.log(hasReviewed); %>
-                <% } %>
-            <% } %>
-        <% } %>
-        <% if (!hasReviewed) { %>
-            <form action="/rate/<%= matchedUser.email %>" method="get">
-                <button type="submit" class="btn btn-success requestBTN">Rate</button>
-            </form>
-        <% } %>
-        <form action="/chat/<%= matchedUser.chatID %>" method="get">
-            <button type="submit" class="btn btn-success requestBTN">Chat</button>
-          </form>
+      <% } %>
+      <form action="/chat/<%= matchedUser.chatID %>" method="get">
+        <button type="submit" class="btn btn-success requestBTN">Chat</button>
+      </form>
     </div>
 </li>
