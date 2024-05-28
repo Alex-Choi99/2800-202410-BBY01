@@ -2,12 +2,64 @@
     width: 100px;
 }
 
+#profileDiv{
+    display: grid;
+    grid-template-areas:
+    "profileHeader profileHeader profileHeader profileHeader"
+    "profileInfo feedback feedback feedback"
+    "skillDiv feedback feedback feedback"
+    "skillDiv feedback feedback feedback"
+    ;
+}
+
+#profileDiv div{
+    margin: 10px;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+#feedback{
+    grid-area: feedback;
+}
+
+#description{
+    margin-top: 35pt;
+    margin-left: 20pt;
+    width: 50%;
+}
+
+#commentList{
+    overflow-y: scroll;
+}
+
+#reviewGrid{
+    display: grid;
+    grid-template-areas:
+    "reviewTitle amountDiv average";
+    grid-template-columns: 20% 30% 50%;
+}
+
+#reviewTitle{
+    grid-area: reviewTitle;
+}
+
+#amountDiv{
+    grid-area: amountDiv;
+}
+
+#average{
+    grid-area: average;
+}
+
+
 #profileUserName {
+    width: 30%;
     margin-top: 35pt;
     margin-left: 20pt;
 }
 
 #profileHeader {
+    grid-area: profileHeader;
     display:flex;
     margin-left: 20pt;
     margin-top: 20pt;
@@ -15,12 +67,7 @@
 }
 
 #skillDiv {
-    width: 35%;
-}
-
-#reviewDiv {
-    margin-top: 10pt;
-    width: 35%;
+    grid-area: skillDiv;
 }
 
 #skillsEditButton {
@@ -33,8 +80,8 @@
 }
 
 #profileInfo {
+    grid-area: profileInfo;
     text-align: center;
-    width: 35%;
     color: gray;
 }
 
