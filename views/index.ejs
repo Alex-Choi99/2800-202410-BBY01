@@ -35,7 +35,17 @@
           FILTER BY SKILL
         </button>
         <form id="filterMenu" class="dropdown-menu" aria-labelledby="dropdownMenuButton" action="/" method="get" >
+          <% const skills = ['Math', 'Sports', 'Physics', 'Computer Technology', 'Social Sciences', 'Biology']; %>
+          <% skills.forEach(skill => { %>
             <li>
+              <label for="<%= skill %>">
+                <%= skill %>
+                <input id="<%= skill %>" name="skills" type="checkbox" value="<%= skill %>" class="dropdown-item form-check-input allow-focus"
+                <%= (selectedSkills && selectedSkills.includes(skill)) ? 'checked' : '' %>>
+              </label>
+            </li>
+          <% }) %>
+            <!-- <li>
               <label for="mathSkill">Math<input id="mathSkill" name="skills" type="checkbox" value="Math" class="dropdown-item form-check-input allow-focus"></label>
             </li>
             <li>
@@ -52,7 +62,7 @@
             </li>
             <li>
               <label for="biologySkill">Biology<input id="biologySkill" type="checkbox" name="skills" value="Biology" class="dropdown-item form-check-input allow-focus"></label>
-            </li>
+            </li> -->
             <div id="filterSaveButtonDiv">
               <button type="submit" id="filterSaveButton">SAVE</button>
             </div>

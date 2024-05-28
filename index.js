@@ -177,10 +177,10 @@ app.get('/', async (req, res) => {
 
         // Apply any additional filters if needed
         const filters = {};
+        var skillsArray = [];
         
 
         if (req.query.skills) {
-            let skillsArray;
             if (Array.isArray(req.query.skills)) {
                 skillsArray = req.query.skills;
             } else if (typeof req.query.skills === 'string') {
@@ -221,7 +221,7 @@ app.get('/', async (req, res) => {
         if (!isValidSession(req)) {
             res.render('index', { users: result });
         } else {
-            res.render('index', { users: result, connectedArray: user.connected, chat, matchedUsers, sessionEmail: req.session.email, user });
+            res.render('index', { users: result, connectedArray: user.connected, chat, matchedUsers, sessionEmail: req.session.email, user, selectedSkills: skillsArray });
         }
     } catch (error) {
         console.error(error);
