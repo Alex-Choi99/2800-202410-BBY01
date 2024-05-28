@@ -488,7 +488,7 @@ app.post('/setTags', async (req, res) => {
         }
 
     } */
-    const user = await userModel.findOne({ email: req.session.email });
+
 
     // Extract tags from the request body
     const { skill1, skill2, skill3, skill4, skill5, skill6 } = req.body;

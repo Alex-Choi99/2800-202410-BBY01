@@ -30,18 +30,32 @@
         </div>
       </div>
     <% } else { %>
-      <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-          FILTER
+      <div class="dropdown" id="filter">
+        <button class="dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+          FILTER BY SKILL
         </button>
-        <form class="dropdown-menu" aria-labelledby="dropdownMenuButton" action="/" method="get">
-          <label><input type="checkbox" name="skills" value="Math">Math</label><br>
-          <label><input type="checkbox" name="skills" value="Sports">Sports</label><br>
-          <label><input type="checkbox" name="skills" value="Physics">Physics</label><br>
-          <label><input type="checkbox" name="skills" value="Computer Technology">Computer Technology</label><br>
-          <label><input type="checkbox" name="skills" value="Social Sciences">Social Sciences</label><br>
-          <label><input type="checkbox" name="skills" value="Biology">Biology</label><br>
-          <button type="submit" class="btn btn-primary">Save</button>
+        <form id="filterMenu" class="dropdown-menu" aria-labelledby="dropdownMenuButton" action="/" method="get" >
+            <li>
+              <label for="mathSkill">Math<input id="mathSkill" name="skills" type="checkbox" value="Math" class="dropdown-item form-check-input allow-focus"></label>
+            </li>
+            <li>
+              <label for="sportsSkill">Sports<input id="sportsSkill" name="skills" type="checkbox" value="Sports" class="dropdown-item form-check-input allow-focus"></label>
+            </li>
+            <li>
+              <label for="physicsSkill">Physics<input id="physicsSkill" name="skills" type="checkbox" value="Physics" class="dropdown-item form-check-input allow-focus"></label>
+            </li>
+            <li>
+              <label for="compSkill">Computer Technology<input id="compSkill" name="skills" type="checkbox" value="Computer Technology" class="dropdown-item form-check-input allow-focus"></label>
+            </li>
+            <li>
+              <label for="socialScienceSkill">Social Sciences<input id="socialScienceSkill" name="skills" type="checkbox" value="Social Sciences" class="dropdown-item form-check-input allow-focus"></label>
+            </li>
+            <li>
+              <label for="biologySkill">Biology<input id="biologySkill" type="checkbox" name="skills" value="Biology" class="dropdown-item form-check-input allow-focus"></label>
+            </li>
+            <div id="filterSaveButtonDiv">
+              <button type="submit" id="filterSaveButton">SAVE</button>
+            </div>
         </form>
       </div>
       
@@ -92,3 +106,4 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
   integrity="sha384-LNSAtfFYg/y4XHVQNISc4V/8e8u/D0tc5Bt7sg6syEBXmW6F7sI0AZpxS+ln6xG"
   crossorigin="anonymous"></script>
+<script src="filter.js"></script>
