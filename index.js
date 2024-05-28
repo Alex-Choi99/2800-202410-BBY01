@@ -174,7 +174,15 @@ app.get('/', async (req, res) => {
 
         // Find the chats where the user is a participant
         const chat = await Chat.find({ participants: userEmail })
-
+        const notifications = await Notification.find({ senderEmail: userEmail });
+        var notificationList = [];
+        notifications.forEach(notification => {
+            if (notification.senderEmail == userEmail) {
+                console.log(notification);
+                notificationList.push(notification.recipientEmail);
+            }
+        });
+        console.log(notificationList);
         // Apply any additional filters if needed
         const filters = {};
         var skillsArray = [];
@@ -221,7 +229,7 @@ app.get('/', async (req, res) => {
         if (!isValidSession(req)) {
             res.render('index', { users: result });
         } else {
-            res.render('index', { users: result, connectedArray: user.connected, chat, matchedUsers, sessionEmail: req.session.email, user, selectedSkills: skillsArray });
+            res.render('index', { users: result, connectedArray: user.connected, chat, matchedUsers, sessionEmail: req.session.email, user, selectedSkills: skillsArray, notificationList: notificationList});
         }
     } catch (error) {
         console.error(error);
@@ -606,7 +614,7 @@ app.post('/requestSent', async (req, res) => {
     const notification = new Notification({
         recipientEmail,
         senderEmail,
-        message: `${senderEmail} has sent you a match request.`
+        message: ` has sent you a match request.`
     });
 
     await notification.save();

@@ -2,9 +2,15 @@
     <% user.image %>
     <%= user.name %>
     <div class="ms-auto d-flex">
-        <form action="/requestSent" method="post">
+        <form action="/requestSent" method="post" class="matchForm">
             <input type="hidden" name="recipientEmail" value="<%= user.email %>">
-            <button class="btn btn-success requestBTN" data-bs-toggle="modal" data-bs-target="#matchModal" id="matchButton">Match</button>
+            <% console.log(notificationList) %>
+            <% console.log("ASJIHDIUAHODS") %>
+            <% if (notificationList.includes(user.email)) { %>
+                <button class="btn btn-success requestBTN" disabled>Pending</button>
+            <% } else { %>
+                <button class="btn btn-success requestBTN" data-bs-toggle="modal" data-bs-target="#matchModal" id="matchButton">Match</button>
+            <% } %>
         </form>
     </div>
 </li>
