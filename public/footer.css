@@ -1,0 +1,24 @@
+/* Footer Customization */
+footer {
+    background: url('/images/header.jpg') no-repeat center center;
+    background-size: cover;
+    border-top: 5px solid rgb(62, 62, 62); /* Added border for a sharp look */
+    border-left: 5px solid rgb(62, 62, 62);
+    border-right: 5px solid rgb(62, 62, 62);
+    padding: 10px; /* Reduced padding to fit content within maximum height */
+    display: flex;
+    justify-content: space-evenly; /* Evenly space the items */
+    position: fixed; /* Position the footer */
+    left: 0; /* Align to the left */
+    bottom: 0; /* Align to the bottom */
+    width: 100%; /* Take the full width of the viewport */
+    max-height: 100px; /* Set maximum height */
+    box-sizing: border-box; /* Include padding and border in total height */
+}
+
+.footer-left,
+.footer-right {
+    display: flex;
+    align-items: center; /* Vertically center the items */
+    justify-content: space-between; /* Evenly space the items horizontally */
+}

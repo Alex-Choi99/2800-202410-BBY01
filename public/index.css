@@ -1,87 +1,102 @@
-.dropdown-item {
-    left: 50pt;
-}
-
-/* #filterMenu li > button {
-    display: block;
-    margin: auto;
-    width: 90%;
-} */
-
-#filterMenu li > label {
-    width: 150pt;
-    margin-left: 10pt;
-}
-
-#filterMenu li.active {
-    background-color: #569fe8;
-    font-weight:bold;
-    color: white;
-}
-
-#filterMenu li:hover, 
-#filterMenu li:focus {
-    background-color: #f5f5f5;
-}
-
-#filterMenu li.active:hover,
-#filterMenu li.active:focus {
-    background-color: #2b82d9;
-    color: white;
-}
-
-#filterMenu li {
-    padding-top: 3pt;
-    padding-bottom: 3pt;
+/* Style for both user and matched user cards */
+.user-card,
+.matched-users-card {
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    background: linear-gradient(to bottom, rgb(68, 68, 68), rgb(68, 68, 68)); /* Gradient background */
+    color: #ffffff; /* Text color */
     display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
-#filterMenu input{
-    display: none;
+/* Additional styles for buttons */
+.user-card .btn,
+.matched-user-card .btn {
+    margin-left: 5px; /* Add some space between buttons */
 }
 
-#filterSaveButton {
-    background-color:rgb(3, 121, 199);
-    padding: 5pt;
-    border-style: solid;
-    border-width: 2pt;
-    border-radius: 10px;
-    margin: 0;
-    border-color: rgb(10, 104, 167);
-    width:80%;
-    transition: 0.3s;
+.fa-bell {
+    color: rgb(255, 255, 255);
+}
+
+/* Custom CSS for Navigation Buttons */
+.navigation {
+    border-radius: 10px 10px 0 0; /* Rounded top corners, straight bottom corners */
+    background-color: transparent; /* Transparent background for inactive tabs */
+    color: white; /* White text color for inactive tabs */
+    border: 1px solid transparent; /* Transparent border for inactive tabs */
+    margin-right: 5px; /* Space between tabs */
+    padding: 10px 15px; /* Padding for better appearance */
+    transition: background-color 0.3s, color 0.3s, border 0.3s; /* Smooth transition for hover effect */
+}
+
+.navigation.active {
+    background-color: white; /* White background for active tab */
+    color: black; /* Black text color for active tab */
+    border: 1px solid white; /* White border to blend with the line */
+    border-bottom-color: transparent; /* Make bottom border transparent to fuse with the line */
+}
+
+.navigation:hover {
+    background-color: rgba(225, 225, 225, 0.1); /* Slightly transparent white on hover */
+    color: white; /* White text color on hover */
+    border: 1px solid rgba(255, 255, 255, 0.3); /* Slightly transparent white border on hover */
+    border-bottom-color: transparent; /* Ensure bottom border is still transparent on hover */
+}
+
+.nav-tabs {
+    border-bottom: 2px solid white; /* White line under the tabs */
+    padding-bottom: 0; /* Remove extra padding */
+}
+
+.tab-content {
+    padding-top: 10px; /* Space between the line and the content */
+}
+
+.dropdown-menu {
+    padding: 10px; /* Add padding to the dropdown menu */
+}
+
+
+.dropdown-menu label {
+    margin-right: 10px; /* Add right margin to the dropdown menu labels */
+    margin-left: 10px; /* Add left margin to the dropdown menu labels */
+}
+
+.dropdown-menu button {
+    margin-top: 10px; /* Add top margin to the "Save" button */
+}
+
+#myTab {
+    margin-top: 20px; /* Add margin top to the navigation tab */
+}
+
+/* New box styles */
+.new-box {
+    position: absolute;
+    top: 40%; /* Adjusted to position the top part in the center */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30%;
+    height: 60%;
+    background-color: rgba(255, 255, 255, 0.8); /* White background with some transparency */
+    border-radius: 20px; /* Rounded corners */
+    z-index: -1; /* Place behind other elements */
+}
+
+/* Custom button styles */
+.teal-btn {
+    background-color: rgb(26, 147, 195);
     color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
-#filterSaveButton:hover {
-    scale:1.04;
-    background-color:rgb(33, 150, 228);
+.teal-btn:hover {
+    background-color: #1f5980; /* Darker teal on hover */
 }
-
-#filterSaveButtonDiv {
-    margin-top:10pt;
-    text-align: center;
-}
-
-#filterMenu {
-    overflow: auto;
-    min-height: 200pt;
-}
-
-#dropdownMenuButton {
-    border-style: solid;
-    border-width: 2pt;
-    padding: 5pt;
-    border-radius: 10px;
-    border-color: rgb(35, 116, 166);
-    background-color: #247fc0;
-    color: white;
-    transition: 0.3s;
-    margin-bottom: 15pt;
-}
-
-#dropdownMenuButton:hover {
-    border-color: rgb(21, 87, 128);
-    background-color: #1a5f91;
-}
-

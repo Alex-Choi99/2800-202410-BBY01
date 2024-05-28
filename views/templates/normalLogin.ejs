@@ -1,9 +1,9 @@
 
 
-<div class="d-flex justify-content-center flex-nowrap">
-  <div class="col-10 col-md-4 genericFormDiv">
+<div style="display: flex; justify-content: center; align-items: flex-start; height: 100vh;">
+  <div class="col-10 col-md-4" style="background-color: white; padding: 20px; border-radius: 8px;">
     <form action="/loginSubmit" method="post">
-      <h1 class="h3 mb-3 fw-normal">Please Log In</h1>
+      <h1 class="h3 mb-3 fw-normal text-center">Please Log In</h1>
       
       <% if (typeof errorMessage !== 'undefined' && errorMessage) { %>
         <div class="alert alert-danger"><%= errorMessage %></div>
@@ -22,7 +22,7 @@
       <button class="btn btn-primary w-100 py-2" type="submit">Log in</button>
     </form>
 
-    <div class="d-flex justify-content-center flex-nowrap">
+    <div class="d-flex justify-content-center">
       <form action="/login?type=forgor" method="get">
         <div class="form-floating">
           <input name="type" type="hidden" class="form-control" value="forgor">
