@@ -1,0 +1,68 @@
+#denyButton, #acceptButton {
+    padding: 3pt;
+    margin: 2pt;
+    color: white;
+    border-style: solid;
+    border-radius: 5px;
+}
+
+#denyButton {
+    padding-left: 10pt;
+    padding-right: 10pt;
+    background-color:rgb(205, 14, 14);
+    border-color: rgb(181, 23, 23);
+    margin-right: 0;
+    transition: 0.3s;
+}
+
+#denyButton:hover {
+    background-color: rgb(236, 14, 14);
+    border-color: rgb(185, 24, 24);
+    scale: 1.02;
+}
+
+#acceptButton {
+    padding-left: 6pt;
+    padding-right: 6pt;
+    background-color: rgb(33, 130, 33);
+    border-color: rgb(26, 123, 26);
+    transition: 0.3s;
+}
+
+#acceptButton:hover {
+    background-color: rgb(38, 160, 38);
+    border-color: rgb(35, 147, 35);
+    scale: 1.02;
+}
+
+#email {
+    font-weight: bold;
+}
+
+#border {
+    padding: 10pt;
+    background-color: lightgray;
+    border-radius: 10px;
+}
+
+#notificationCard {
+    margin-top: 2pt;
+    margin-bottom: 2pt;
+}
+
+#notificationCardBody {
+    display: flex;
+}
+
+@media only screen and (max-width: 768px) {
+    #notificationCardBody {
+        width: 100%;
+        display: block;
+    }
+
+    #notificationButtonDiv {
+        margin-top: 4pt;
+        display:flex;
+        justify-content: center;
+    }
+}

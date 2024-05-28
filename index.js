@@ -588,12 +588,12 @@ app.get('/requestSent', (req, res) => {
 app.post('/requestSent', async (req, res) => {
     const recipientEmail = req.body.recipientEmail; // Assuming recipientEmail is sent in the request body
     console.log(recipientEmail);
-    const senderEmail = req.session.email; // Assuming the sender is the logged-in user
+    const senderEmail = req.session.userId; // Assuming the sender is the logged-in user
 
     const notification = new Notification({
         recipientEmail,
         senderEmail,
-        message: `${senderEmail} has sent you a match request.`
+        message: ` has sent you a match request.`
     });
 
     await notification.save();

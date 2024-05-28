@@ -1,26 +1,31 @@
-
 <!-- Include header.ejs -->
 <%- include('templates/header.ejs') %>
 
-<div class="container mt-5">
-    <h1 class="text-center mb-4">Notifications</h1>
-    <ul>
-        <% notifications.forEach(notification => { %>
-            <li>
-                <%= notification.message %>
-                <form action="/acceptRequest" method="post">
-                    <input type="hidden" name="notificationId" value="<%= notification._id %>">
-                    <button type="submit">Accept</button>
-                </form>
-                <form action="/denyRequest" method="post">
-                    <input type="hidden" name="notificationId" value="<%= notification._id %>">
-                    <button type="submit">Deny</button>
-                </form>
-            </li>
-        <% }); %>
-    </ul>
-
-    
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">NOTIFICATIONS</h1>
+        <div class="container">
+            <div id="border">
+                <% notifications.forEach(notification=> { %>
+                    <div class="card" id="notificationCard">
+                        <div class="card-body" id="notificationCardBody">
+                            <div>
+                                <span id="email"> <%= notification.senderEmail %></span><%= notification.message %>
+                            </div>
+                            <div id="notificationButtonDiv" class="ms-auto d-flex">
+                                <form action="/acceptRequest" method="post" id="acceptButtonForm">
+                                    <input type="hidden" name="notificationId" value="<%= notification._id %>">
+                                    <button type="submit" id="acceptButton">ACCEPT</button>
+                                </form>
+                                <form action="/denyRequest" method="post" id="denyButtonForm">
+                                    <input type="hidden" name="notificationId" value="<%= notification._id %>">
+                                    <button type="submit"  id="denyButton">DENY</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                <% }); %>
+            </div>
+        </div>
 
 <!-- Include footer.ejs -->
 <%- include ("templates/footer_after_login") %>
@@ -29,5 +34,3 @@
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-LNSAtfFYg/y4XHVQNISc4V/8e8u/D0tc5Bt7sg6syEBXmW6F7sI0AZpxS+ln6xG" crossorigin="anonymous"></script> -->
-
-
