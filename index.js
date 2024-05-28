@@ -346,7 +346,7 @@ app.post('/resetConfirm', async (req, res) => {
                     TextPart: `Your new temporary code is ${tempCode}
 http://localhost:3025/newPW
                     `,
-                    // TemplateID: 5969125,
+                    TemplateID: 6005138,
                     // Variables: vari
                 },
             ],
@@ -362,7 +362,7 @@ http://localhost:3025/newPW
         //     5969125,
 
         // );
-        res.render('resetConfirm');
+        res.render('login', { forgor: '', errorMessage: 'An error occurred while processing your request.' });
     } catch (error) {
         console.error('Error in resetConfirm:', error);
         res.render('login', { forgor: 'forgor', errorMessage: 'An error occurred while processing your request.' });
