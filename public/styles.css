@@ -148,7 +148,7 @@
 
 
 /* FOOTER */
-.footer-left > a > img:hover, .footer-right > img:hover {
+.footer-left > a > img:hover, .footer-right > img:hover, .footer-right > a > img:hover {
   /* background: #ff0404; */
   /* color: red; */
   /* filter: drop-shadow(8px 8px 10px gray); */
