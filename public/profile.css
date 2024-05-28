@@ -178,18 +178,14 @@
 }
 
 @media only screen and (max-width: 768px) {
-
-
-    #profileInfo {
-        width: 100%;
-    }
-
-    #reviewDiv {
-        width: 100%;
-    }
-
-    #skillDiv {
-        width: 100%;
+    #profileDiv{
+        display: grid;
+        grid-template-areas:
+        "profileHeader"
+        "profileInfo"
+        "skillDiv"
+        "feedback"
+        ;
     }
 
     .settingsDiv .card {
