@@ -1,53 +1,54 @@
-#defaultProfilePicture img, #mainDefaultProfilePicture img{
+#defaultProfilePicture img,
+#mainDefaultProfilePicture img {
     width: 100px;
 }
 
-#profileDiv{
+#profileDiv {
     display: grid;
     grid-template-areas:
-    "profileHeader profileHeader profileHeader profileHeader"
-    "profileInfo feedback feedback feedback"
-    "skillDiv feedback feedback feedback"
-    "skillDiv feedback feedback feedback"
+        "profileHeader profileHeader profileHeader profileHeader"
+        "profileInfo feedback feedback feedback"
+        "skillDiv feedback feedback feedback"
+        "skillDiv feedback feedback feedback"
     ;
 }
 
-#profileDiv div{
+#profileDiv div {
     margin: 10px;
     padding: 10px;
     border-radius: 4px;
 }
 
-#feedback{
+#feedback {
     grid-area: feedback;
 }
 
-#description{
+#description {
     margin-top: 35pt;
     margin-left: 20pt;
     width: 50%;
 }
 
-#commentList{
+#commentList {
     overflow-y: scroll;
 }
 
-#reviewGrid{
+#reviewGrid {
     display: grid;
     grid-template-areas:
-    "reviewTitle amountDiv average";
+        "reviewTitle amountDiv average";
     grid-template-columns: 20% 30% 50%;
 }
 
-#reviewTitle{
+#reviewTitle {
     grid-area: reviewTitle;
 }
 
-#amountDiv{
+#amountDiv {
     grid-area: amountDiv;
 }
 
-#average{
+#average {
     grid-area: average;
 }
 
@@ -60,7 +61,7 @@
 
 #profileHeader {
     grid-area: profileHeader;
-    display:flex;
+    display: flex;
     margin-left: 20pt;
     margin-top: 20pt;
     margin-bottom: 20pt;
@@ -74,7 +75,9 @@
     float: right;
 }
 
-#skillsTitle, #reviewTitle, #settingsTitle {
+#skillsTitle,
+#reviewTitle,
+#settingsTitle {
     font-weight: bold;
     font-size: 20pt;
 }
@@ -89,9 +92,9 @@
     margin-left: 5pt;
 }
 
-#eachSkill {
+.eachSkill {
     color: white;
-    background-color:#228cdd;
+    background-color: #228cdd;
 }
 
 #profileImage:hover {
@@ -104,14 +107,17 @@
 }
 
 .settingsDiv {
-    position: fixed; /* Use fixed to cover the entire viewport */
+    position: fixed;
+    /* Use fixed to cover the entire viewport */
     top: 0;
     width: 100%;
     height: 100%;
     background-color: rgba(128, 128, 128, 0.5);
     display: none;
-    justify-content: center; /* Center content vertically */
-    align-items: center; /* Center content horizontally */
+    justify-content: center;
+    /* Center content vertically */
+    align-items: center;
+    /* Center content horizontally */
 }
 
 .settingsDiv.active {
@@ -119,7 +125,8 @@
 }
 
 #saveButton {
-    background-color: #0888d8;;
+    background-color: #0888d8;
+    ;
     border: none;
     color: white;
     margin-top: 15pt;
@@ -138,7 +145,7 @@
 }
 
 #exitIcon {
-    margin-top:3pt;
+    margin-top: 3pt;
     border-radius: 25px;
     padding-left: 4pt;
     padding-right: 4pt;
@@ -160,7 +167,7 @@
     padding: 6pt;
     color: white;
     background-color: rgb(104, 104, 104);
-    margin-left:30pt;
+    margin-left: 30pt;
     transition: 0.3s;
 }
 
@@ -173,18 +180,19 @@
     margin-left: 10pt;
 }
 
-#averageRatingSpan, #amountDiv {
+.infoNum {
     font-weight: bold;
+    margin: 0 1rem;
 }
 
 @media only screen and (max-width: 768px) {
-    #profileDiv{
+    #profileDiv {
         display: grid;
         grid-template-areas:
-        "profileHeader"
-        "profileInfo"
-        "skillDiv"
-        "feedback"
+            "profileHeader"
+            "profileInfo"
+            "skillDiv"
+            "feedback"
         ;
     }
 
@@ -194,7 +202,7 @@
     }
 
     .custom-file-upload {
-        margin-left:20pt;
+        margin-left: 20pt;
         font-size: 12pt;
     }
 

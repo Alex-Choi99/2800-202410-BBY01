@@ -13,3 +13,14 @@
 .fa-bell{
   color: rgb(255, 255, 255);
 }
+
+#averageRatingSpan, #amountDiv {
+  font-weight: bold;
+}
+
+.name {
+  width: 150px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
