@@ -23,25 +23,36 @@
 
 /* Custom CSS for Navigation Buttons */
 .navigation {
-    color: black; /* Black text color */
-    border-radius: 20px; /* Rounded corners */
-}
-
-.nav-tabs {
-    border-bottom: none; /* Remove border from the nav tabs */
+    border-radius: 10px 10px 0 0; /* Rounded top corners, straight bottom corners */
+    background-color: transparent; /* Transparent background for inactive tabs */
+    color: white; /* White text color for inactive tabs */
+    border: 1px solid transparent; /* Transparent border for inactive tabs */
+    margin-right: 5px; /* Space between tabs */
+    padding: 10px 15px; /* Padding for better appearance */
+    transition: background-color 0.3s, color 0.3s, border 0.3s; /* Smooth transition for hover effect */
 }
 
 .navigation.active {
-    background-color: #007bff; /* Blue background for active tab */
-    color: white; /* White text color for active tab */
-    border: 1px solid #007bff; /* Add border for active tab */
+    background-color: white; /* White background for active tab */
+    color: black; /* Black text color for active tab */
+    border: 1px solid white; /* White border to blend with the line */
+    border-bottom-color: transparent; /* Make bottom border transparent to fuse with the line */
 }
 
-.navigation.active:focus,
-.navigation.active:hover {
-    background-color: #007bff; /* Blue background for hover/focus state */
-    color: white; /* White text color for hover/focus state */
-    border: 1px solid #007bff; /* Add border for hover/focus state */
+.navigation:hover {
+    background-color: rgba(255, 255, 255, 0.1); /* Slightly transparent white on hover */
+    color: white; /* White text color on hover */
+    border: 1px solid rgba(255, 255, 255, 0.3); /* Slightly transparent white border on hover */
+    border-bottom-color: transparent; /* Ensure bottom border is still transparent on hover */
+}
+
+.nav-tabs {
+    border-bottom: 2px solid white; /* White line under the tabs */
+    padding-bottom: 0; /* Remove extra padding */
+}
+
+.tab-content {
+    padding-top: 10px; /* Space between the line and the content */
 }
 
 .dropdown-menu {
