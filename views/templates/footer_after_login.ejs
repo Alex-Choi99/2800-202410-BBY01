@@ -1,27 +1,33 @@
-<head>
-  <link rel="stylesheet" href="footer.css">
-</head>
+</div> <!-- Main content container above -->
 
-<div class="container">
-  <!-- Main content container above -->
-  <div class="container mt-5" style="padding-bottom: 140px;"> <!-- Adjust the padding-bottom value as needed -->
-    <!-- Your main content goes here -->
-  </div>
-
+<div class="container-footer">
+  <br>
   <footer class="d-flex justify-content-evenly flex-nowrap">
     <div class="footer-left">
       <a href="/">
-        <img src="/images/home.png" alt="Home" width="40" height="40">
+        <img src="/images/home_24dp_FILL0_wght400_GRAD0_opsz24.png" alt="Home" style="filter: invert(100%);" width="40"
+          height="40">
       </a>
     </div>
     <div class="footer-right">
-      <a href="/?tab=matchedUsers">
-        <img src="/images/school.png" alt="School" width="40" height="40">
+      <a href="/notifications">
+        <img src="/images/school_24dp_FILL0_wght400_GRAD0_opsz24.png" id="goToMatchedUsersTab" alt="School" style="filter: invert(100%);" width="40" height="40" onmouseover="this.style.cursor='pointer';">
       </a>
     </div>
   </footer>
 </div>
 
-<script src="profile.js"></script>
 <!-- Boostrap Library JS CDN  go here -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
+  </script>
+
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.5/socket.io.min.js"
+  integrity="sha512-11t8Q+vY9JlCrr+PveZKTYJq8n7O09Y5X/pk/aMd3vJugSvu4xOunGEUzaADqL3I8cZKE/pBwwCfXzDkRJh2sQ=="
+  crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+</body>
+
+</html>

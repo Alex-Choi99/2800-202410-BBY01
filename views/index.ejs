@@ -21,33 +21,54 @@
           </form>
         </div>
       </div>
-    </div>
-  <% } else { %>
-    <!-- If user is logged in -->
-    <div class="container mt-5">
-      <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-          FILTER
+    <% } else { %>
+      <div class="dropdown" id="filter">
+        <button class="dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+          FILTER BY SKILL
         </button>
-        <form class="dropdown-menu" aria-labelledby="dropdownMenuButton" action="/" method="get">
-          <label><input type="checkbox" name="skills" value="Math">Math</label><br>
-          <label><input type="checkbox" name="skills" value="Sports">Sports</label><br>
-          <label><input type="checkbox" name="skills" value="Physics">Physics</label><br>
-          <label><input type="checkbox" name="skills" value="Computer Technology">Computer Technology</label><br>
-          <label><input type="checkbox" name="skills" value="Social Sciences">Social Sciences</label><br>
-          <label><input type="checkbox" name="skills" value="Biology">Biology</label><br>
-          <button type="submit" class="btn btn-primary">Save</button>
+        <form id="filterMenu" class="dropdown-menu" aria-labelledby="dropdownMenuButton" action="/" method="get" >
+          <% const skills = ['Math', 'Sports', 'Physics', 'Computer Technology', 'Social Sciences', 'Biology']; %>
+          <% skills.forEach(skill => { %>
+            <li>
+              <label for="<%= skill %>">
+                <%= skill %>
+                <input id="<%= skill %>" name="skills" type="checkbox" value="<%= skill %>" class="dropdown-item form-check-input allow-focus"
+                <%= (selectedSkills && selectedSkills.includes(skill)) ? 'checked' : '' %>>
+              </label>
+            </li>
+          <% }) %>
+            <!-- <li>
+              <label for="mathSkill">Math<input id="mathSkill" name="skills" type="checkbox" value="Math" class="dropdown-item form-check-input allow-focus"></label>
+            </li>
+            <li>
+              <label for="sportsSkill">Sports<input id="sportsSkill" name="skills" type="checkbox" value="Sports" class="dropdown-item form-check-input allow-focus"></label>
+            </li>
+            <li>
+              <label for="physicsSkill">Physics<input id="physicsSkill" name="skills" type="checkbox" value="Physics" class="dropdown-item form-check-input allow-focus"></label>
+            </li>
+            <li>
+              <label for="compSkill">Computer Technology<input id="compSkill" name="skills" type="checkbox" value="Computer Technology" class="dropdown-item form-check-input allow-focus"></label>
+            </li>
+            <li>
+              <label for="socialScienceSkill">Social Sciences<input id="socialScienceSkill" name="skills" type="checkbox" value="Social Sciences" class="dropdown-item form-check-input allow-focus"></label>
+            </li>
+            <li>
+              <label for="biologySkill">Biology<input id="biologySkill" type="checkbox" name="skills" value="Biology" class="dropdown-item form-check-input allow-focus"></label>
+            </li> -->
+            <div id="filterSaveButtonDiv">
+              <button type="submit" id="filterSaveButton">SAVE</button>
+            </div>
         </form>
       </div>
       
       <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">
-            <button class="navigation active btn-nav" id="allUsers-tab" data-bs-toggle="tab" data-bs-target="#allUsers"
-                type="button" role="tab" aria-controls="allUsers" aria-selected="true">All Users</button>
+          <button class="nav-link active" id="allUsers-tab" data-bs-toggle="tab" data-bs-target="#allUsers"
+            type="button" role="tab" aria-controls="allUsers" aria-selected="true">All Users</button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="navigation btn-nav" id="matchedUsers-tab" data-bs-toggle="tab" data-bs-target="#matchedUsers"
-                type="button" role="tab" aria-controls="matchedUsers" aria-selected="false">Matched Users</button>
+          <button class="nav-link" id="matchedUsers-tab" data-bs-toggle="tab" data-bs-target="#matchedUsers"
+            type="button" role="tab" aria-controls="matchedUsers" aria-selected="false">Matched Users</button>
         </li>
       </ul>
     
