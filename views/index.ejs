@@ -14,6 +14,27 @@
 </head> -->
 <!-- <body> -->
 
+
+
+
+<!-- Modal Structure -->
+<div class="modal fade" id="matchModal" tabindex="-1" aria-labelledby="matchModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="matchModalLabel">Match Request Sent</h5>
+      </div>
+      <div class="modal-body">
+        Your match request has been sent successfully.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<body>
   <div class="container mt-5">
     <% if (!locals.user) { %>
       <div class="text-center mt-5 mb-5">
@@ -118,3 +139,12 @@
   integrity="sha384-LNSAtfFYg/y4XHVQNISc4V/8e8u/D0tc5Bt7sg6syEBXmW6F7sI0AZpxS+ln6xG"
   crossorigin="anonymous"></script> -->
 <script src="filter.js"></script>
+<!-- Show Modal on "Match" button click -->
+<script>
+  // Use jQuery to show the modal when the "Match" button is clicked
+  $(document).ready(function() {
+    $('#matchButton').on('click', function() {
+      $('#matchModal').modal('show');
+    });
+  });
+</script>

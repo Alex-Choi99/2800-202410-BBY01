@@ -4,7 +4,7 @@
     <div class="ms-auto d-flex">
         <form action="/requestSent" method="post">
             <input type="hidden" name="recipientEmail" value="<%= user.email %>">
-            <button class="btn btn-success requestBTN">Match</button>
+            <button class="btn btn-success requestBTN" data-bs-toggle="modal" data-bs-target="#matchModal" id="matchButton">Match</button>
         </form>
     </div>
 </li>
