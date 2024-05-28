@@ -1,16 +1,21 @@
-/* public/styles.css */
 body {
-  background: url('/images/main1.jpg') no-repeat center center fixed;
+  position: relative;
+  background-color: #333; /* Set background to dark grey */
   background-size: cover;
-}
-  
-.box {
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 20px;
-    margin-bottom: 20px;
+  margin: 0; /* Remove default margin */
+  height: 100%; /* Ensure the background covers the full viewport height */
+  color: rgb(68, 68, 68);
 }
 
-.fa-bell{
+.box {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  position: relative; /* Ensure box content is above the background */
+  z-index: 1; /* Ensure box content is above the background */
+}
+
+.fa-bell {
   color: rgb(255, 255, 255);
 }

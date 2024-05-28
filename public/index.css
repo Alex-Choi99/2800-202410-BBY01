@@ -1,3 +1,26 @@
+/* Style for both user and matched user cards */
+.user-card,
+.matched-users-card {
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    background: linear-gradient(to bottom, rgb(68, 68, 68), rgb(68, 68, 68)); /* Gradient background */
+    color: #ffffff; /* Text color */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Additional styles for buttons */
+.user-card .btn,
+.matched-user-card .btn {
+    margin-left: 5px; /* Add some space between buttons */
+}
+
+.fa-bell {
+    color: rgb(255, 255, 255);
+}
+
 /* Custom CSS for Navigation Buttons */
 .navigation {
     color: black; /* Black text color */
@@ -20,8 +43,6 @@
     color: white; /* White text color for hover/focus state */
     border: 1px solid #007bff; /* Add border for hover/focus state */
 }
-
-
 
 .dropdown-menu {
     padding: 10px; /* Add padding to the dropdown menu */

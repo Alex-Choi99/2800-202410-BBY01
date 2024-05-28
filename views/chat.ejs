@@ -10,6 +10,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.5/socket.io.min.js"
         integrity="sha512-11t8Q+vY9JlCrr+PveZKTYJq8n7O09Y5X/pk/aMd3vJugSvu4xOunGEUzaADqL3I8cZKE/pBwwCfXzDkRJh2sQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
     <style>
         .chat-container {
             min-height: calc(50vh - 100px);
@@ -59,7 +60,21 @@
             </div>
         </div>
     </div>
+
+    <!-- Home Button -->
+    <div class="container-fluid py-3">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <button onclick="goToHome()" class="btn btn-primary">Home</button>
+            </div>
+        </div>
+    </div>
+
     <script>
+        function goToHome() {
+            // Redirect to the home page
+            window.location.href = "/";
+        }
         document.addEventListener("DOMContentLoaded", async () => {
             console.log("cheese");
             const socket = io();

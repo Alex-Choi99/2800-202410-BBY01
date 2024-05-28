@@ -8,11 +8,11 @@
 
 /* Navbar Customization */
 .navbar-custom {
-    background: url('/images/headerjpg.jpg') no-repeat center center;
+    background: url('/images/header.jpg') no-repeat center center;
     background-size: cover;
     position: relative;
     z-index: 1;
-    border-bottom: 5px solid rgb(255, 255, 255); /* Added border for a sharp look */
+    border-bottom: 5px solid rgb(62, 62, 62); /* Added border for a sharp look */
 }
 
 /* Add specific padding for the logout button */
@@ -47,23 +47,24 @@
 }
 
 .btn-aboutus:hover {
-    background-color: rgba(5, 5, 80, 0.5);
+    background-color: rgba(124, 124, 124, 0.5);
     color: white;
 }
 
 /* NAVBAR */
 .nav-link.btn-primary {
-    background-color: white;
-    color: rgb(0, 0, 0);
+    background-color: rgb(91, 91, 91);
+    color: rgb(255, 255, 255);
     border: 1px solid black; /* Add black border to buttons */
     width: auto; /* Ensure buttons take natural width */
     padding: 10px 15px; /* Add padding for better alignment */
     transition: 0.3s;
+    margin-bottom: 10px;
 }
 
 .nav-link.btn-primary:hover {
     scale: 1.05;
-    background-color: rgba(20, 74, 122, 0.5);
+    background-color: rgba(16, 16, 16, 0.5);
     color: white;
 }
 

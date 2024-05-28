@@ -1,0 +1,11 @@
+/* CSS for Signup Form Card */
+.signup-card {
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add box shadow for depth */
+    padding: 20px; /* Add padding for spacing inside the card */
+}
+
+/* CSS for Signup Form Inputs */
+.signup-form input {
+    margin-bottom: 10px; /* Add margin between input fields */
+}
