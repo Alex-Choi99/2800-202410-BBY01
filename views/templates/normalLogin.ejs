@@ -1,28 +1,27 @@
+
+
 <div class="d-flex justify-content-center flex-nowrap">
   <div class="col-10 col-md-4">
     <form action="/loginSubmit" method="post">
       <h1 class="h3 mb-3 fw-normal">Please Log In</h1>
-
+      
+      <% if (typeof errorMessage !== 'undefined' && errorMessage) { %>
+        <div class="alert alert-danger"><%= errorMessage %></div>
+      <% } %>
+      
       <div class="form-floating">
-        <input name="loginID" type="text" class="form-control" id="floatingInput" placeholder="Email address">
+        <input name="loginID" type="text" class="form-control" id="floatingInput" placeholder="Email address or ID" value="<%= typeof loginID !== 'undefined' ? loginID : '' %>">
         <label for="floatingInput">Email or ID</label>
       </div>
       <div class="form-floating">
-        <input name="password" type="password" class="form-control" id="floatingPassword" placeholder="Password">
+        <input name="password" type="password" class="form-control" id="floatingPassword" placeholder="Password" value="<%= typeof password !== 'undefined' ? password : '' %>">
         <label for="floatingPassword">Password</label>
       </div>
       
       <br>
       <button class="btn btn-primary w-100 py-2" type="submit">Log in</button>
     </form>
-
-  <div class="d-flex justify-content-center flex-nowrap">
-    <form action="/login?type=forgor" method="get">
-      <div class="form-floating">
-        <input name="type" type="hidden" class="form-control" value="forgor">
-        <button class="btn btn-secondary btn-sm w-60 py-2 m-1" type="submit">Forgot login info?</button>
-      </div>
-    </form>
-  </div>
   </div>
 </div>
+
+
