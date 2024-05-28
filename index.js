@@ -768,9 +768,10 @@ app.post('/logout', (req, res) => {
     });
 });
 
-app.get('/404', (req, res) => {
-    res.render('404');
-});
+app.get(`*`, (req, res) => {
+    res.status(404);
+    res.render("404");
+})
 
 // app.listen(port, () => {
 //     console.log(`Server is running on port ${port}`);
