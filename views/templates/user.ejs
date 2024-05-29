@@ -4,6 +4,7 @@
     <div class="ms-auto d-flex">
         <form action="/requestSent" method="post" class="matchForm">
             <input type="hidden" name="recipientEmail" value="<%= user.email %>">
+<<<<<<< HEAD
             <% console.log(notificationList) %>
             <% console.log("ASJIHDIUAHODS") %>
             <% if (notificationList.includes(user.email)) { %>
@@ -11,6 +12,9 @@
             <% } else { %>
                 <button class="btn btn-success requestBTN" data-bs-toggle="modal" data-bs-target="#matchModal" id="matchButton">Match</button>
             <% } %>
+=======
+            <button class="btn btn-success requestBTN">Match</button>
+>>>>>>> test_branch
         </form>
     </div>
 </li>

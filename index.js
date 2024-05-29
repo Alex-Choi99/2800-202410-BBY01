@@ -260,15 +260,13 @@ app.post('/loginSubmit', async (req, res) => {
     const schema = Joi.object({
         loginID: Joi.string().max(30).required(),
         password: Joi.string().max(30).required()
-    });
-    
+    })
     const validationResult = schema.validate({ loginID, password });
-    if (validationResult.error) {
+    if (validationResult.error != null) {
         console.log(`Validation error: ` + validationResult.error);
-        res.render("login", { errorMessage: "Please provide both login ID and password.", loginID, password, forgor: ''  });
+        res.render("login", { forgor: 'know', errorMessage: "Input must be less than 30 characters." });
         return;
     }
-
     const result = await userModel.findOne({
         $or: [
             { email: loginID },
@@ -279,7 +277,7 @@ app.post('/loginSubmit', async (req, res) => {
     console.log('User info from DB:', result);
     if (!result) {
         console.log("user not found");
-        res.render("login", { errorMessage: "No User Detected", loginID, password });
+        res.render("login", { forgor: 'know', errorMessage: "No User Detected" });
         return;
     }
 
@@ -293,15 +291,16 @@ app.post('/loginSubmit', async (req, res) => {
         req.session.cookie.maxAge = expireTime;
         req.session.image = result.image;
         console.log("Result:", result.skills);
+        // console.log(req.session);
         res.redirect('/');
         return;
-    } else {
+    }
+    else {
         console.log("incorrect password");
-        res.render("login", { errorMessage: "Incorrect Password", loginID, password });
+        res.render("login", { forgor: 'know', errorMessage: "Incorrect Password" });
         return;
     }
 });
-
 
 app.post('/resetConfirm', async (req, res) => {
     try {
@@ -415,10 +414,7 @@ app.post('/newPWSubmit', async (req, res) => {
 });
 
 app.get('/signup', (req, res) => {
-    res.render('signup', { 
-        errorMessage: null, 
-        errors: [] 
-    });
+    res.render('signup');
 });
 
 app.post('/signupSubmit', async (req, res) => {
@@ -438,51 +434,42 @@ app.post('/signupSubmit', async (req, res) => {
     });
 
     const validationResult = schema.validate({ name, userId, email, password });
-    if (validationResult.error) {
-        const errors = validationResult.error.details.map(detail => detail.message);
-        res.render("signup", { 
-            errorMessage: 'Please fill in all required fields.', 
-            errors: errors,
+    console.log('all good');
+    if (validationResult.error != null) {
+        //{ name: name, email: email, id: id, password: password }
+        res.render("signup", { errorMessage: 'user with that email already exists in our record.' });
+        /* html += `
+        <form action='/signup' method='get'>
+            <button>Try Again</button>
+        </form>`;
+        res.send(html);
+        return; */
+    } else {
+        let user = await userModel.findOne({ email });
+        if (user) {
+            res.render('signup', { errorMessage: 'user with that email already exists in our record.' });
+            return;
+        }
+
+        const hashedPass = await bcrypt.hash(password, 12);
+        user = new userModel({
             name,
             userId,
             email,
-            password
+            password: hashedPass,
+            joinDate: currentDate
         });
+
+        await user.save();
+        req.session.authenticated = true;
+        req.session.email = user.email;
+        req.session.name = user.name;
+        req.session.userId = user.userId;
+        req.session.cookie.maxAge = expireTime;
+        res.redirect('selectSkills');
         return;
     }
-
-    let user = await userModel.findOne({ email });
-    if (user) {
-        res.render('signup', { 
-            errorMessage: 'User with that email already exists in our record.', 
-            errors: [], // Ensure errors is always defined
-            name,
-            userId,
-            email,
-            password
-        });
-        return;
-    }
-
-    const hashedPass = await bcrypt.hash(password, 12);
-    user = new userModel({
-        name,
-        userId,
-        email,
-        password: hashedPass,
-        joinDate: currentDate
-    });
-
-    await user.save();
-    req.session.authenticated = true;
-    req.session.email = user.email;
-    req.session.name = user.name;
-    req.session.userId = user.userId;
-    req.session.cookie.maxAge = expireTime;
-    res.redirect('selectSkills');
 });
-
-
 
 // define your own email api which points to your server.
 app.post('/api/sendemail/', function (req, res) {
@@ -647,7 +634,8 @@ app.post('/requestSent', async (req, res) => {
     }).catch((err) => {
         console.error('Error sending email:', err);
     });
-    res.status(204).send();
+
+    res.redirect('/');
 });
 
 app.use('/notifications', sessionValidation); // Ensure user is logged in
@@ -791,10 +779,9 @@ app.post('/logout', (req, res) => {
     });
 });
 
-app.get(`*`, (req, res) => {
-    res.status(404);
-    res.render("404");
-})
+app.get('/404', (req, res) => {
+    res.render('404');
+});
 
 // app.listen(port, () => {
 //     console.log(`Server is running on port ${port}`);
