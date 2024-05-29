@@ -10,7 +10,7 @@
           Your match request has been sent successfully.
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button id="modalCloseButton" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
@@ -119,6 +119,9 @@
     $(document).ready(function() {
       $('#matchButton').on('click', function() {
         $('#matchModal').modal('show');
+      });
+      $('#modalCloseButton').on('click', function() {
+        location.reload();
       });
     });
   </script>

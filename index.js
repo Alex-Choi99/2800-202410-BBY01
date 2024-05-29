@@ -670,7 +670,7 @@ app.post('/requestSent', async (req, res) => {
         console.error('Error sending email:', err);
     });
 
-    res.redirect('/');
+    res.status(202);
 });
 
 app.use('/notifications', sessionValidation); // Ensure user is logged in
