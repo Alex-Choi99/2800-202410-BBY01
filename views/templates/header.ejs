@@ -34,20 +34,19 @@
       <a class="navbar-brand <% if (!locals.user) { %>navbar-brand-hidden<% } %>" href="/">
         <img src="/images/Logo_BBY01.png" alt="Website Logo" width="120">
       </a>
-      <a href="/notifications">
-        <% console.log("Notifications: " + locals.notifications.length) %>
-        <% console.log(locals.notifications) %>
-        <% if (locals.incomingNotifications.length < 1) { %>
-          <div id="notificationImage">
-            <img src="/images/notification_bell.png">
-          </div>
-        <% } else { %>
-          <div id="notificationImage">
-            <img src="/images/notification_bell_active.png">
-          </div>
-        <% } %>
-        
-      </a>
+      <% if (locals.user) { %>
+        <a href="/notifications">
+          <% if (locals.incomingNotifications.length < 1) { %>
+            <div id="notificationImage">
+              <img src="/images/notification_bell.png">
+            </div>
+          <% } else { %>
+            <div id="notificationImage">
+              <img src="/images/notification_bell_active.png">
+            </div>
+          <% } %>
+        </a>
+      <% } %>
       <!-- Hamburger Menu -->
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
               aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">

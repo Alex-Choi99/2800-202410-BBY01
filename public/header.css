@@ -26,10 +26,10 @@
 }
 
 /* Override the default styling of the hamburger menu icon */
-.navbar-toggler {
-    background-color: transparent; /* Set the background color to transparent */
-    border: none; /* Remove any border */
-}
+/* .navbar-toggler { */
+    /* background-color: transparent; Set the background color to transparent */
+    /* border: none; Remove any border */
+/* } */
 
 /* Style the inner lines of the hamburger menu */
 .navbar-toggler-icon {

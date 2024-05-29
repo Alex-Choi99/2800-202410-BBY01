@@ -4,17 +4,13 @@
     border-radius: 8px;
     padding: 20px;
     margin-bottom: 20px;
-    background: linear-gradient(to bottom, rgb(68, 68, 68), rgb(68, 68, 68));
+    background: rgb(68, 68, 68);
     color: #ffffff;
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-left: 10%;
     margin-right: 10%;
-}
-
-.matched-users-card .btn {
-    /* Add specific styles for buttons within matched user cards */
 }
 
 
@@ -25,67 +21,84 @@
 }
 
 /* Custom CSS for Navigation Buttons */
-.navigation {
-    border-radius: 10px 10px 0 0; /* Rounded top corners, straight bottom corners */
-    background-color: transparent; /* Transparent background for inactive tabs */
-    color: white; /* White text color for inactive tabs */
-    border: 1px solid transparent; /* Transparent border for inactive tabs */
-    padding: 10px 15px; /* Padding for better appearance */
-    transition: background-color 0.3s, color 0.3s, border 0.3s; /* Smooth transition for hover effect */
-    display: flex; /* Make navigation items align horizontally */
-    margin-left: 10%; /* Set margin from left */
-    margin-right: 10%; /* Set margin from right */
-}
 
-.navigation.active {
-    background-color: white; /* White background for active tab */
-    color: black; /* Black text color for active tab */
-    border: 1px solid white; /* White border to blend with the line */
-    border-bottom-color: transparent; /* Make bottom border transparent to fuse with the line */
+.navigation {
+    border-radius: 10px 10px 0 0;
+    color: white;
+    border: 1px solid rgba(255, 255, 255);
+    padding: 10px 15px;
 }
 
 .navigation:hover {
-    background-color: rgba(225, 225, 225, 0.1); /* Slightly transparent white on hover */
-    color: white; /* White text color on hover */
-    border: 1px solid rgba(255, 255, 255, 0.3); /* Slightly transparent white border on hover */
-    border-bottom-color: transparent; /* Ensure bottom border is still transparent on hover */
+    background-color: rgb(188, 205, 221);
+    color: black;
 }
 
 .nav-tabs {
-    border-bottom: 2px solid white; /* White line under the tabs */
-    padding-bottom: 0; /* Remove extra padding */
-    display: flex; /* Make tabs align horizontally */
-    list-style-type: none; /* Remove bullet points */
-    margin-left: 10%; /* Set margin from left */
-    margin-right: 10%; /* Set margin from right */
+    margin-left: 10%; 
+    margin-right: 10%;
 }
+/* .navigation { */
+    /* border-radius: 10px 10px 0 0; Rounded top corners, straight bottom corners */
+    /* background-color: transparent; Transparent background for inactive tabs */
+    /* color: white; White text color for inactive tabs */
+    /* border: 1px solid transparent; Transparent border for inactive tabs */
+    /* padding: 10px 15px; Padding for better appearance */
+    /* transition: background-color 0.3s, color 0.3s, border 0.3s; Smooth transition for hover effect */
+    /* display: flex; Make navigation items align horizontally */
+    /* margin-left: 10%; Set margin from left */
+    /* margin-right: 10%; Set margin from right */
+/* } */
+
+/* .navigation.active {
+    background-color: white; 
+    color: black; 
+    border: 1px solid white; 
+    border-bottom-color: transparent; 
+} */
+
+/* .navigation:hover { */
+    /* background-color: rgba(225, 225, 225, 0.1); Slightly transparent white on hover */
+    /* color: white; White text color on hover */
+    /* border: 1px solid rgba(255, 255, 255, 0.3); Slightly transparent white border on hover */
+    /* border-bottom-color: transparent; Ensure bottom border is still transparent on hover */
+/* } */
+
+/* .nav-tabs { 
+    border-bottom: 2px solid white;
+    padding-bottom: 0; 
+    display: flex; 
+    list-style-type: none;  
+    margin-left: 10%; 
+    margin-right: 10%; 
+} */
 
 
-.nav-item {
+/* .nav-item {
     margin-right: 15px; /* Add space between tabs */
-}
+/* }  */
 
-.tab-content {
-    padding-top: 10px; /* Space between the line and the content */
-}
+/* .tab-content { */
+    /* padding-top: 10px; Space between the line and the content */
+/* } */
 
-.dropdown-menu {
+/* .dropdown-menu {
     padding: 10px; /* Add padding to the dropdown menu */
-    margin-bottom: 10px; /* Add bottom margin to separate from tabs */
-}
+    /* margin-bottom: 10px; Add bottom margin to separate from tabs */
+/* } */ 
 
-.dropdown-menu label {
-    margin-right: 10px; /* Add right margin to the dropdown menu labels */
-    margin-left: 10px; /* Add left margin to the dropdown menu labels */
-}
+/* .dropdown-menu label { */
+    /* margin-right: 10px; Add right margin to the dropdown menu labels */
+    /* margin-left: 10px; Add left margin to the dropdown menu labels */
+/* } */
 
 .dropdown-menu button {
     margin-top: 10px; /* Add top margin to the "Save" button */
 }
 
-#myTab {
+/* #myTab {
     margin-top: 20px; /* Add margin top to the navigation tab */
-}
+/* }  */
 
 /* New box styles */
 .new-box {
@@ -128,14 +141,14 @@
 }
 
 /* Additional styles for tab labels */
-.nav-link {
+/* .nav-link {
     text-transform: capitalize; /* Convert tab labels to title case */
-}
+/* }  */
 
 /* Move filter by skill menu above the tabs */
 #filter {
     text-align: left;
-    padding-top: 20px;
+    margin-top: 20px;
     margin-bottom: 20px;
     margin-left: 10%;
     margin-right: 10%;
@@ -145,8 +158,4 @@
 .matched-users-card {
     margin-left: 10%; /* Set margin from left */
     margin-right: 10%; /* Set margin from right */
-}
-
-.matched-users-card .btn {
-    /* Add specific styles for buttons within matched user cards */
 }

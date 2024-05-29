@@ -91,14 +91,12 @@
                 <img src="<%= user.imageUrl %>" alt="Profile Image" />
                 <% } %>
               </div>
-                <div id="uploadButtonDiv">
-                  <input id="uploadImageButton" type="file" name="image" onchange="previewImage(event)" accept="image/*">
-                  <label for="uploadImageButton" class="custom-file-upload">
-                    UPLOAD FILE
-                  </label>
-            
-                </div>
-                  
+              <div id="uploadButtonDiv">
+                <input id="uploadImageButton" type="file" name="image" onchange="previewImage(event)" accept="image/*">
+                <label for="uploadImageButton" class="custom-file-upload">
+                  UPLOAD FILE
+                </label>
+              </div>  
           </div>
           <div id="imageButtonDiv">
             <input id="saveButton" type="submit" value="Save">
