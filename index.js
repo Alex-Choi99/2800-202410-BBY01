@@ -162,8 +162,9 @@ io.on('connection', (socket) => {
     });
 });
 
-app.use('/', (req, res, next) => {
+app.use('/', async (req, res, next) => {
     app.locals.user = isValidSession(req);
+    app.locals.notifications = await Notification.find({ recipientEmail: req.session.email });
     next();
 });
 
@@ -229,7 +230,7 @@ app.get('/', async (req, res) => {
         if (!isValidSession(req)) {
             res.render('index', { users: result });
         } else {
-            res.render('index', { users: result, connectedArray: user.connected, chat, matchedUsers, sessionEmail: req.session.email, user, selectedSkills: skillsArray, notificationList: notificationList});
+            res.render('index', { users: result, connectedArray: user.connected, chat, matchedUsers, sessionEmail: req.session.email, user, selectedSkills: skillsArray, notificationList: notificationList, notifications});
         }
     } catch (error) {
         console.error(error);
