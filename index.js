@@ -371,7 +371,7 @@ http://localhost:3025/newPW
         //     5969125,
 
         // );
-        res.render('login', { forgor: '', errorMessage: 'An error occurred while processing your request.' });
+        res.render('login', { forgor: '', errorMessage: '' });
     } catch (error) {
         console.error('Error in resetConfirm:', error);
         res.render('login', { forgor: 'forgor', errorMessage: 'An error occurred while processing your request.' });

@@ -2,7 +2,7 @@
 
 /* Style the container to have a large card with white background */
 .about-container {
-    max-width: 800px; /* Adjust the max-width as needed */
+    /* max-width: 800px; Adjust the max-width as needed */
     margin: 0 auto;
     padding: 20px;
     background-color: white;
@@ -10,5 +10,4 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
     border-color: solid grey;
     margin-bottom: 40px;
-    
 }
