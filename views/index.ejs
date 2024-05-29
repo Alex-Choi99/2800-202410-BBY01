@@ -1,24 +1,26 @@
 <%- include("templates/header") %>
 <body>
+  <div class="modal fade" id="matchModal" tabindex="-1" aria-labelledby="matchModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="matchModalLabel">Match Request Sent</h5>
+        </div>
+        <div class="modal-body">
+          Your match request has been sent successfully.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <% if (!locals.user) { %>
     <!-- If user is not logged in -->
     <div class="new-box"></div>
     <!-- Modal Structure -->
-    <div class="modal fade" id="matchModal" tabindex="-1" aria-labelledby="matchModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="matchModalLabel">Match Request Sent</h5>
-          </div>
-          <div class="modal-body">
-            Your match request has been sent successfully.
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          </div>
-        </div>
-      </div>
-    </div>
+   
 
     <div class="container mt-5">
       <div class="text-center mt-5 mb-5">
