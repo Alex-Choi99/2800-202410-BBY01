@@ -1,10 +1,8 @@
 /* Footer Customization */
 footer {
-    background: url('/images/header.jpg') no-repeat center center;
+    background-color: rgb(9, 34, 62);
     background-size: cover;
-    border-top: 5px solid rgb(62, 62, 62); /* Added border for a sharp look */
-    border-left: 5px solid rgb(62, 62, 62);
-    border-right: 5px solid rgb(62, 62, 62);
+    border-top: 5px solid rgb(27, 80, 126); /* Added border for a sharp look */
     padding: 10px; /* Reduced padding to fit content within maximum height */
     display: flex;
     justify-content: space-evenly; /* Evenly space the items */
