@@ -1,20 +1,7 @@
-<head>
-  <style>
-    .signup-card {
-      background-color: white;
-      padding: 20px;
-      border-radius: 8px;
-    }
-    .signup-form {
-      margin-top: 75px; /* Adjusted to align the card near the 75% mark */
-    }
-  </style>
-</head>
-
 <%- include("templates/header") %>
 
 <div style="display: flex; justify-content: center; align-items: flex-start; height: 100vh;">
-  <div class="col-10 col-md-4 signup-card">
+  <div class="col-10 col-md-4 genericFormDiv">
     <form action="/signupSubmit" method="post" class="signup-form">
       <h1 class="h3 mb-3 fw-normal text-center">Sign Up</h1>
       <div class="form-floating">
