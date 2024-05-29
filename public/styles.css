@@ -37,6 +37,11 @@ body {
 }
 
 
+.footer-h1 {
+  color: white;
+}
+
+
 /* GENERIC FORM */
 .genericFormDiv {
   border: 1px solid #ccc;
