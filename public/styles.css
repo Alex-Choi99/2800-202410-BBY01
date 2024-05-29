@@ -35,3 +35,16 @@ body {
   /* filter: drop-shadow(8px 8px 10px gray); */
   opacity: 0.5;
 }
+
+
+/* GENERIC FORM */
+.genericFormDiv {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-top: 10px;
+  padding: 10px;
+}
+
+.genericFormDiv > form > h1 {
+  text-align: center;
+}
