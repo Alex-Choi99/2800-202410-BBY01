@@ -9,6 +9,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin-left: 10%; /* Set margin from left */
+    margin-right: 10%; /* Set margin from right */
 }
 
 /* Additional styles for buttons */
@@ -27,9 +29,11 @@
     background-color: transparent; /* Transparent background for inactive tabs */
     color: white; /* White text color for inactive tabs */
     border: 1px solid transparent; /* Transparent border for inactive tabs */
-    margin-right: 5px; /* Space between tabs */
+    margin-left: 10%; /* Set margin from left */
+    margin-right: 10%; /* Set margin from right */
     padding: 10px 15px; /* Padding for better appearance */
     transition: background-color 0.3s, color 0.3s, border 0.3s; /* Smooth transition for hover effect */
+    display: flex; /* Make navigation items align horizontally */
 }
 
 .navigation.active {
@@ -49,6 +53,15 @@
 .nav-tabs {
     border-bottom: 2px solid white; /* White line under the tabs */
     padding-bottom: 0; /* Remove extra padding */
+    margin-left: 10%; /* Set margin from left */
+    margin-right: 10%; /* Set margin from right */
+    display: flex; /* Make tabs align horizontally */
+    list-style-type: none; /* Remove bullet points */
+    padding-left: 0; /* Remove default padding */
+}
+
+.nav-item {
+    margin-right: 15px; /* Add space between tabs */
 }
 
 .tab-content {
@@ -57,8 +70,8 @@
 
 .dropdown-menu {
     padding: 10px; /* Add padding to the dropdown menu */
+    margin-bottom: 10px; /* Add bottom margin to separate from tabs */
 }
-
 
 .dropdown-menu label {
     margin-right: 10px; /* Add right margin to the dropdown menu labels */
@@ -100,3 +113,18 @@
 .teal-btn:hover {
     background-color: #1f5980; /* Darker teal on hover */
 }
+
+/* Additional styles for tab labels */
+.nav-link {
+    text-transform: capitalize; /* Convert tab labels to title case */
+}
+
+/* Move filter by skill menu above the tabs */
+#filter {
+    text-align: left;
+    padding-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
