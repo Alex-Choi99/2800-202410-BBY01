@@ -19,3 +19,19 @@ body {
 .fa-bell {
   color: rgb(255, 255, 255);
 }
+
+
+/* FOOTER */
+.container-footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+.footer-left > a > img:hover, .footer-right > img:hover, .footer-right > a > img:hover {
+  /* background: #ff0404; */
+  /* color: red; */
+  /* filter: drop-shadow(8px 8px 10px gray); */
+  opacity: 0.5;
+}
