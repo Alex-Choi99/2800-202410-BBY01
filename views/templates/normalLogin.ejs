@@ -1,7 +1,12 @@
 <div class="d-flex justify-content-center flex-nowrap">
   <div class="col-10 col-md-4 genericFormDiv">
     <form action="/loginSubmit" method="post">
-      <h1 class="h3 mb-3 fw-normal">Please Log In</h1>
+      <h1 class="h3 mb-3 fw-normal footer-h1">Please Log In</h1>
+      
+      <% if (typeof errorMessage !== 'undefined' && errorMessage) { %>
+        <div class="alert alert-danger"><%= errorMessage %></div>
+      <% } %>
+      
       <div class="form-floating">
         <input name="loginID" type="text" class="form-control" id="floatingInput" placeholder="Email address or ID" value="<%= typeof loginID !== 'undefined' ? loginID : '' %>">
         <label for="floatingInput">Email or ID</label>

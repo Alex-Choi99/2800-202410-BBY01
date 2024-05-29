@@ -3,7 +3,12 @@
 <div style="display: flex; justify-content: center; align-items: flex-start; height: 100vh;">
   <div class="col-10 col-md-4 genericFormDiv">
     <form action="/signupSubmit" method="post" class="signup-form">
-      <h1 class="h3 mb-3 fw-normal text-center">Sign Up</h1>
+      <h1 class="h3 mb-3 fw-normal text-center footer-h1">Sign Up</h1>
+      
+      <% if (typeof errorMessage !== 'undefined' && errorMessage) { %>
+        <div class="alert alert-danger"><%= errorMessage %></div>
+      <% } %>
+
       <div class="form-floating">
         <input name="name" type="text" class="form-control" id="floatingInput" placeholder="Name">
         <label for="floatingInput">Name</label>

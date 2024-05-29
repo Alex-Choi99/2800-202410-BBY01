@@ -1,7 +1,9 @@
+
 <!-- Include header.ejs -->
 <%- include ("templates/header") %>
 
-<div class="container mt-5">
+<<<<<<< HEAD
+<div class="about-container mt-5">
     <h1 class="display-3 text-center mb-4 font-weight-bold">About Us</h1>
 
     <!-- Section to talk about the app -->
@@ -15,78 +17,72 @@
             <p>We hope you use LearnXchange to its fullest extent, by fostering rich connections with your local and online communities while also learning a thing or two! </p>
         </div>
     </div>
-    <div class="container mt-5">
+    <div class="about-container mt-5">
         <!-- New heading -->
         <h1 class="display-3 text-center mb-4 font-weight-bold">Meet the LearnXchange Team!</h1>
     </div>
+=======
+<div class="container mt-5">
+    <h1 class="text-center mb-4">About Us</h1>
+
+>>>>>>> test_branch
     <!-- Boxed sections for each team member -->
-    <div class="row text-center">
-        <div class="col-md-4 mb-4">
-            <div class="card">
-                <button class="img-btn border-0 bg-transparent" data-id="1">
-                    <img src="./images/Alex.jpg" class="card-img-top img-fluid w-50 rounded-circle mx-auto mt-3" alt="Team Member 1">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="box">
+                <button class="img-btn" data-id="1">
+                <img src="./images/Alex.jpg" class="img-fluid mb-3 w-50" alt="Team Member 1">
                 </button>
-                <div class="card-body">
-                    <h5 class="card-title">Alex Choi</h5>
-                    <p class="card-text">I am Alex Choi. I am a team's backend member.</p>
-                </div>
+                <p>I am Alex Choi. I am a team's backend member.</p>
             </div>
         </div>
-        <div class="col-md-4 mb-4">
-            <div class="card">
-                <button class="img-btn border-0 bg-transparent" data-id="2">
-                    <img src="./images/Alfredo.jpg" class="card-img-top img-fluid w-50 rounded-circle mx-auto mt-3" alt="Team Member 2">
+        <div class="col-md-4">
+            <div class="box">
+                <button class="img-btn" data-id="2">
+                    <img src="./images/Alfredo.jpg" class="img-fluid mb-3 w-50 h-auto" alt="Team Member 2">
                 </button>
-                <div class="card-body">
-                    <h5 class="card-title">Alfredo Luzardo</h5>
-                    <p class="card-text">Hi my name is Alfredo, and I am aspiring to become a software engineer.</p>
-                </div>
+                <p>Hi my name is Alfredo, and I am aspiring to become a software engineer</p>
             </div>
         </div>
-        <div class="col-md-4 mb-4">
-            <div class="card">
-                <button class="img-btn border-0 bg-transparent" data-id="3">
-                    <img src="./images/Daniil.png" class="card-img-top img-fluid w-50 rounded-circle mx-auto mt-3" alt="Team Member 3">
+        <div class="col-md-4">
+            <div class="box">
+                <button class="img-btn" data-id="3">
+                    <img src="./images/Daniil.png" class="img-fluid mb-3 w-50"  alt="Team Member 3">
                 </button>
-                <div class="card-body">
-                    <h5 class="card-title">Daniil Yarygin</h5>
-                    <p class="card-text">Hello I am Daniil, I am mainly responsible for front end programming and UI design.</p>
-                </div>
+                <p>Hello I am Daniil, I am mainly responsible for front end programming and UI design</p>
             </div>
         </div>
-        <div class="col-md-4 mb-4">
-            <div class="card">
-                <button class="img-btn border-0 bg-transparent" data-id="4" id="markImage">
-                    <img src="./images/mark.png" class="card-img-top img-fluid w-50 rounded-circle mx-auto mt-3" alt="Team Member 4">
+        <div class="col-md-4">
+            <div class="box">
+                <button class="img-btn" data-id="4" id="markImage">
+                    <img src="./images/mark.png" class="img-fluid mb-3 w-50" alt="Team Member 4">
                 </button>
-                <div class="card-body">
-                    <h5 class="card-title">Mark Pirvulescu</h5>
-                    <p class="card-text">Hello! I am one of LearnXchange's backend developers, and I'm very excited to see how big this app could get!</p>
-                </div>
+                <p>Hello I'm Mark.</p>
             </div>
         </div>
-        <div class="col-md-4 mb-4">
-            <div class="card">
-                <button class="img-btn border-0 bg-transparent" data-id="5">
-                    <img src="./images/Wayne.png" class="card-img-top img-fluid w-50 rounded-circle mx-auto mt-3" alt="Team Member 5">
+        <div class="col-md-4">
+            <div class="box">
+                <button class="img-btn" data-id="5">
+                    <img src="./images/Wayne.png" class="img-fluid mb-3 w-50" alt="Team Member 5">
                 </button>
-                <div class="card-body">
-                    <h5 class="card-title">Wayne Wong</h5>
-                    <p class="card-text">Hello, I'm Wayne and I will be working on front end programming and UI/UX design.</p>
-                </div>
+                <p>Hello, I'm Wayne and I will be working on front end programming and UI/UX design</p>
             </div>
         </div>
     </div>
+
+    <!-- Lorum Ipsum paragraph -->
+    <p></p>
 </div>
 
+<script src="easterEgg.js"></script>
 <!-- Include footer.ejs -->
 <%- include ("templates/footer_after_login") %>
 
 <!-- Bootstrap JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-LNSAtfFYg/y4XHVQNISc4V/8e8u/D0tc5Bt7sg6syEBXmW6F7sI0AZpxS+ln6xG" crossorigin="anonymous"></script>
-<script src="easterEgg.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-LNSAtfFYg/y4XHVQNISc4V/8e8u/D0tc5Bt7sg6syEBXmW6F7sI0AZpxS+ln6xG" crossorigin="anonymous"></script>
 
 </body>
-</html>
+</html> -->
+
