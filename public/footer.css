@@ -16,9 +16,9 @@ footer {
     box-sizing: border-box; /* Include padding and border in total height */
 }
 
-.footer-left,
-.footer-right {
+.container-footer {
     display: flex;
     align-items: center; /* Vertically center the items */
-    justify-content: space-between; /* Evenly space the items horizontally */
+    color: white; /* Set the text color to white */
 }
+
