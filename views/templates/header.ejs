@@ -9,6 +9,9 @@
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
   <!-- Font Awesome for icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link rel="stylesheet" href="header.css">
@@ -37,17 +40,17 @@
       display: none;
     }
 
-    .btn-aboutus {
+    /* .btn-aboutus {
       border: 1px solid white;
       background-color: rgb(29, 105, 171);
-      color: white;
+      color: white; */
       /* Changed text color to white */
-    }
+    /* } */
 
-    .btn-aboutus:hover {
+    /* .btn-aboutus:hover {
       background-color: rgb(5, 5, 80);
       color: white;
-    }
+    } */
 
     /* NAVBAR
     .nav-link.btn-primary {
@@ -209,6 +212,7 @@
 
 
   </style>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/cloudinary-jquery@2.11.3/cloudinary-jquery.min.js"></script>
 </head>
@@ -240,15 +244,15 @@
         </a>
       <% } %>
       <!-- Hamburger Menu -->
+      <% if (locals.user) { %>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
           <!-- Conditionally render the navbar links if the user is logged in -->
-          <% if (locals.user) { %>
+          
             <li class="nav-item">
               <a class="nav-link btn btn-primary me-2" href="/">Home</a>
             </li>
@@ -264,13 +268,14 @@
                 <button class="nav-link btn btn-primary" id="logoutButton">Logout</button>
               </form>
             </li>
-            <% } %>
+            
         </ul>
+        <% } %>
         <!-- Conditionally render the About Us button if the user is not logged in -->
-        <% if (!locals.user) { %>
-          <a class="nav-link btn btn-aboutus me-2 py-2" href="/aboutus">About Us</a>
-          <% } %>
       </div>
+      <% if (!locals.user) { %>
+        <a class="nav-link btn btn-aboutus me-2 py-2" href="/aboutus">About Us</a>
+        <% } %>
     </div>
   </nav>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
