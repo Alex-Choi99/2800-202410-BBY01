@@ -38,13 +38,13 @@
 }
 
 #filterSaveButton {
-    background-color:rgb(3, 121, 199);
+    background-color: #198754;
     padding: 5pt;
     border-style: solid;
     border-width: 2pt;
     border-radius: 10px;
     margin: 0;
-    border-color: rgb(10, 104, 167);
+    border-color: #198754;
     width:80%;
     transition: 0.3s;
     color: white;
@@ -52,7 +52,7 @@
 
 #filterSaveButton:hover {
     scale:1.04;
-    background-color:rgb(33, 150, 228);
+    background-color: #1eb770;
 }
 
 #filterSaveButtonDiv {
@@ -74,7 +74,7 @@
     background-color: #247fc0;
     color: white;
     transition: 0.3s;
-    margin-bottom: 15pt;
+    margin-bottom: 5pt;
 }
 
 #dropdownMenuButton:hover {

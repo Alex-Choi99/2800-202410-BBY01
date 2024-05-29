@@ -1,31 +1,66 @@
-<li class="d-flex list-group-item justify-content-between align-items-center" style="border-radius: 8px; padding: 20px; margin-bottom: 20px; background: linear-gradient(to bottom, rgb(68, 68, 68), rgb(68, 68, 68)); color: #ffffff;">
-    <div style="display: flex; align-items: center;">
-        <%= matchedUser.name %>
-    </div>
-    <div class="ms-auto d-flex">
-      <form action="/unmatch" method="post">
-        <input type="hidden" name="unmatch" value="<%= matchedUser.email %>">
-        <button class="btn btn-danger requestBTN">Unmatch</button>
-      </form>
-      <% var hasReviewed = false; %>
-      <% for(let i = 0; i < matchedUsers.length; i++) { %>
-        <% let rateList = matchedUsers[i].rate; %>
-        <% console.log(`session email`, sessionEmail); %>
-        <% for(let j = 0; j < rateList.length; j++) { %>
-          <% console.log(`rateList[j].email`, rateList[j].email); %>
-          <% if(rateList[j].email == sessionEmail) { %>
-            <% hasReviewed = true; %>
-            <% console.log(hasReviewed); %>
-          <% } %>
+<li class="d-flex list-group-item justify-content-between align-items-center">
+    <%= matchedUser.name %>
+    <% 
+        // Create a safe ID by replacing invalid characters
+        let safeEmailID = matchedUser.email.replace(/@/g, '-at-').replace(/\./g, '-dot-');
+    %>
+    <div class="ms-auto d-flex justify-content-between">
+        <!-- Unmatch button triggers the modal -->
+        <button type="button" class="btn btn-danger requestBTN m-1" data-bs-toggle="modal" data-bs-target="#unmatchModal-<%= safeEmailID %>">
+            Unmatch
+        </button>
+
+        <% 
+        let hasReviewed = false;
+        for (let i = 0; i < matchedUsers.length; i++) {
+            if (matchedUsers[i].email === matchedUser.email) {
+                let rateList = matchedUsers[i].rate;
+                for (let j = 0; j < rateList.length; j++) {
+                    if (rateList[j].email === sessionEmail) {
+                        hasReviewed = true;
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+        %>
+
+        <% if (!hasReviewed) { %>
+            <form action="/rate/<%= matchedUser.email %>" method="get">
+                <button type="submit" class="btn btn-success requestBTN m-1">Rate</button>
+            </form>
         <% } %>
-      <% } %>
-      <% if (!hasReviewed) { %>
-        <form action="/rate/<%= matchedUser.email %>" method="get">
-          <button type="submit" class="btn btn-warning requestBTN">Rate</button>
+
+        <form action="/chat/<%= matchedUser.chatID %>" method="get">
+            <button type="submit" class="btn btn-success requestBTN m-1">Chat</button>
         </form>
-      <% } %>
-      <form action="/chat/<%= matchedUser.chatID %>" method="get">
-        <button type="submit" class="btn btn-success requestBTN">Chat</button>
-      </form>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="unmatchModal-<%= safeEmailID %>" tabindex="-1" aria-labelledby="unmatchModalLabel-<%= safeEmailID %>" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="unmatchModalLabel-<%= safeEmailID %>">Unmatch</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Do you really want to unmatch?
+                </div>
+                <div class="modal-footer">
+                    <form action="/unmatch" method="post">
+                        <input type="hidden" name="unmatch" value="<%= matchedUser.email %>">
+                        <button type="submit" class="btn btn-danger">Unmatch</button>
+                    </form>
+                    <% if (!hasReviewed) { %>
+                        <form action="/rate/<%= matchedUser.email %>" method="get">
+                            <button type="submit" class="btn btn-success">Rate</button>
+                        </form>
+                    <% } %>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
     </div>
 </li>

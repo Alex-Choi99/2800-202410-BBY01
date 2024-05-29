@@ -2,15 +2,17 @@
 .user-card,
 .matched-users-card {
     border-radius: 8px;
-    padding: 20px;
-    margin-bottom: 20px;
-    background: rgb(68, 68, 68);
-    color: #ffffff;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    /* padding: 20px; */
+    /* margin-bottom: 20px; */
+    background: rgb(238, 239, 240);
+    /* color: #001a3c; */
+    /* display: flex; */
+    /* align-items: center; */
+    /* justify-content: space-between; */
     margin-left: 10%;
     margin-right: 10%;
+    /* border-color:#76accf; */
+    /* border-width: 3px; */
 }
 
 
@@ -24,81 +26,35 @@
 
 .navigation {
     border-radius: 10px 10px 0 0;
-    color: white;
-    border: 1px solid rgba(255, 255, 255);
+    color: rgb(77, 118, 179);
+    border: 1px solid rgb(101, 101, 101);
     padding: 10px 15px;
 }
 
 .navigation:hover {
-    background-color: rgb(188, 205, 221);
+    /* background-color: rgb(188, 205, 221); */
+    color: rgb(42, 97, 180);
     color: black;
+}
+
+.navigation.active {
+    font-weight: bold;
+    
 }
 
 .nav-tabs {
     margin-left: 10%; 
     margin-right: 10%;
 }
-/* .navigation { */
-    /* border-radius: 10px 10px 0 0; Rounded top corners, straight bottom corners */
-    /* background-color: transparent; Transparent background for inactive tabs */
-    /* color: white; White text color for inactive tabs */
-    /* border: 1px solid transparent; Transparent border for inactive tabs */
-    /* padding: 10px 15px; Padding for better appearance */
-    /* transition: background-color 0.3s, color 0.3s, border 0.3s; Smooth transition for hover effect */
-    /* display: flex; Make navigation items align horizontally */
-    /* margin-left: 10%; Set margin from left */
-    /* margin-right: 10%; Set margin from right */
-/* } */
-
-/* .navigation.active {
-    background-color: white; 
-    color: black; 
-    border: 1px solid white; 
-    border-bottom-color: transparent; 
-} */
-
-/* .navigation:hover { */
-    /* background-color: rgba(225, 225, 225, 0.1); Slightly transparent white on hover */
-    /* color: white; White text color on hover */
-    /* border: 1px solid rgba(255, 255, 255, 0.3); Slightly transparent white border on hover */
-    /* border-bottom-color: transparent; Ensure bottom border is still transparent on hover */
-/* } */
-
-/* .nav-tabs { 
-    border-bottom: 2px solid white;
-    padding-bottom: 0; 
-    display: flex; 
-    list-style-type: none;  
-    margin-left: 10%; 
-    margin-right: 10%; 
-} */
 
 
-/* .nav-item {
+.nav-item {
     margin-right: 15px; /* Add space between tabs */
-/* }  */
-
-/* .tab-content { */
-    /* padding-top: 10px; Space between the line and the content */
-/* } */
-
-/* .dropdown-menu {
-    padding: 10px; /* Add padding to the dropdown menu */
-    /* margin-bottom: 10px; Add bottom margin to separate from tabs */
-/* } */ 
-
-/* .dropdown-menu label { */
-    /* margin-right: 10px; Add right margin to the dropdown menu labels */
-    /* margin-left: 10px; Add left margin to the dropdown menu labels */
-/* } */
+ } 
 
 .dropdown-menu button {
     margin-top: 10px; /* Add top margin to the "Save" button */
 }
-
-/* #myTab {
-    margin-top: 20px; /* Add margin top to the navigation tab */
-/* }  */
 
 /* New box styles */
 .new-box {
@@ -114,7 +70,7 @@
 }
 
 /* Custom button styles */
-.teal-btn {
+/* .teal-btn {
     background-color: rgb(26, 147, 195);
     color: white;
     border: none;
@@ -122,11 +78,11 @@
     padding: 10px 20px;
     cursor: pointer;
     transition: background-color 0.3s;
-}
+} */
 
-.teal-btn:hover {
-    background-color: #1f5980; /* Darker teal on hover */
-}
+/* .teal-btn:hover { */
+    /* background-color: #1f5980; Darker teal on hover */
+/* } */
 
 #notificationImage img {
     width: 30px;
@@ -159,3 +115,32 @@
     margin-left: 10%; /* Set margin from left */
     margin-right: 10%; /* Set margin from right */
 }
+
+#notUserButtonDiv {
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    width: 400px;
+    text-align: center;
+    justify-content: space-between;
+}
+
+#loginBtn, #signupBtn {
+    background-color: #1b81c5;
+    color: white;
+    padding: 5pt;
+    width: 150px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: #1b5d89;
+    border-radius: 10px;
+}
+
+/* #loginBtn {
+    
+
+}
+
+#signupBtn {
+
+} */

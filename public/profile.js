@@ -43,3 +43,23 @@ function previewImage(event) {
     img.style.objectFit = 'cover';
     imageDiv.appendChild(img);
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    const editNameButton = document.getElementById('editNameButton');
+    const editNameForm = document.getElementById('editNameForm');
+    const editDescriptionButton = document.getElementById('editDescriptionButton');
+    const editDescriptionForm = document.getElementById('editDescriptionForm');
+    const descriptionText = document.getElementById('descriptionText');
+  
+    editNameButton.addEventListener('click', () => {
+      editNameForm.classList.remove('d-none');
+      editNameButton.classList.add('d-none');
+    });
+  
+    editDescriptionButton.addEventListener('click', () => {
+      editDescriptionForm.classList.remove('d-none');
+      editDescriptionButton.classList.add('d-none');
+      descriptionText.classList.add('d-none');
+    });
+  });
+  

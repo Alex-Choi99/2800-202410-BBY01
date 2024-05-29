@@ -29,7 +29,7 @@ const expressServer = app.listen(port, () => {
 const io = socketIO(expressServer, {
     cors: {
         origin: process.env.NODE_ENV === 'production' ? false :
-        ["http://localhost:3025", "https://two800-202410-bby01.onrender.com/"]
+            ["http://localhost:3025", "https://two800-202410-bby01.onrender.com/"]
     }
 });
 
@@ -128,7 +128,7 @@ io.on('connection', (socket) => {
         console.log('inside send message');
         const timestamp = new Date();
         const { chatId, message, senderName } = data;
-        
+
         console.log(data);
         console.log(senderName);
         console.log(chatId);
@@ -137,7 +137,7 @@ io.on('connection', (socket) => {
             $push: { messages: { sender: senderName, message, timestamp } }
         });
 
-        io.to(chatId).emit('receiveMessage', {sender: senderName, message, timestamp});
+        io.to(chatId).emit('receiveMessage', { sender: senderName, message, timestamp });
 
         console.log("MADE PAST RECIEVE MESSAGE");
     });
@@ -243,7 +243,7 @@ app.get('/aboutus', (req, res) => {
 });
 
 app.get('/circle', (req, res) => {
-  res.render('circle');
+    res.render('circle');
 });
 
 app.get('/login', (req, res) => {
@@ -259,15 +259,13 @@ app.post('/loginSubmit', async (req, res) => {
     const schema = Joi.object({
         loginID: Joi.string().max(30).required(),
         password: Joi.string().max(30).required()
-    });
-    
+    })
     const validationResult = schema.validate({ loginID, password });
-    if (validationResult.error) {
+    if (validationResult.error != null) {
         console.log(`Validation error: ` + validationResult.error);
-        res.render("login", { errorMessage: "Please provide both login ID and password.", loginID, password, forgor: ''  });
+        res.render("login", { forgor: 'know', errorMessage: "Input must be less than 30 characters." });
         return;
     }
-
     const result = await userModel.findOne({
         $or: [
             { email: loginID },
@@ -278,7 +276,7 @@ app.post('/loginSubmit', async (req, res) => {
     console.log('User info from DB:', result);
     if (!result) {
         console.log("user not found");
-        res.render("login", { errorMessage: "No User Detected", loginID, password });
+        res.render("login", { forgor: 'know', errorMessage: "No User Detected" });
         return;
     }
 
@@ -292,15 +290,16 @@ app.post('/loginSubmit', async (req, res) => {
         req.session.cookie.maxAge = expireTime;
         req.session.image = result.image;
         console.log("Result:", result.skills);
+        // console.log(req.session);
         res.redirect('/');
         return;
-    } else {
+    }
+    else {
         console.log("incorrect password");
-        res.render("login", { errorMessage: "Incorrect Password", loginID, password });
+        res.render("login", { forgor: 'know', errorMessage: "Incorrect Password" });
         return;
     }
 });
-
 
 app.post('/resetConfirm', async (req, res) => {
     try {
@@ -356,7 +355,7 @@ app.post('/resetConfirm', async (req, res) => {
                     TextPart: `Your new temporary code is ${tempCode}
 http://localhost:3025/newPW
                     `,
-                    // TemplateID: 5969125,
+                    TemplateID: 6005138,
                     // Variables: vari
                 },
             ],
@@ -372,7 +371,7 @@ http://localhost:3025/newPW
         //     5969125,
 
         // );
-        res.render('resetConfirm');
+        res.render('login', { forgor: '', errorMessage: 'An error occurred while processing your request.' });
     } catch (error) {
         console.error('Error in resetConfirm:', error);
         res.render('login', { forgor: 'forgor', errorMessage: 'An error occurred while processing your request.' });
@@ -414,10 +413,7 @@ app.post('/newPWSubmit', async (req, res) => {
 });
 
 app.get('/signup', (req, res) => {
-    res.render('signup', { 
-        errorMessage: null, 
-        errors: [] 
-    });
+    res.render('signup');
 });
 
 app.post('/signupSubmit', async (req, res) => {
@@ -437,51 +433,42 @@ app.post('/signupSubmit', async (req, res) => {
     });
 
     const validationResult = schema.validate({ name, userId, email, password });
-    if (validationResult.error) {
-        const errors = validationResult.error.details.map(detail => detail.message);
-        res.render("signup", { 
-            errorMessage: 'Please fill in all required fields.', 
-            errors: errors,
+    console.log('all good');
+    if (validationResult.error != null) {
+        //{ name: name, email: email, id: id, password: password }
+        res.render("signup", { errorMessage: 'user with that email already exists in our record.' });
+        /* html += `
+        <form action='/signup' method='get'>
+            <button>Try Again</button>
+        </form>`;
+        res.send(html);
+        return; */
+    } else {
+        let user = await userModel.findOne({ email });
+        if (user) {
+            res.render('signup', { errorMessage: 'user with that email already exists in our record.' });
+            return;
+        }
+
+        const hashedPass = await bcrypt.hash(password, 12);
+        user = new userModel({
             name,
             userId,
             email,
-            password
+            password: hashedPass,
+            joinDate: currentDate
         });
+
+        await user.save();
+        req.session.authenticated = true;
+        req.session.email = user.email;
+        req.session.name = user.name;
+        req.session.userId = user.userId;
+        req.session.cookie.maxAge = expireTime;
+        res.redirect('selectSkills');
         return;
     }
-
-    let user = await userModel.findOne({ email });
-    if (user) {
-        res.render('signup', { 
-            errorMessage: 'User with that email already exists in our record.', 
-            errors: [], // Ensure errors is always defined
-            name,
-            userId,
-            email,
-            password
-        });
-        return;
-    }
-
-    const hashedPass = await bcrypt.hash(password, 12);
-    user = new userModel({
-        name,
-        userId,
-        email,
-        password: hashedPass,
-        joinDate: currentDate
-    });
-
-    await user.save();
-    req.session.authenticated = true;
-    req.session.email = user.email;
-    req.session.name = user.name;
-    req.session.userId = user.userId;
-    req.session.cookie.maxAge = expireTime;
-    res.redirect('selectSkills');
 });
-
-
 
 // define your own email api which points to your server.
 app.post('/api/sendemail/', function (req, res) {
@@ -601,6 +588,42 @@ app.post('/setSkill', async (req, res) => {
     }
 });
 
+app.post('/editDescription', async (req, res) => {
+    try {
+        const newDesc = req.body.newDesc;
+        const user = await userModel.findOne({ email: req.session.email });
+
+        if (user) {
+            user.description = newDesc;
+            await user.save();
+            res.redirect('/profile');
+        } else {
+            res.status(404).send('User not found');
+        }
+    } catch (error) {
+        console.error('Error updating name:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+app.post('/editName', async (req, res) => {
+    try {
+        const newName = req.body.newName;
+        const user = await userModel.findOne({ email: req.session.email });
+
+        if (user) {
+            user.name = newName;
+            await user.save();
+            res.redirect('/profile');
+        } else {
+            res.status(404).send('User not found');
+        }
+    } catch (error) {
+        console.error('Error updating name:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
 app.get('/settings', (req, res) => {
     res.render('settings');
 })
@@ -646,7 +669,8 @@ app.post('/requestSent', async (req, res) => {
     }).catch((err) => {
         console.error('Error sending email:', err);
     });
-    res.status(204).send();
+
+    res.redirect('/');
 });
 
 app.use('/notifications', sessionValidation); // Ensure user is logged in
@@ -752,21 +776,29 @@ app.post('/unmatch', async (req, res) => {
 app.get('/rate/:email', async (req, res) => {
     const ratedUserEmail = req.params.email;
     const user = await userModel.findOne({ email: ratedUserEmail });
-    console.log(`rated User: `+ user);
+    console.log(`rated User: ` + user);
     res.render('rate', { user });
 });
 
 app.post('/rateSubmit', async (req, res) => {
+    const currentUser = req.session.email;
     const rateValue = req.body.rateValue;
+    const feedback = req.body.feedback;
     const ratedUserEmail = req.body.ratedUserEmail;
-    console.log('rated user email:'+ ratedUserEmail);
+    console.log('rated user email:' + ratedUserEmail);
     const ratedUser = await userModel.findOne({ email: ratedUserEmail });
+    ratedUser.rate.forEach((rate) => {
+        if (currentUser === rate.email) {
+
+        }
+    });
 
     if (ratedUser) {
         ratedUser.rate.push({
-            email: req.session.email,
+            email: currentUser,
             rating: rateValue,
-            date: new Date()
+            date: new Date(),
+            feedback: feedback
         });
         await ratedUser.save();
 
@@ -790,10 +822,9 @@ app.post('/logout', (req, res) => {
     });
 });
 
-app.get(`*`, (req, res) => {
-    res.status(404);
-    res.render("404");
-})
+app.get('/404', (req, res) => {
+    res.render('404');
+});
 
 // app.listen(port, () => {
 //     console.log(`Server is running on port ${port}`);

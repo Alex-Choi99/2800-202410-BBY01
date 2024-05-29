@@ -1,15 +1,36 @@
-<li class="d-flex list-group-item justify-content-between align-items-center user-card">
+<li class="d-flex list-group-item justify-content-between align-items-center user-card my-2">
     <% user.image %>
-    <%= user.name %>
-    <div class="ms-auto d-flex">
-        <form action="/requestSent" method="post" class="matchForm">
+    <% var sum = 0; %>
+    <% var countRates = 0; %>
+    <% user.rate.forEach(rating => { %>
+      <% sum += parseFloat(rating.rating); %>
+      <% countRates++; %>
+    <% }); %>
+    <% var avg = (countRates > 0) ? (sum / countRates) : 0; %>
+    <div class="d-flex flex-column justify-content-between" style="min-width: 0;">
+        <p class="name d-flex list-group justify-content-center mx-2 my-1 fw-bold my-2"><%= user.name %></p>
+        <p class="d-flex flex-row list-group my-1" style="flex-wrap: wrap;">
+            <span></span>
+            <% user.skills.forEach(skill => { %>
+                <% if(skill != 'NaN') { %>
+                    <span class="mx-1 eachSkill rounded badge my-1"><%= skill %></span>
+                <% } %>
+            <% }); %>
+        </p>
+    </div>
+    <div class="ms-auto d-flex align-middle" style="min-width: 0;">
+        <p class="d-flex flex-row list-group justify-content-center align-items-center mx-2 rounded border my-1" style="flex-wrap: wrap;">
+            <span id="averageRatingSpan" class="mx-2">AVERAGE RATE: </span>
+            <span class="me-2"><%= avg.toFixed(2) %>/5 (by <%= user.rate.length %>)</span>
+        </p>
+        <form action="/requestSent" method="post" class="">
             <input type="hidden" name="recipientEmail" value="<%= user.email %>">
             <% console.log(notificationList) %>
             <% console.log("ASJIHDIUAHODS") %>
             <% if (notificationList.includes(user.email)) { %>
-                <button class="btn btn-success requestBTN" disabled>Pending</button>
+                <button class="btn btn-success requestBTN my-1" disabled>Pending</button>
             <% } else { %>
-                <button class="btn btn-success requestBTN" data-bs-toggle="modal" data-bs-target="#matchModal" id="matchButton">Match</button>
+                <button class="btn btn-success requestBTN my-1" data-bs-toggle="modal" data-bs-target="#matchModal" id="matchButton">Match</button>
             <% } %>
         </form>
     </div>

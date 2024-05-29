@@ -1,4 +1,7 @@
-/* public/css/custom-styles.css */
+#title {
+    margin-right: 20pt;
+    color: white;
+}
 
 /* Dropdown Menu */
 .dropdown-menu {
@@ -8,11 +11,13 @@
 
 /* Navbar Customization */
 .navbar-custom {
-    background: url('/images/header.jpg') no-repeat center center;
+    /* background: url('/images/header.jpg') no-repeat center center; */
+    background-color:rgb(9, 34, 62);
     background-size: cover;
     position: relative;
     z-index: 1;
-    border-bottom: 5px solid rgb(62, 62, 62); /* Added border for a sharp look */
+    border-bottom: 7px solid rgb(27, 80, 126);
+    /* border-bottom: 5px solid rgb(62, 62, 62); Added border for a sharp look */
 }
 
 /* Add specific padding for the logout button */
@@ -40,10 +45,15 @@
     display: none;
 }
 
+.navbar-brand {
+    margin-right: 0;
+}
+
 .btn-aboutus {
     border: 1px solid white;
     background-color: transparent;
     color: white; /* Changed text color to white */
+    padding: 10pt;
 }
 
 .btn-aboutus:hover {
@@ -53,24 +63,27 @@
 
 /* NAVBAR */
 .nav-link.btn-primary {
-    background-color: rgb(91, 91, 91);
+    background-color: rgb(42, 127, 202);
     color: rgb(255, 255, 255);
-    border: 1px solid black; /* Add black border to buttons */
-    width: auto; /* Ensure buttons take natural width */
+    border: 3px solid rgb(21, 93, 156); /* Add black border to buttons */
+    width: 120px; 
     padding: 10px 15px; /* Add padding for better alignment */
     transition: 0.3s;
-    margin-bottom: 10px;
+    text-align: center;
 }
 
 .nav-link.btn-primary:hover {
     scale: 1.05;
-    background-color: rgba(16, 16, 16, 0.5);
+    background-color: rgb(42, 127, 202, 0.5);
     color: white;
 }
 
 /* Apply text-align: left to navbar links */
-@media (min-width: 768px) {
+@media (max-width: 768px) {
     .navbar-nav .nav-link {
         text-align: left;
+    }
+    #title {
+        display: none;
     }
 }

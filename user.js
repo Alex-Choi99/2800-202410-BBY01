@@ -40,8 +40,13 @@ const userSchema = new Schema({
     connected: {
         type: Array,
         required: false,
-    }, rate: {
+    },
+    rate: {
         type: Array,
+        required: false,
+    },
+    description: {
+        type: String,
         required: false,
     }
 });
