@@ -17,9 +17,7 @@
   <link rel="stylesheet" href="index.css">
   <link rel="stylesheet" href="notifications.css">
   <link rel="stylesheet" href="filtermenu.css">
-  <style>
-
-  </style>
+  
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/cloudinary-jquery@2.11.3/cloudinary-jquery.min.js"></script>
 </head>
@@ -35,7 +33,16 @@
         <img src="/images/Logo_BBY01.png" alt="Website Logo" width="120">
       </a>
       <a href="/notifications">
-        <i class="fa-solid fa-bell"> </i>
+        <% if (locals.notifications.length >= 1) { %>
+          <div id="notificationImage">
+            <img src="/images/notification_bell_active.png">
+          </div>
+        <% } else { %>
+          <div id="notificationImage">
+            <img src="/images/notification_bell.png">
+          </div>
+        <% } %>
+        
       </a>
       <!-- Hamburger Menu -->
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"

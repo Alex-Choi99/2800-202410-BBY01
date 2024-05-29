@@ -17,9 +17,14 @@
     margin-left: 5px; /* Add some space between buttons */
 }
 
-.fa-bell {
+/* .fa-bell {
     color: rgb(255, 255, 255);
+    transition: 0.3s;
 }
+
+.fa-bell:hover {
+    scale: 1.2;
+} */
 
 /* Custom CSS for Navigation Buttons */
 .navigation {
@@ -99,4 +104,16 @@
 
 .teal-btn:hover {
     background-color: #1f5980; /* Darker teal on hover */
+}
+
+#notificationImage img {
+    width: 30px;
+}
+
+#notificationImage {
+    transition: 0.3s;
+}
+
+#notificationImage:hover {
+    scale: 1.2;
 }
