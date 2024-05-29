@@ -4,29 +4,25 @@
     border-radius: 8px;
     padding: 20px;
     margin-bottom: 20px;
-    background: linear-gradient(to bottom, rgb(68, 68, 68), rgb(68, 68, 68)); /* Gradient background */
-    color: #ffffff; /* Text color */
+    background: linear-gradient(to bottom, rgb(68, 68, 68), rgb(68, 68, 68));
+    color: #ffffff;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-left: 10%; /* Set margin from left */
-    margin-right: 10%; /* Set margin from right */
+    margin-left: 10%;
+    margin-right: 10%;
 }
+
+.matched-users-card .btn {
+    /* Add specific styles for buttons within matched user cards */
+}
+
 
 /* Additional styles for buttons */
 .user-card .btn,
-.matched-user-card .btn {
+.matched-users-card .btn {
     margin-left: 5px; /* Add some space between buttons */
 }
-
-/* .fa-bell {
-    color: rgb(255, 255, 255);
-    transition: 0.3s;
-}
-
-.fa-bell:hover {
-    scale: 1.2;
-} */
 
 /* Custom CSS for Navigation Buttons */
 .navigation {
@@ -34,11 +30,11 @@
     background-color: transparent; /* Transparent background for inactive tabs */
     color: white; /* White text color for inactive tabs */
     border: 1px solid transparent; /* Transparent border for inactive tabs */
-    margin-left: 10%; /* Set margin from left */
-    margin-right: 10%; /* Set margin from right */
     padding: 10px 15px; /* Padding for better appearance */
     transition: background-color 0.3s, color 0.3s, border 0.3s; /* Smooth transition for hover effect */
     display: flex; /* Make navigation items align horizontally */
+    margin-left: 10%; /* Set margin from left */
+    margin-right: 10%; /* Set margin from right */
 }
 
 .navigation.active {
@@ -58,12 +54,12 @@
 .nav-tabs {
     border-bottom: 2px solid white; /* White line under the tabs */
     padding-bottom: 0; /* Remove extra padding */
-    margin-left: 10%; /* Set margin from left */
-    margin-right: 10%; /* Set margin from right */
     display: flex; /* Make tabs align horizontally */
     list-style-type: none; /* Remove bullet points */
-    padding-left: 0; /* Remove default padding */
+    margin-left: 10%; /* Set margin from left */
+    margin-right: 10%; /* Set margin from right */
 }
+
 
 .nav-item {
     margin-right: 15px; /* Add space between tabs */
@@ -130,6 +126,7 @@
 #notificationImage:hover {
     scale: 1.2;
 }
+
 /* Additional styles for tab labels */
 .nav-link {
     text-transform: capitalize; /* Convert tab labels to title case */
@@ -144,3 +141,12 @@
     margin-right: 10%;
 }
 
+/* Additional styles for matched user cards */
+.matched-users-card {
+    margin-left: 10%; /* Set margin from left */
+    margin-right: 10%; /* Set margin from right */
+}
+
+.matched-users-card .btn {
+    /* Add specific styles for buttons within matched user cards */
+}
