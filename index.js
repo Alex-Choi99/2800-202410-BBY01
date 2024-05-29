@@ -164,6 +164,7 @@ io.on('connection', (socket) => {
 
 app.use('/', async (req, res, next) => {
     app.locals.user = isValidSession(req);
+    app.locals.notification = [];
     app.locals.notifications = await Notification.find({ recipientEmail: req.session.email });
     next();
 });
