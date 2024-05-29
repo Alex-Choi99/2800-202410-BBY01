@@ -34,13 +34,15 @@
         <img src="/images/Logo_BBY01.png" alt="Website Logo" width="120">
       </a>
       <a href="/notifications">
-        <% if (locals.notifications.length >= 1) { %>
+        <% console.log("Notifications: " + locals.notifications.length) %>
+        <% console.log(locals.notifications) %>
+        <% if (locals.incomingNotifications.length < 1) { %>
           <div id="notificationImage">
-            <img src="/images/notification_bell_active.png">
+            <img src="/images/notification_bell.png">
           </div>
         <% } else { %>
           <div id="notificationImage">
-            <img src="/images/notification_bell.png">
+            <img src="/images/notification_bell_active.png">
           </div>
         <% } %>
         

@@ -164,8 +164,7 @@ io.on('connection', (socket) => {
 
 app.use('/', async (req, res, next) => {
     app.locals.user = isValidSession(req);
-    app.locals.notification = [];
-    app.locals.notifications = await Notification.find({ recipientEmail: req.session.email });
+    app.locals.incomingNotifications = await Notification.find({ recipientEmail: req.session.email });
     next();
 });
 
@@ -208,23 +207,23 @@ app.get('/', async (req, res) => {
 
         // Find users based on filters
         const result = await userModel.find(filters);
-        console.log(`list of users based on filters: ` + result);
+        // console.log(`list of users based on filters: ` + result);
     
         if(req.session.email) {
             var user = await userModel.findOne({ email: req.session.email });
-            console.log(`connected user list: `, user.connected);
+            // console.log(`connected user list: `, user.connected);
             var matchedUsers = [];
 
             for (let i = 0; i < result.length; i++) {
-                console.log(result[i].email);
+                // console.log(result[i].email);
                 let connectedUser = user.connected; 
-                console.log(connectedUser);
+                // console.log(connectedUser);
                 connectedUser.forEach(usr => { 
                     usr.email == result[i].email? matchedUsers.push(result[i]) : null
-                    console.log(usr.email);
+                    // console.log(usr.email);
                 });
             }
-            console.log(`matched users: ` + matchedUsers);
+            // console.log(`matched users: ` + matchedUsers);
         }
 
 
