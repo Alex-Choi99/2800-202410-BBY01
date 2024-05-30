@@ -15,3 +15,14 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+    $('body').on('click', '#deselectAllButton', async function () {
+        const checkboxes = document.querySelectorAll('#filterMenu input[type="checkbox"]');
+        checkboxes.forEach(checkbox => {
+            checkbox.checked = false; // Uncheck the checkbox
+            checkbox.closest('li').classList.remove('active'); // Remove the active class from the parent <li>
+        });
+        console.log("DESELECTED ALL");
+    });
+});
