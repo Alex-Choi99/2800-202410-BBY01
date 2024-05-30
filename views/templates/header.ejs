@@ -219,25 +219,29 @@
   </script>
   <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
     <div class="container" id="navtop">
-      <!-- Website Logo -->
-      <a class="navbar-brand <% if (!locals.user) { %>navbar-brand-hidden<% } %>" href="/">
-        <img src="/images/Logo_BBY01.png" alt="Website Logo" width="120">
-      </a>
+
       <% if (locals.user) { %>
         <h3 id="title">
           LearnXChange
         </h3>
-        <a href="/notifications">
-          <% if (locals.incomingNotifications.length < 1) { %>
-            <div id="notificationImage">
-              <img src="/images/notification_bell.png">
-            </div>
-          <% } else { %>
-            <div id="notificationImage">
-              <img src="/images/notification_bell_active.png">
-            </div>
-          <% } %>
-        </a>
+        <div class="d-flex flex-row align-items-center">
+          <!-- Website Logo -->
+          <a class="navbar-brand <% if (!locals.user) { %>navbar-brand-hidden<% } %>" href="/">
+            <img src="/images/Logo_BBY01.png" alt="Website Logo" width="120">
+          </a>
+          <a href="/notifications">
+            <% if (locals.incomingNotifications.length < 1) { %>
+              <div id="notificationImage">
+                <img src="/images/notification_bell.png">
+              </div>
+            <% } else { %>
+              <div id="notificationImage">
+                <img src="/images/notification_bell_active.png">
+              </div>
+            <% } %>
+          </a>
+        </div>
+        
       <% } %>
       <!-- Hamburger Menu -->
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -250,24 +254,28 @@
           <!-- Conditionally render the navbar links if the user is logged in -->
           <% if (locals.user) { %>
             <li class="nav-item">
-              <a class="nav-link btn btn-primary me-2" href="/">Home</a>
+              <a class="nav-link btn btn-primary me-2 my-1 text-center" href="/">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link btn btn-primary me-2" href="/profile">User Profile</a>
+              <a class="nav-link btn btn-primary me-2 my-1 text-center" href="/profile">User Profile</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link btn btn-primary me-2" href="/aboutus">About Us</a>
+              <a class="nav-link btn btn-primary me-2 my-1 text-center" href="/aboutus">About Us</a>
             </li>
             <li class="nav-item">
               <!-- Logout button -->
               <form action="/logout" method="post" class="w-100">
-                <button class="nav-link btn btn-primary" id="logoutButton">Logout</button>
+                <button class="nav-link btn btn-primary my-1 text-center" id="logoutButton">Logout</button>
               </form>
             </li>
             <% } %>
         </ul>
         <!-- Conditionally render the About Us button if the user is not logged in -->
         <% if (!locals.user) { %>
+          <!-- Website Logo -->
+          <a class="navbar-brand <% if (!locals.user) { %>navbar-brand-hidden<% } %>" href="/">
+            <img src="/images/Logo_BBY01.png" alt="Website Logo" width="120">
+          </a>
           <a class="nav-link btn btn-aboutus me-2 py-2" href="/aboutus">About Us</a>
           <% } %>
       </div>

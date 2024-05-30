@@ -90,9 +90,13 @@
       <% if (connectedArray != null) { %>
         <!-- Loop through matched users and wrap each one in a card -->
         <div class="tab-pane fade" id="matchedUsers" role="tabpanel" aria-labelledby="matchedUsers-tab">
+          <ul class="list-group mt-3">
+          <% var count = 0 %>
           <% connectedArray.forEach(matchedUser => { %>
-            <%- include('templates/matchedUser', { matchedUser, matchedUsers, sessionEmail }) %>
-          <% }) %>
+            <%- include('templates/matchedUser', { count, matchedUser, matchedUsers, sessionEmail, notificationList }) %>
+            <% count++ %>
+          <% }); %>
+          </ul>
         </div>
       <% } %>
     </div>
