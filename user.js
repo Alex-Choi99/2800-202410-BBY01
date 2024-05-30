@@ -1,54 +1,54 @@
-const mongoose = require('mongoose');
-const { type } = require('os');
+const mongoose = require("mongoose");
+const { type } = require("os");
 const Schema  = mongoose.Schema;
 
 const userSchema = new Schema({
-    name: {
-        type: String,
-        required: true,
-    },
-    userId: {
-        type: String,
-        required: false,
-    },
-    email: {
-        type: String,
-        required: true,
-        unique: true,
-    },
-    password: {
-        type: String,
-        required: true,
-    },
-    skills: {
-        type: Array,
-        default: 'NaN',
-        required: true,
-    },
-    tempCode: {
-        type: String,
-        required: false,
-    },
-    image_id: {
-        type: String,
-        required: false,
-    },
-    joinDate: {
-        type: String,
-        required: true,
-    },
     connected: {
-        type: Array,
         required: false,
-    },
-    rate: {
-        type: Array,
-        required: false,
+        type: Array
     },
     description: {
-        type: String,
         required: false,
+        type: String
+    },
+    email: {
+        required: true,
+        type: String,
+        unique: true
+    },
+    image_id: {
+        required: false,
+        type: String
+    },
+    joinDate: {
+        required: true,
+        type: String
+    },
+    name: {
+        required: true,
+        type: String
+    },
+    password: {
+        required: true,
+        type: String
+    },
+    rate: {
+        required: false,
+        type: Array
+    },
+    skills: {
+        default: "NaN",
+        required: true,
+        type: Array
+    },
+    tempCode: {
+        required: false,
+        type: String
+    },
+    userId: {
+        required: false,
+        type: String
     }
 });
 
-module.exports = mongoose.mongoose.model('User', userSchema);
+module.exports = mongoose.mongoose.model("User", userSchema);
