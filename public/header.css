@@ -50,14 +50,18 @@
 }
 
 .btn-aboutus {
-    border: 1px solid white;
-    background-color: transparent;
-    color: white; /* Changed text color to white */
-    padding: 10pt;
+    background-color: rgb(42, 127, 202);
+    color: rgb(255, 255, 255);
+    border: 3px solid rgb(21, 93, 156); /* Add black border to buttons */
+    width: 120px; 
+    padding: 10px 15px; /* Add padding for better alignment */
+    transition: 0.3s;
+    text-align: center;
 }
 
 .btn-aboutus:hover {
-    background-color: rgba(124, 124, 124, 0.5);
+    scale: 1.05;
+    background-color: rgb(42, 127, 202, 0.5);
     color: white;
 }
 
@@ -85,5 +89,8 @@
     }
     #title {
         display: none;
+    }
+    .btn-aboutus {
+        margin-left: 5pt;
     }
 }

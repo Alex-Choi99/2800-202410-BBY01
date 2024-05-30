@@ -10,7 +10,7 @@
           Your match request has been sent successfully.
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button id="modalCloseButton" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
@@ -25,19 +25,19 @@
         <!-- Central Icon -->
         <div class="mb-5">
           <img src="/images/Logo_BBY01.png" class="img-fluid" alt="Central Icon" style="max-width: 300px;">
-          <h1 class="display-2">
+          <h1 id="titleIndex">
             LearnXChange
           </h1>
-          <h3>
-            Fostering Connections, One Skill at a Time
-          </h3>
+          <h4 id="quote">
+            "Fostering Connections, One Skill at a Time"
+          </h4>
         </div>
         <div class="" id="notUserButtonDiv">
           <form action='/login' method='get' class="mb-3">
-            <button id="loginBtn" class="">Login</button>
+            <button id="loginBtn" class="">LOGIN</button>
           </form>
           <form action='/signup' method='get'>
-            <button id="signupBtn" class="">Signup</button>
+            <button id="signupBtn" class="">SIGNUP</button>
           </form>
         </div>
       </div>
@@ -123,6 +123,9 @@
     $(document).ready(function() {
       $('#matchButton').on('click', function() {
         $('#matchModal').modal('show');
+      });
+      $('#modalCloseButton').on('click', function() {
+        location.reload();
       });
     });
   </script>

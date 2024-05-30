@@ -371,7 +371,7 @@ http://localhost:3025/newPW
         //     5969125,
 
         // );
-        res.render('login', { forgor: '', errorMessage: 'An error occurred while processing your request.' });
+        res.render('login', { forgor: '', errorMessage: '' });
     } catch (error) {
         console.error('Error in resetConfirm:', error);
         res.render('login', { forgor: 'forgor', errorMessage: 'An error occurred while processing your request.' });
@@ -670,7 +670,7 @@ app.post('/requestSent', async (req, res) => {
         console.error('Error sending email:', err);
     });
 
-    res.redirect('/');
+    res.status(202);
 });
 
 app.use('/notifications', sessionValidation); // Ensure user is logged in
@@ -822,7 +822,7 @@ app.post('/logout', (req, res) => {
     });
 });
 
-app.get('/404', (req, res) => {
+app.get('*', (req, res) => {
     res.render('404');
 });
 

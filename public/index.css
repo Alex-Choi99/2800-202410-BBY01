@@ -126,21 +126,57 @@
 }
 
 #loginBtn, #signupBtn {
+    font-family: "Archivo", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+    font-variation-settings: "wdth" 100;
     background-color: #1b81c5;
     color: white;
     padding: 5pt;
     width: 150px;
     border-style: solid;
-    border-width: 2px;
-    border-color: #1b5d89;
+    border-width: 5px;
+    border-color: #1973ae;
     border-radius: 10px;
+    font-size: 20pt;
+    transition: 0.3s;
 }
 
-/* #loginBtn {
-    
+#loginBtn {
+    margin-left: 20pt;
+}
 
+#loginBtn:hover {
+    background-color: #0965a2;
 }
 
 #signupBtn {
+    margin-right: 20pt;
+}
 
-} */
+#signupBtn:hover {
+    background-color: #0965a2;
+}
+
+#quote {
+    font-family: "Archivo", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-style: italic;
+    font-variation-settings: "wdth" 100;
+    margin-top: 30pt;
+}
+
+@media only screen and (max-width: 768px) {
+    #notUserButtonDiv {
+        display: block;
+        width: 200px;
+        /* justify-content: center; */
+    }
+
+    #loginBtn, #signupBtn {
+        margin-left: 0;
+        margin-right: 0;
+    }
+}

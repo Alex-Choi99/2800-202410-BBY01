@@ -46,12 +46,6 @@ body {
   opacity: 0.5;
 }
 
-
-.footer-h1 {
-  color: white;
-}
-
-
 /* GENERIC FORM */
 .genericFormDiv {
   border: 1px solid #ccc;
@@ -62,4 +56,21 @@ body {
 
 .genericFormDiv > form > h1 {
   text-align: center;
+}
+
+#title {
+  font-family: "Archivo", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 800;
+  font-style: normal;
+  font-variation-settings: "wdth" 100;
+}
+
+#titleIndex {
+  font-family: "Archivo", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 800;
+  font-style: normal;
+  font-variation-settings: "wdth" 100;
+  color:rgb(1, 26, 99);
 }
