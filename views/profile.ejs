@@ -27,7 +27,7 @@
       <div id="profileUserName" class="text-start w-100 d-flex flex-column">
         <h4>
           <%= user.name %>
-            <button id="editNameButton" class="btn btn-secondary btn-sm">Edit</button>
+            <button id="editNameButton" class="btn btn-primary btn-sm">Edit</button>
         </h4>
         <form id="editNameForm" class="d-none" method="post" action="/editName">
           <input type="text" name="newName" class="form-control" value="<%= user.name %>" maxlength="30" placeholder="Name">
@@ -36,7 +36,7 @@
       </div>
       <!-- INFO -->
       <div id="description" class="text-start d-flex flex-column w-100">
-        <h4>Description <button id="editDescriptionButton" class="btn btn-secondary btn-sm">Edit</button></h4>
+        <h4>Description <button id="editDescriptionButton" class="btn btn-primary btn-sm">Edit</button></h4>
         <p id="descriptionText">
           <%= user.description %>
         </p>
@@ -57,7 +57,7 @@
       <div class="card-header d-flex justify-content-between align-items-center"><span id="skillsTitle">
           Skills</span>
         <form action="/selectSkills" method="get">
-          <button class="btn btn-primary" id="skillsEditButton">EDIT</button>
+          <button class="btn btn-primary" id="skillsEditButton">Edit</button>
         </form>
       </div>
       <div class="card-body">
