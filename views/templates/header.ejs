@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -140,9 +139,11 @@
             </li>
             <li class="nav-item">
               <!-- Logout button -->
-              <form action="/logout" method="post" class="w-100">
-                <button class="nav-link btn btn-primary my-1 text-center" id="logoutButton">Logout</button>
-              </form>
+              <% if(!isChat) { %>
+                <form action="/logout" method="post" class="w-100">
+                  <button class="nav-link btn btn-primary my-1 text-center" id="logoutButton">Logout</button>
+                </form>
+              <% } %>
             </li>
             
         </ul>
