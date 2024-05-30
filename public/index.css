@@ -15,6 +15,13 @@
     /* border-width: 3px; */
 }
 
+#filterSelect {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    font-weight: bold;
+}
+
 #allUsers {
     margin-bottom: 50pt;
 }

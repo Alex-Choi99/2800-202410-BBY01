@@ -48,8 +48,11 @@
       </button>
       <form id="filterMenu" class="dropdown-menu" aria-labelledby="dropdownMenuButton" action="/" method="get" >
         <% const skills = ['Math', 'Sports', 'Physics', 'Computer Technology', 'Social Sciences', 'Biology']; %>
+        <li>
+          <div id="filterSelect">SELECT</div>
+        </li>
         <% skills.forEach(skill => { %>
-          <li>
+          <li id="filterSelectList">
             <label for="<%= skill %>">
               <%= skill %>
               <input id="<%= skill %>" name="skills" type="checkbox" value="<%= skill %>" class="dropdown-item form-check-input allow-focus"
