@@ -279,7 +279,7 @@ app.post('/loginSubmit', async (req, res) => {
     const validationResult = schema.validate({ loginID, password });
     if (validationResult.error != null) {
         console.log(`Validation error: ` + validationResult.error);
-        res.render("login", { forgor: 'know', isChat, errorMessage: "Invalid Email and/or Password" });
+        res.render("login", { forgor: 'know', isChat, errorMessage: "Input must be less than 30 characters." });
         return;
     }
     const result = await userModel.findOne({

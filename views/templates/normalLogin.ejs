@@ -8,7 +8,7 @@
       <% } %>
       
       <div class="form-floating">
-        <input name="loginID" type="text" class="form-control" id="floatingInput" placeholder="Email address or ID" value="<%= typeof loginID !== 'undefined' ? loginID : '' %>">
+        <input name="loginID" type="text" class="form-control" id="floatingInput" placeholder="Email address or ID" value="<%= typeof loginID !== 'undefined' ? loginID : '' %>" min="2" max="30">
         <label for="floatingInput">Email or ID</label>
       </div>
       <div class="form-floating">

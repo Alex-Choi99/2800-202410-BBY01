@@ -3,15 +3,15 @@
   <div class="col-10 col-md-4">
     <form action="/newPWSubmit" method="post">
         <div class="form-floating">
-            <input name="tempCode" type="text" class="form-control" id="floatingPassword" placeholder="Password">
+            <input name="tempCode" type="text" class="form-control" id="floatingPassword" placeholder="Password" min="2" max="10">
             <label for="floatingPassword">Temporary code</label>
         </div>
         <div class="form-floating">
-            <input name="newPW" type="password" class="form-control" id="floatingPassword" placeholder="Password">
+            <input name="newPW" type="password" class="form-control" id="floatingPassword" placeholder="Password" min="2" max="30">
             <label for="floatingPassword">New password</label>
         </div>
         <div class="form-floating">
-            <input name="confirmPW" type="password" class="form-control" id="floatingPassword" placeholder="Password">
+            <input name="confirmPW" type="password" class="form-control" id="floatingPassword" placeholder="Password" min="2" max="30">
             <label for="floatingPassword">Confirm New password</label>
         </div>
         <button class="btn btn-primary w-100 py-2" type="submit">Submit</button>
