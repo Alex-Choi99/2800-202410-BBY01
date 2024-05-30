@@ -11,12 +11,17 @@
         "skillDiv feedback feedback feedback"
         "skillDiv feedback feedback feedback"
     ;
+    margin-bottom: 30pt;
 }
 
 #profileDiv div {
     margin: 10px;
     padding: 10px;
     border-radius: 4px;
+}
+
+#profileDiv #feedback {
+    margin-bottom: 20pt;
 }
 
 #feedback {

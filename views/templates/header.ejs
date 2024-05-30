@@ -16,7 +16,7 @@
   <link rel="stylesheet" href="../header.css">
   <link rel="stylesheet" href="profile.css">
   <link rel="stylesheet" href="../styles.css">
-  <link rel="stylesheet" href="chat.css">
+  <link rel="stylesheet" href="../chat.css">
   <link rel="stylesheet" href="about.css">
   <link rel="stylesheet" href="../footer.css">
   <link rel="stylesheet" href="../index.css">
@@ -96,14 +96,15 @@
     <div class="container" id="navtop">
 
       <% if (locals.user) { %>
-        <h3 id="title">
-          LearnXChange
-        </h3>
+
         <div class="d-flex flex-row align-items-center">
           <!-- Website Logo -->
           <a class="navbar-brand <% if (!locals.user) { %>navbar-brand-hidden<% } %>" href="/">
             <img src="/images/Logo_BBY01.png" alt="Website Logo" width="120">
           </a>
+          <h3 id="title">
+            LearnXChange
+          </h3>
           <a href="/notifications">
             <% if (locals.incomingNotifications.length < 1) { %>
               <div id="notificationImage">
@@ -128,16 +129,16 @@
         <ul class="navbar-nav ms-auto">
           <!-- Conditionally render the navbar links if the user is logged in -->
           
-            <li class="nav-item">
+            <li class="nav-item justify-content-center d-flex">
               <a class="nav-link btn btn-primary me-2 my-1 text-center" href="/">Home</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item justify-content-center d-flex">
               <a class="nav-link btn btn-primary me-2 my-1 text-center" href="/profile">User Profile</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item justify-content-center d-flex">
               <a class="nav-link btn btn-primary me-2 my-1 text-center" href="/aboutus">About Us</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item justify-content-center d-flex">
               <!-- Logout button -->
               <% if(!isChat) { %>
                 <form action="/logout" method="post" class="w-100">

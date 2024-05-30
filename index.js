@@ -171,6 +171,7 @@ app.use('/', async (req, res, next) => {
 });
 
 app.get('/', async (req, res) => {
+    isChat = false;
     try {
         // Get the user's email from the session
         const userEmail = req.session.email;
@@ -241,20 +242,24 @@ app.get('/', async (req, res) => {
 });
 
 app.get('/aboutus', (req, res) => {
+    isChat = false;
     res.render('about', { isChat });
 });
 
 app.get('/circle', (req, res) => {
+    isChat = false;
     res.render('circle', { isChat });
 });
 
 app.get('/login', (req, res) => {
+    isChat = false;
     var forgor = req.query.type;
     console.log('forgor type' + forgor);
     res.render('login', { forgor, isChat, errorMessage: '', user: isValidSession(req) });
 });
 
 app.post('/loginSubmit', async (req, res) => {
+    isChat = false;
     const { loginID, password } = req.body;
     console.log(loginID + password);
 
@@ -304,6 +309,7 @@ app.post('/loginSubmit', async (req, res) => {
 });
 
 app.post('/resetConfirm', async (req, res) => {
+    isChat = false;
     try {
         const email = req.body.email;
         const forgor = req.query.type;
@@ -381,10 +387,12 @@ http://localhost:3025/newPW
 });
 
 app.get('/newPW', async (req, res) => {
+    isChat = false;
     res.render('newPW', { isChat });
 });
 
 app.post('/newPWSubmit', async (req, res) => {
+    isChat = false;
     const tempCode = req.body.tempCode;
     const newPW = req.body.newPW;
     const confirmPW = req.body.confirmPW;
@@ -415,10 +423,12 @@ app.post('/newPWSubmit', async (req, res) => {
 });
 
 app.get('/signup', (req, res) => {
+    isChat = false;
     res.render('signup', { isChat });
 });
 
 app.post('/signupSubmit', async (req, res) => {
+    isChat = false;
     const { name, userId, email, password } = req.body;
     const date = new Date();
 
@@ -474,6 +484,7 @@ app.post('/signupSubmit', async (req, res) => {
 
 // define your own email api which points to your server.
 app.post('/api/sendemail/', function (req, res) {
+    isChat = false;
     const { name, email, subject, message } = req.body;
     //implement your spam protection or checks.
     sendEmail(name, email, subject, message);
@@ -481,10 +492,12 @@ app.post('/api/sendemail/', function (req, res) {
 
 app.use('/selectSkills', sessionValidation);
 app.get('/selectSkills', (req, res) => {
+    isChat = false;
     res.render('selectSkills', { isChat });
 });
 
 app.post('/setTags', async (req, res) => {
+    isChat = false;
     // var userSkill = await userModel.skills;
 
     // for(let i = 0; i < skills[0].length; i++){
@@ -519,6 +532,7 @@ app.post('/setTags', async (req, res) => {
 app.use('/profile', sessionValidation);
 
 app.get('/profile', async (req, res) => {
+    isChat = false;
     req.session.cookie.maxAge = expireTime;
     var email = req.session.email;
     var user = await userModel.findOne({ email });
@@ -539,6 +553,7 @@ app.get('/profile', async (req, res) => {
 });
 
 app.post('/setProfilePic', upload.single('image'), async (req, res, next) => {
+    isChat = false;
     let image_uuid = uuid();
     let email = req.session.email;
     let doc = await userModel.findOne({ email });
@@ -574,6 +589,7 @@ app.post('/setProfilePic', upload.single('image'), async (req, res, next) => {
 });
 
 app.post('/setSkill', async (req, res) => {
+    isChat = false;
     try {
         let email = req.session.email;
         const newSkills = req.body.setSkill.split(',').map(skill => skill.trim());
@@ -591,6 +607,7 @@ app.post('/setSkill', async (req, res) => {
 });
 
 app.post('/editDescription', async (req, res) => {
+    isChat = false;
     try {
         const newDesc = req.body.newDesc;
         const user = await userModel.findOne({ email: req.session.email });
@@ -609,6 +626,7 @@ app.post('/editDescription', async (req, res) => {
 });
 
 app.post('/editName', async (req, res) => {
+    isChat = false;
     try {
         const newName = req.body.newName;
         const user = await userModel.findOne({ email: req.session.email });
@@ -627,13 +645,16 @@ app.post('/editName', async (req, res) => {
 });
 
 app.get('/settings', (req, res) => {
+    isChat = false;
     res.render('settings', { isChat });
 })
 app.get('/requestSent', (req, res) => {
+    isChat = false;
     res.render('requestConfirm', { isChat });
 });
 
 app.post('/requestSent', async (req, res) => {
+    isChat = false;
     const recipientEmail = req.body.recipientEmail; // Assuming recipientEmail is sent in the request body
     console.log(recipientEmail);
     const senderEmail = req.session.email; // Assuming the sender is the logged-in user
@@ -677,6 +698,7 @@ app.post('/requestSent', async (req, res) => {
 
 app.use('/notifications', sessionValidation); // Ensure user is logged in
 app.get('/notifications', async (req, res) => {
+    isChat = false;
     const email = req.session.email;
     const notifications = await Notification.find({ recipientEmail: email, read: false });
 
@@ -684,6 +706,7 @@ app.get('/notifications', async (req, res) => {
 });
 
 app.post('/acceptRequest', async (req, res) => {
+    isChat = false;
     const { notificationId } = req.body;
     const recipientEmail = req.session.email; // Assuming the recipient's email is stored in the session
     console.log(`email: ` + recipientEmail);
@@ -734,6 +757,7 @@ app.post('/acceptRequest', async (req, res) => {
 });
 
 app.post('/denyRequest', async (req, res) => {
+    isChat = false;
     const notificationId = req.body.notificationId;
     await Notification.deleteOne({ _id: notificationId });
     res.redirect('/notifications');
@@ -760,6 +784,7 @@ app.get('/chat/:id', async (req, res) => {
 });
 
 app.post('/unmatch', async (req, res) => {
+    isChat = false;
     const email = req.session.email;
     const unmatchedEmail = req.body.unmatch;
     console.log(unmatchedEmail);
@@ -777,6 +802,7 @@ app.post('/unmatch', async (req, res) => {
 });
 
 app.get('/rate/:email', async (req, res) => {
+    isChat = false;
     const ratedUserEmail = req.params.email;
     const user = await userModel.findOne({ email: ratedUserEmail });
     console.log(`rated User: ` + user);
@@ -784,6 +810,7 @@ app.get('/rate/:email', async (req, res) => {
 });
 
 app.post('/rateSubmit', async (req, res) => {
+    isChat = false;
     const currentUser = req.session.email;
     const rateValue = req.body.rateValue;
     const feedback = req.body.feedback;
@@ -817,6 +844,7 @@ app.post('/rateSubmit', async (req, res) => {
 });
 
 app.post('/logout', (req, res) => {
+    isChat = false;
     req.session.destroy((err) => {
         if (err) {
             throw err;
@@ -826,6 +854,7 @@ app.post('/logout', (req, res) => {
 });
 
 app.get('*', (req, res) => {
+    isChat = false;
     res.render('404', { isChat });
 });
 

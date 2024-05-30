@@ -12,7 +12,7 @@
 
   <div class="container" id="profileDiv">
     <!-- PROFILE HEADER -->
-    <div class="widget-card shadow-sm" id="profileHeader">
+    <div class="widget-card shadow-sm card" id="profileHeader">
       <!-- IMAGE -->
       <div id="profileImage">
         <% if (user.image_id==null) { %>
@@ -119,7 +119,7 @@
               </div>
               <div id="uploadButtonDiv">
                 <input id="uploadImageButton" type="file" name="image" onchange="previewImage(event)" accept="image/*">
-                <label for="uploadImageButton" class="custom-file-upload">
+                <label for="uploadImageButton" class="custom-file-upload text-center">
                   UPLOAD FILE
                 </label>
               </div>  
