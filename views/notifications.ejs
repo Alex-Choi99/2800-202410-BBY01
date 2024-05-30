@@ -22,7 +22,7 @@
                         <div class="card" id="notificationCard">
                             <div class="card-body" id="notificationCardBody">
                                 <div>
-                                    <span id="email"> <%= notification.senderEmail %></span><%= notification.message %>
+                                    <span id="email"> <%= notification.senderEmail %></span> <%= notification.message %>
                                 </div>
                                 <div id="notificationButtonDiv" class="ms-auto d-flex">
                                     <form action="/acceptRequest" method="post" id="acceptButtonForm">
