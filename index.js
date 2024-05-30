@@ -17,6 +17,7 @@ const bodyParser = require('body-parser');
 const Notification = require('./notifications');
 const Chat = require('./chat');
 const path = require('path');
+var isChat = false;
 
 // const httpServer = http.createServer(app);
 const socketIO = require('socket.io');
@@ -165,6 +166,7 @@ io.on('connection', (socket) => {
 app.use('/', async (req, res, next) => {
     app.locals.user = isValidSession(req);
     app.locals.incomingNotifications = await Notification.find({ recipientEmail: req.session.email });
+    app.locals.isChat = false;
     next();
 });
 
@@ -228,9 +230,9 @@ app.get('/', async (req, res) => {
 
 
         if (!isValidSession(req)) {
-            res.render('index', { users: result });
+            res.render('index', { users: result, isChat });
         } else {
-            res.render('index', { users: result, connectedArray: user.connected, chat, matchedUsers, sessionEmail: req.session.email, user, selectedSkills: skillsArray, notificationList: notificationList, notifications});
+            res.render('index', { users: result, isChat, connectedArray: user.connected, chat, matchedUsers, sessionEmail: req.session.email, user, selectedSkills: skillsArray, notificationList: notificationList, notifications});
         }
     } catch (error) {
         console.error(error);
@@ -239,17 +241,17 @@ app.get('/', async (req, res) => {
 });
 
 app.get('/aboutus', (req, res) => {
-    res.render('about');
+    res.render('about', { isChat });
 });
 
 app.get('/circle', (req, res) => {
-    res.render('circle');
+    res.render('circle', { isChat });
 });
 
 app.get('/login', (req, res) => {
     var forgor = req.query.type;
     console.log('forgor type' + forgor);
-    res.render('login', { forgor, errorMessage: '', user: isValidSession(req) });
+    res.render('login', { forgor, isChat, errorMessage: '', user: isValidSession(req) });
 });
 
 app.post('/loginSubmit', async (req, res) => {
@@ -263,7 +265,7 @@ app.post('/loginSubmit', async (req, res) => {
     const validationResult = schema.validate({ loginID, password });
     if (validationResult.error != null) {
         console.log(`Validation error: ` + validationResult.error);
-        res.render("login", { forgor: 'know', errorMessage: "Input must be less than 30 characters." });
+        res.render("login", { forgor: 'know', isChat, errorMessage: "Input must be less than 30 characters." });
         return;
     }
     const result = await userModel.findOne({
@@ -276,7 +278,7 @@ app.post('/loginSubmit', async (req, res) => {
     console.log('User info from DB:', result);
     if (!result) {
         console.log("user not found");
-        res.render("login", { forgor: 'know', errorMessage: "No User Detected" });
+        res.render("login", { forgor: 'know', isChat, errorMessage: "No User Detected" });
         return;
     }
 
@@ -296,7 +298,7 @@ app.post('/loginSubmit', async (req, res) => {
     }
     else {
         console.log("incorrect password");
-        res.render("login", { forgor: 'know', errorMessage: "Incorrect Password" });
+        res.render("login", { forgor: 'know', isChat, errorMessage: "Incorrect Password" });
         return;
     }
 });
@@ -309,7 +311,7 @@ app.post('/resetConfirm', async (req, res) => {
         const validationResult = schema.validate(email);
         if (validationResult.error != null) {
             console.log(validationResult.error);
-            res.render('login', { forgor, errorMessage: "Invalid email." });
+            res.render('login', { forgor, isChat, errorMessage: "Invalid email." });
             return;
         }
 
@@ -318,7 +320,7 @@ app.post('/resetConfirm', async (req, res) => {
         console.log('User info from db' + result);
         if (!result) {
             console.log("user not found");
-            res.render('login', { forgor, errorMessage: 'No user detected.' });
+            res.render('login', { forgor, isChat, errorMessage: 'No user detected.' });
             return;
         }
 
@@ -371,15 +373,15 @@ http://localhost:3025/newPW
         //     5969125,
 
         // );
-        res.render('login', { forgor: '', errorMessage: '' });
+        res.render('login', { forgor: '', isChat, errorMessage: '' });
     } catch (error) {
         console.error('Error in resetConfirm:', error);
-        res.render('login', { forgor: 'forgor', errorMessage: 'An error occurred while processing your request.' });
+        res.render('login', { forgor: 'forgor', isChat, errorMessage: 'An error occurred while processing your request.' });
     }
 });
 
 app.get('/newPW', async (req, res) => {
-    res.render('newPW');
+    res.render('newPW', { isChat });
 });
 
 app.post('/newPWSubmit', async (req, res) => {
@@ -391,29 +393,29 @@ app.post('/newPWSubmit', async (req, res) => {
     const validationResult = schema.validate(tempCode, newPW, confirmPW);
     if (validationResult.error != null) {
         console.log(validationResult.error);
-        res.render("newPW", { errorMessage: "Password cannot be more than 30." });
+        res.render("newPW", { isChat, errorMessage: "Password cannot be more than 30." });
         return;
     }
 
     const findCode = await userModel.findOne({ tempCode });
     if (!findCode) {
-        res.render("newPW", { errorMessage: "Non existing temporary code." });
+        res.render("newPW", { isChat, errorMessage: "Non existing temporary code." });
         return;
     }
 
     if (newPW != confirmPW) {
-        res.render("newPW", { errorMessage: "new password and confirmation are not matching." });
+        res.render("newPW", { isChat, errorMessage: "new password and confirmation are not matching." });
         return;
     }
 
     const saltRounds = 12;
     const hashedPassword = await bcrypt.hash(newPW, saltRounds);
     await userModel.updateOne({ tempCode: tempCode }, { $set: { password: hashedPassword } });
-    res.render('login', { forgor: 'know' });
+    res.render('login', { isChat, forgor: 'know' });
 });
 
 app.get('/signup', (req, res) => {
-    res.render('signup');
+    res.render('signup', { isChat });
 });
 
 app.post('/signupSubmit', async (req, res) => {
@@ -436,7 +438,7 @@ app.post('/signupSubmit', async (req, res) => {
     console.log('all good');
     if (validationResult.error != null) {
         //{ name: name, email: email, id: id, password: password }
-        res.render("signup", { errorMessage: 'user with that email already exists in our record.' });
+        res.render("signup", { isChat, errorMessage: 'user with that email already exists in our record.' });
         /* html += `
         <form action='/signup' method='get'>
             <button>Try Again</button>
@@ -446,7 +448,7 @@ app.post('/signupSubmit', async (req, res) => {
     } else {
         let user = await userModel.findOne({ email });
         if (user) {
-            res.render('signup', { errorMessage: 'user with that email already exists in our record.' });
+            res.render('signup', { isChat, errorMessage: 'user with that email already exists in our record.' });
             return;
         }
 
@@ -479,7 +481,7 @@ app.post('/api/sendemail/', function (req, res) {
 
 app.use('/selectSkills', sessionValidation);
 app.get('/selectSkills', (req, res) => {
-    res.render('selectSkills');
+    res.render('selectSkills', { isChat });
 });
 
 app.post('/setTags', async (req, res) => {
@@ -533,7 +535,7 @@ app.get('/profile', async (req, res) => {
         user.imageUrl = imageUrl;
     }
 
-    res.render('profile', { user, skills: user.skills });
+    res.render('profile', { user, isChat, skills: user.skills });
 });
 
 app.post('/setProfilePic', upload.single('image'), async (req, res, next) => {
@@ -625,10 +627,10 @@ app.post('/editName', async (req, res) => {
 });
 
 app.get('/settings', (req, res) => {
-    res.render('settings');
+    res.render('settings', { isChat });
 })
 app.get('/requestSent', (req, res) => {
-    res.render('requestConfirm');
+    res.render('requestConfirm', { isChat });
 });
 
 app.post('/requestSent', async (req, res) => {
@@ -678,7 +680,7 @@ app.get('/notifications', async (req, res) => {
     const email = req.session.email;
     const notifications = await Notification.find({ recipientEmail: email, read: false });
 
-    res.render('notifications', { notifications });
+    res.render('notifications', { isChat, notifications });
 });
 
 app.post('/acceptRequest', async (req, res) => {
@@ -738,6 +740,7 @@ app.post('/denyRequest', async (req, res) => {
 });
 
 app.get('/chat/:id', async (req, res) => {
+    isChat = true;
     const ID = req.params.id;
     const email = req.session.email;
     console.log(email);
@@ -749,7 +752,7 @@ app.get('/chat/:id', async (req, res) => {
         }
         console.log('Received chatId:', ID);
         console.log(user);
-        res.render('chat', { chat, chatId: ID, user }); // Assuming user info is stored in session
+        res.render('chat', { isChat, chat, chatId: ID, user }); // Assuming user info is stored in session
     } catch (error) {
         console.error(error);
         res.status(500).send('Server error');
@@ -777,7 +780,7 @@ app.get('/rate/:email', async (req, res) => {
     const ratedUserEmail = req.params.email;
     const user = await userModel.findOne({ email: ratedUserEmail });
     console.log(`rated User: ` + user);
-    res.render('rate', { user });
+    res.render('rate', { isChat, user });
 });
 
 app.post('/rateSubmit', async (req, res) => {
@@ -823,7 +826,7 @@ app.post('/logout', (req, res) => {
 });
 
 app.get('*', (req, res) => {
-    res.render('404');
+    res.render('404', { isChat });
 });
 
 // app.listen(port, () => {
