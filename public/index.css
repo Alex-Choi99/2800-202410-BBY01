@@ -15,6 +15,9 @@
     /* border-width: 3px; */
 }
 
+#allUsers {
+    margin-bottom: 50pt;
+}
 
 /* Additional styles for buttons */
 .user-card .btn,

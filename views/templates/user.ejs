@@ -10,7 +10,6 @@
     <div class="d-flex flex-column justify-content-between" style="min-width: 0;">
         <p class="name d-flex list-group justify-content-center mx-2 my-1 fw-bold my-2"><%= user.name %></p>
         <p class="d-flex flex-row list-group my-1" style="flex-wrap: wrap;">
-            <% console.log(`user: `, user) %>
             <% user.skills.forEach(skill => { %>
                 <% if(skill != 'NaN') { %>
                     <span class="mx-1 eachSkill rounded badge my-1"><%= skill %></span>

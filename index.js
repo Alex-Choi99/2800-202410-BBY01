@@ -182,11 +182,9 @@ app.get('/', async (req, res) => {
         var notificationList = [];
         notifications.forEach(notification => {
             if (notification.senderEmail == userEmail) {
-                console.log(notification);
                 notificationList.push(notification.recipientEmail);
             }
         });
-        console.log(notificationList);
         // Apply any additional filters if needed
         const filters = {};
         var skillsArray = [];
@@ -211,21 +209,32 @@ app.get('/', async (req, res) => {
         // Find users based on filters
         const result = await userModel.find(filters);
         // console.log(`list of users based on filters: ` + result);
+        
+
     
-        if(req.session.email) {
+        if(isValidSession(req)) {
+
+            console.log("INSIDE");
             var user = await userModel.findOne({ email: req.session.email });
             // console.log(`connected user list: `, user.connected);
             var matchedUsers = [];
 
             for (let i = 0; i < result.length; i++) {
-                // console.log(result[i].email);
+                
+                console.log(result[i].email);
                 let connectedUser = user.connected; 
-                // console.log(connectedUser);
+                console.log(connectedUser);
                 connectedUser.forEach(usr => { 
-                    usr.email == result[i].email? matchedUsers.push(result[i]) : null
-                    // console.log(usr.email);
+                    if (usr.email == result[i].email) {
+                        console.log(`result[i]: `, result[i]);
+                        matchedUsers.push(result[i]);
+                        console.log(`matchedUsers[i]: `, matchedUsers[i]);
+                    }
                 });
+
             }
+            console.log('Result:', result);
+            console.log('Matched Users:', matchedUsers);
             // console.log(`matched users: ` + matchedUsers);
         }
 
