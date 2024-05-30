@@ -457,7 +457,7 @@ app.post('/signupSubmit', async (req, res) => {
     console.log('all good');
     if (validationResult.error != null) {
         //{ name: name, email: email, id: id, password: password }
-        res.render("signup", { isChat, errorMessage: 'user with that email already exists in our record.' });
+        res.render("signup", { isChat, errorMessage: 'Please input valid info.' });
         /* html += `
         <form action='/signup' method='get'>
             <button>Try Again</button>
@@ -692,6 +692,7 @@ app.post('/requestSent', async (req, res) => {
                 ],
                 Subject: 'New Match Request',
                 TextPart: `You have received a new match request from ${senderEmail}.`,
+                TemplateID: 6009357,
             },
         ],
     });

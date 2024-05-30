@@ -30,7 +30,7 @@
             <button id="editNameButton" class="btn btn-secondary btn-sm">Edit</button>
         </h4>
         <form id="editNameForm" class="d-none" method="post" action="/editName">
-          <input type="text" name="newName" class="form-control" value="<%= user.name %>">
+          <input type="text" name="newName" class="form-control" value="<%= user.name %>" maxlength="30" placeholder="Name">
           <button type="submit" class="btn btn-primary btn-sm">Submit</button>
         </form>
       </div>
@@ -41,7 +41,7 @@
           <%= user.description %>
         </p>
         <form id="editDescriptionForm" class="d-none" method="post" action="/editDescription">
-          <textarea id="descriptionTextarea" name="newDesc" class="form-control my-2"
+          <textarea id="descriptionTextarea" name="newDesc" class="form-control my-2" maxlength="500" placeholder="description"
             rows="3"><%= user.description %></textarea>
           <button type="submit" class="btn btn-primary text-end">Submit</button>
         </form>
