@@ -99,7 +99,7 @@
   </div>
 
   <div class="settingsDiv" id="settingsDiv">
-    <div class="card">
+    <div class="card ">
       <div class="card-header">
         <span id="settingsTitle">Change Image</span>
         <div class="float-end" id="exitIcon">
@@ -109,7 +109,7 @@
       <div class="card-body">
         <!-- UPLOAD IMAGE FORM -->
         <form action="/setProfilePic" method="post" enctype="multipart/form-data">
-          <div class="container d-flex">
+          <div class="container d-flex text-center">
             <div id="defaultProfilePicture">
               <% if (user.image_id==null) { %>
                 <img src="/images/defaultProfilePicture.png" alt="default">
