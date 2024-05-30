@@ -1,5 +1,21 @@
 .chat-container {
-    min-height: calc(72vh - 100px); /* Adjust as needed */
-    max-height: calc(72vh - 100px); /* Adjust as needed */
+    min-height: calc(68vh - 100px); 
+    max-height: calc(68vh - 100px); 
     overflow-y: scroll;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: white;
+}
+
+.btn .btn-primary {
+    text-align: center;
+}
+
+#messageForm {
+    display: flex;
+}
+
+#messageInput {
+    width: 50%;
 }
