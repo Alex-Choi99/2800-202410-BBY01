@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,152 +8,82 @@
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
   <!-- Font Awesome for icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <link rel="stylesheet" href="profile.css">
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="chat.css">
+  <link rel="stylesheet" href="../css/header.css">
+  <link rel="stylesheet" href="css/profile.css">
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="../css/chat.css">
+  <link rel="stylesheet" href="css/about.css">
+  <link rel="stylesheet" href="../css/footer.css">
+  <link rel="stylesheet" href="../css/index.css">
+  <link rel="stylesheet" href="css/notifications.css">
+  <link rel="stylesheet" href="css/filtermenu.css">
+  <link rel="stylesheet" href="../css/rate.css">
   <style>
     .dropdown-menu {
       max-height: 200px;
       overflow-y: auto;
     }
+
     .navbar-custom {
-      background-color: rgb(29, 105, 171);
+      /* background-color: rgb(29, 105, 171); */
       position: relative;
       z-index: 1;
-      border-bottom: 5px solid rgb(29, 105, 171); /* Added border for a sharp look */
+      /* Added border for a sharp look */
     }
+
     .navbar-brand-hidden {
       display: none;
     }
-    .btn-aboutus {
-      border: 1px solid white;
-      background-color: rgb(29, 105, 171);
-      color: white; /* Changed text color to white */
-    }
-    .btn-aboutus:hover {
-      background-color: rgb(5, 5, 80);
-      color: white;
-    }
 
-    /* NAVBAR */
-    .nav-link.btn-primary {
-      background-color: rgb(29, 105, 171);
-      color: white; 
-      border: 1px solid rgb(29, 105, 171);
-      width: 100%; /* Ensure full width */
-      padding-left: 15px; /* Add padding for better alignment */
-      transition:0.3s;
-    }
-    .nav-link.btn-primary:hover {
-      scale: 1.05;
-      background-color: rgb(20, 74, 122);;
-      color: white;
-    }
-    .navbar-nav .nav-item form {
-      width: 100%; /* Ensure form takes full width */
-    }
-    .navbar-nav .nav-item form .nav-link {
-      width: 100%; /* Ensure button takes full width */
-      text-align: center; /* Align text to the left */
-      padding-left: 15px; /* Add padding for better alignment */
-    }
-
-    @media only screen and (max-width: 768px){
-      #navtop{
-        
-      }
+    @media only screen and (max-width: 768px) {
       .nav-link.btn-primary {
         text-align: left;
       }
-      .fa-bell {
-      }
-    }
-    .rating {
-      --dir: right;
-      --fill: gold;
-      --fillbg: rgba(100, 100, 100, 0.15);
-      --star: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 17.25l-6.188 3.75 1.641-7.031-5.438-4.734 7.172-0.609 2.813-6.609 2.813 6.609 7.172 0.609-5.438 4.734 1.641 7.031z"/></svg>');
-      --stars: 5;
-      --starsize: 3rem;
-      --symbol: var(--star);
-      --value: 1;
-      --w: calc(var(--stars) * var(--starsize));
-      --x: calc(100% * (var(--value) / var(--stars)));
-      block-size: var(--starsize);
-      inline-size: var(--w);
-      position: relative;
-      touch-action: manipulation;
-      -webkit-appearance: none;
     }
 
-    [dir="rtl"] .rating {
-      --dir: left;
-    }
+    .user-card {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
 
-    .rating::-moz-range-track {
-      background: linear-gradient(to var(--dir), var(--fill) 0 var(--x), var(--fillbg) 0 var(--x));
-      block-size: 100%;
-      mask: repeat left center/var(--starsize) var(--symbol);
-    }
+.user-card .name,
+.user-card .eachSkill,
+.user-card p,
+.user-card form {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
 
-    .rating::-webkit-slider-runnable-track {
-      background: linear-gradient(to var(--dir), var(--fill) 0 var(--x), var(--fillbg) 0 var(--x));
-      block-size: 100%;
-      mask: repeat left center/var(--starsize) var(--symbol);
-      -webkit-mask: repeat left center/var(--starsize) var(--symbol);
-    }
+.user-card .d-flex {
+    flex-wrap: wrap;
+    max-width: 100%;
+}
 
-    .rating::-moz-range-thumb {
-      height: var(--starsize);
-      opacity: 0;
-      width: var(--starsize);
-    }
+.user-card .name {
+    min-width: 0; /* Prevent name from expanding parent */
+}
 
-    .rating::-webkit-slider-thumb {
-      height: var(--starsize);
-      opacity: 0;
-      width: var(--starsize);
-      -webkit-appearance: none;
-    }
+.user-card .eachSkill {
+    max-width: 100%;
+}
 
-    .rating,
-    .rating-label {
-      display: block;
-      font-family: ui-sans-serif, system-ui, sans-serif;
-    }
+.user-card .ms-auto {
+    margin-left: auto;
+}
 
-    .rating-label {
-      margin-block-end: 1rem;
-    }
 
-    /* NO JS */
-    .rating--nojs::-moz-range-track {
-      background: var(--fillbg);
-    }
-
-    .rating--nojs::-moz-range-progress {
-      background: var(--fill);
-      block-size: 100%;
-      mask: repeat left center/var(--starsize) var(--star);
-    }
-
-    .rating--nojs::-webkit-slider-runnable-track {
-      background: var(--fillbg);
-    }
-
-    .rating--nojs::-webkit-slider-thumb {
-      background-color: var(--fill);
-      box-shadow: calc(0rem - var(--w)) 0 0 var(--w) var(--fill);
-      opacity: 1;
-      width: 1px;
-    }
-
-    [dir="rtl"] .rating--nojs::-webkit-slider-thumb {
-      box-shadow: var(--w) 0 0 var(--w) var(--fill);
-    }
   </style>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/cloudinary-jquery@2.11.3/cloudinary-jquery.min.js"></script>
 </head>
@@ -165,49 +94,73 @@
   </script>
   <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
     <div class="container" id="navtop">
-      <!-- Website Logo -->
-      <a class="navbar-brand <% if (!locals.user) { %>navbar-brand-hidden<% } %>" href="/">
-        <img src="/images/Logo_BBY01.png" alt="Website Logo" width="120">
-      </a>
-      <a href="/notifications">
-        <i class="fa-solid fa-bell"> </i>
-      </a>
+
+      <% if (locals.user) { %>
+
+        <div class="d-flex flex-row align-items-center mr-6 p-2">
+          <!-- Website Logo -->
+          <a class="navbar-brand <% if (!locals.user) { %>navbar-brand-hidden<% } %>" href="/">
+            <img src="/images/Logo_BBY01.png" alt="Website Logo" width="120">
+          </a>
+          <h3 id="title">
+            LearnXChange
+          </h3>
+          <a href="/notifications">
+            <% if (locals.incomingNotifications.length < 1) { %>
+              <div id="notificationImage">
+                <img src="/images/notification_bell.png">
+              </div>
+            <% } else { %>
+              <div id="notificationImage">
+                <img src="/images/notification_bell_active.png">
+              </div>
+            <% } %>
+          </a>
+        </div>
+        
+      <% } %>
       <!-- Hamburger Menu -->
+      <% if (locals.user) { %>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-              aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-
       <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
+        <ul class="navbar-nav mx-auto">
           <!-- Conditionally render the navbar links if the user is logged in -->
-          <% if (locals.user) { %>
-            <li class="nav-item">
-              <a class="nav-link btn btn-primary me-2" href="/">Home</a>
+          
+            <li class="nav-item justify-content-center d-flex">
+              <a class="nav-link btn btn-primary mx-1 my-1 text-center" href="/">Home</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link btn btn-primary me-2" href="/profile">User Profile</a>
+            <li class="nav-item justify-content-center d-flex">
+              <a class="nav-link btn btn-primary mx-1 my-1 text-center" href="/profile">User Profile</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link btn btn-primary me-2" href="/aboutus">About Us</a>
+            <li class="nav-item justify-content-center d-flex">
+              <a class="nav-link btn btn-primary mx-1 my-1 text-center" href="/aboutus">About Us</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link btn btn-primary me-2" href="/settings">Settings</a>
-            </li>
-            <li class="nav-item">
+            <li class="nav-item justify-content-center d-flex">
               <!-- Logout button -->
-              <form action="/logout" method="post" class="w-100">
-                <button class="nav-link btn btn-primary w-100">Logout</button>
-              </form>
+              <% if(!isChat) { %>
+                <form action="/logout" method="post" class="w-100 justify-content-center d-flex">
+                  <button class="nav-link btn btn-primary my-1 text-center" id="logoutButton">Logout</button>
+                </form>
+              <% } %>
             </li>
-          <% } %>
+            
         </ul>
+        <% } %>
         <!-- Conditionally render the About Us button if the user is not logged in -->
         <% if (!locals.user) { %>
+          <!-- Website Logo -->
+          <a class="navbar-brand" href="/">
+            <img src="/images/Logo_BBY01.png" alt="Website Logo" width="120">
+          </a>
           <a class="nav-link btn btn-aboutus me-2 py-2" href="/aboutus">About Us</a>
-        <% } %>
+          <% } %>
       </div>
     </div>
   </nav>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-ho+y8US3+Yb9GP+pCiH+3+sh2Ftah5MZsY3DZ/TuuT9oQXh1Ukr7nD7D5U5CVnE9" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+    integrity="sha384-ho+y8US3+Yb9GP+pCiH+3+sh2Ftah5MZsY3DZ/TuuT9oQXh1Ukr7nD7D5U5CVnE9"
+    crossorigin="anonymous"></script>

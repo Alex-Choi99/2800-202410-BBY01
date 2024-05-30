@@ -1,73 +1,105 @@
 <%- include("templates/header") %>
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+  $.cloudinary.config({ cloud_name: '<%= process.env.CLOUDINARY_CLOUD_NAME %>', secure: true });
+</script>
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+  $.cloudinary.config({ cloud_name: '<%= process.env.CLOUDINARY_CLOUD_NAME %>', secure: true });
+</script>
 
-  <div class="container d-flex">
-    <div class="container">
-      <!-- PROFILE HEADER -->
-      <div class="container" id="profileHeader">
-        <!-- IMAGE -->
-        <div id="profileImage">
-          <% if (user.image_id==null) { %>
-            <div id="mainDefaultProfilePicture">
-              <img src="/images/defaultProfilePicture.png" alt="default">
-            </div>
-            <% } else { %>
-              <img src="<%= user.imageUrl %>" alt="Profile Image" />
-              <% } %>
-        </div>
-        <!-- USERNAME -->
-        <div id="profileUserName">
-          <h4>
-            <%= user.name %>
-          </h4>
-        </div>
-        <!-- INFO -->
+  <div class="container" id="profileDiv">
+    <!-- PROFILE HEADER -->
+    <div class="widget-card shadow-sm card" id="profileHeader">
+      <!-- IMAGE -->
+      <div id="profileImage">
+        <% if (user.image_id==null) { %>
+          <div id="mainDefaultProfilePicture">
+            <img src="/images/defaultProfilePicture.png" alt="default">
+          </div>
+          <% } else { %>
+            <img src="<%= user.imageUrl %>" alt="Profile Image" />
+            <% } %>
       </div>
-      <div id="profileInfo">
-        <h6><i class="fa-solid fa-calendar-days"></i><span id="joinedText">Joined <%= user.joinDate %></span></h6>
-        <hr>
+      <!-- USERNAME -->
+      <div id="profileUserName" class="text-start w-100 d-flex flex-column">
+        <h4>
+          <%= user.name %>
+            <button id="editNameButton" class="btn btn-primary btn-sm">Edit</button>
+        </h4>
+        <form id="editNameForm" class="d-none" method="post" action="/editName">
+          <input type="text" name="newName" class="form-control" value="<%= user.name %>" maxlength="30" placeholder="Name">
+          <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+        </form>
       </div>
-
-      <!-- SKILLS DIV -->
-      <div class="card widget-card shadow-sm" id="skillDiv">
-        <div class="card-header d-flex justify-content-between align-items-center"><span id="skillsTitle">
-            Skills</span>
-          <form action="/selectSkills" method="get">
-            <button class="btn btn-primary" id="skillsEditButton">EDIT</button>
-          </form>
-        </div>
-        <div class="card-body">
-          <% console.log(skills) %>
-            <% skills.forEach(skill=> { %>
-              <%- include('templates/eachSkill', { skill }) %>
-                <% }) %>
-        </div>
-      </div>
-
-      <div class="card widget-card shadow-sm" id="reviewDiv">
-        <div class="card-header d-flex justify-content-between align-items-center">
-          <span id="reviewTitle">Reviews</span>
-          <span id="amountDiv">Amount: <%= user.rate.length %></span>
-        </div>
-        <div class="card-body">
-          <section>
-            <div class="container mt-4">
-              <% var sum = 0; %>
-              <% var countRates = 0; %>
-              <% user.rate.forEach(rating => { %>
-                <% sum += parseFloat(rating.rating); %>
-                <% countRates++; %>
-              <% }); %>
-              <% var avg = (countRates > 0) ? (sum / countRates) : 0; %>
-              <p>Average Rating: <span id="averageRatingSpan"><%= avg.toFixed(2) %></span></p>
-            </div>
-          </section>
-        </div>
+      <!-- INFO -->
+      <div id="description" class="text-start d-flex flex-column w-100">
+        <h4>Description <button id="editDescriptionButton" class="btn btn-primary btn-sm">Edit</button></h4>
+        <p id="descriptionText">
+          <%= user.description %>
+        </p>
+        <form id="editDescriptionForm" class="d-none" method="post" action="/editDescription">
+          <textarea id="descriptionTextarea" name="newDesc" class="form-control my-2" maxlength="500" placeholder="description"
+            rows="3"><%= user.description %></textarea>
+          <button type="submit" class="btn btn-primary text-end">Submit</button>
+        </form>
       </div>
     </div>
+    <div id="profileInfo" class="card widget-card shadow-sm">
+      <h6><i class="fa-solid fa-calendar-days"></i><span id="joinedText">Joined <%= user.joinDate %></span></h6>
+      <hr>
+    </div>
+
+    <!-- SKILLS DIV -->
+    <div class="card widget-card shadow-sm" id="skillDiv">
+      <div class="card-header d-flex justify-content-between align-items-center"><span id="skillsTitle">
+          Skills</span>
+        <form action="/selectSkills" method="get">
+          <button class="btn btn-primary" id="skillsEditButton">Edit</button>
+        </form>
+      </div>
+      <div class="card-body">
+        <% console.log(skills) %>
+          <% skills.forEach(skill=> { %>
+            <%- include('templates/eachSkill', { skill }) %>
+              <% }) %>
+      </div>
+    </div>
+    <% var sum=0; %>
+      <% var countRates=0; %>
+        <% user.rate.forEach(rating=> { %>
+          <% sum +=parseFloat(rating.rating); %>
+            <% countRates++; %>
+              <% }); %>
+                <% var avg=(countRates> 0) ? (sum / countRates) : 0; %>
+                  <div class="card widget-card shadow-sm" id="feedback">
+                    <div class="d-flex align-items-center" id="reviewGrid">
+                      <div class="card w-100" id="reviewDiv">
+                        <p id="reviewTitle" class="card-header mb-3">Reviews</p>
+                        <p>Amount: <span class="infoNum">
+                            <%= user.rate.length %>
+                          </span></p>
+                        <p>Average Rating: <span class="infoNum">
+                            <%= avg.toFixed(2) %>
+                          </span>
+                      </div>
+                    </div>
+                    <div id="commentList">
+                      <% user.rate.forEach(feedback=> { %>
+                        <% if(feedback.feedback){ %>
+                          <div class="comments list-group-item bg-body-tertiary">
+                            <%= feedback.feedback %>
+                          </div>
+                          <% } %>
+                            <% }); %>
+                    </div>
+                  </div>
   </div>
 
   <div class="settingsDiv" id="settingsDiv">
-    <div class="card">
+    <div class="card ">
       <div class="card-header">
         <span id="settingsTitle">Change Image</span>
         <div class="float-end" id="exitIcon">
@@ -77,22 +109,20 @@
       <div class="card-body">
         <!-- UPLOAD IMAGE FORM -->
         <form action="/setProfilePic" method="post" enctype="multipart/form-data">
-          <div class="container d-flex">
-              <div id="defaultProfilePicture">
-                <% if (user.image_id==null) { %>
+          <div class="container d-flex text-center">
+            <div id="defaultProfilePicture">
+              <% if (user.image_id==null) { %>
                 <img src="/images/defaultProfilePicture.png" alt="default">
                 <% } else { %>
                 <img src="<%= user.imageUrl %>" alt="Profile Image" />
                 <% } %>
               </div>
-                <div id="uploadButtonDiv">
-                  <input id="uploadImageButton" type="file" name="image" onchange="previewImage(event)" accept="image/*">
-                  <label for="uploadImageButton" class="custom-file-upload">
-                    UPLOAD FILE
-                  </label>
-            
-                </div>
-                  
+              <div id="uploadButtonDiv">
+                <input id="uploadImageButton" type="file" name="image" onchange="previewImage(event)" accept="image/*">
+                <label for="uploadImageButton" class="custom-file-upload text-center">
+                  UPLOAD FILE
+                </label>
+              </div>  
           </div>
           <div id="imageButtonDiv">
             <input id="saveButton" type="submit" value="Save">
@@ -101,5 +131,7 @@
         <!-- ADD OTHER INFO TO PROFILE SETTINGS TAB -->
       </div>
     </div>
+  </div>
 
+  <script src="/js/profile.js"></script>
   <%- include("templates/footer_after_login") %>

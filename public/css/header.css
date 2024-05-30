@@ -1,0 +1,96 @@
+#title {
+    margin-right: 20pt;
+    color: white;
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+/* Navbar Customization */
+.navbar-custom {
+    /* background: url('/images/header.jpg') no-repeat center center; */
+    background-color:rgb(9, 34, 62);
+    background-size: cover;
+    position: relative;
+    z-index: 1;
+    border-bottom: 7px solid rgb(27, 80, 126);
+    /* border-bottom: 5px solid rgb(62, 62, 62); Added border for a sharp look */
+}
+
+/* Add specific padding for the logout button */
+.nav-item.logout-form .nav-link.btn-primary {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.navbar-collapse {
+    text-align: left; /* Align text to the left */
+}
+
+/* Override the default styling of the hamburger menu icon */
+/* .navbar-toggler { */
+    /* background-color: transparent; Set the background color to transparent */
+    /* border: none; Remove any border */
+/* } */
+
+/* Style the inner lines of the hamburger menu */
+.navbar-toggler-icon {
+    color: white; /* Set the color of the icon to white */
+}
+
+.navbar-brand-hidden {
+    display: none;
+}
+
+.navbar-brand {
+    margin-right: 0;
+}
+
+.btn-aboutus {
+    background-color: rgb(42, 127, 202);
+    color: rgb(255, 255, 255);
+    border: 3px solid rgb(21, 93, 156); /* Add black border to buttons */
+    width: 120px; 
+    padding: 10px 15px; /* Add padding for better alignment */
+    transition: 0.3s;
+    text-align: center;
+}
+
+.btn-aboutus:hover {
+    scale: 1.05;
+    background-color: rgb(42, 127, 202, 0.5);
+    color: white;
+}
+
+/* NAVBAR */
+.nav-link.btn-primary {
+    background-color: rgb(42, 127, 202);
+    color: rgb(255, 255, 255);
+    border: 3px solid rgb(21, 93, 156); /* Add black border to buttons */
+    width: 120px; 
+    padding: 10px 15px; /* Add padding for better alignment */
+    transition: 0.3s;
+    text-align: center;
+}
+
+.nav-link.btn-primary:hover {
+    scale: 1.05;
+    background-color: rgb(42, 127, 202, 0.5);
+    color: white;
+}
+
+/* Apply text-align: left to navbar links */
+@media (max-width: 768px) {
+    .navbar-nav .nav-link {
+        text-align: left;
+    }
+    #title {
+        display: none;
+    }
+    .btn-aboutus {
+        margin-left: 5pt;
+    }
+}

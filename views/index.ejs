@@ -1,94 +1,138 @@
 <%- include("templates/header") %>
-<!-- <head>
-  <style>
-    .btn-aboutus {
-      border: 1px solid white;
-      background-color: white;
-      color: rgb(5, 5, 80);
-    }
-    .btn-aboutus:hover {
-      background-color: rgb(5, 5, 80);
-      color: white;
-    }
-  </style>
-</head> -->
-<body>
-  <div class="container mt-5">
-    <% if (!locals.user) { %>
-      <div class="text-center mt-5 mb-5">
-        <!-- Central Icon -->
-        <div class="mb-4">
-          <img src="/images/Logo_BBY01.png" class="img-fluid" alt="Central Icon" style="max-width: 400px;">
+  <div class="modal fade" id="matchModal" tabindex="-1" aria-labelledby="matchModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="matchModalLabel">Match Request Sent</h5>
         </div>
-        <div class="d-flex flex-column align-items-center">
+        <div class="modal-body">
+          Your match request has been sent successfully.
+        </div>
+        <div class="modal-footer">
+          <button id="modalCloseButton" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <% if (!locals.user) { %>
+    <!-- If user is not logged in -->
+    <div class="new-box"></div>
+    <!-- Modal Structure -->
+    <div class="container mt-3">
+      <div class="text-center mb-5">
+        <!-- Central Icon -->
+        <div class="mb-5">
+          <img src="/images/Logo_BBY01.png" class="img-fluid" alt="Central Icon" style="max-width: 300px;">
+          <h1 id="titleIndex">
+            LearnXChange
+          </h1>
+          <h4 id="quote">
+            "Fostering Connections, One Skill at a Time"
+          </h4>
+        </div>
+        <div class="" id="notUserButtonDiv">
           <form action='/login' method='get' class="mb-3">
-            <button class="btn btn-primary btn-lg">Login</button>
+            <button id="loginBtn" class="">LOGIN</button>
           </form>
           <form action='/signup' method='get'>
-            <button class="btn btn-primary btn-lg">Signup</button>
+            <button id="signupBtn" class="">SIGNUP</button>
           </form>
         </div>
       </div>
-    <% } else { %>
-      <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-          FILTER
-        </button>
-        <form class="dropdown-menu" aria-labelledby="dropdownMenuButton" action="/" method="get">
-          <label><input type="checkbox" name="skills" value="Math">Math</label><br>
-          <label><input type="checkbox" name="skills" value="Sports">Sports</label><br>
-          <label><input type="checkbox" name="skills" value="Physics">Physics</label><br>
-          <label><input type="checkbox" name="skills" value="Computer Technology">Computer Technology</label><br>
-          <label><input type="checkbox" name="skills" value="Social Sciences">Social Sciences</label><br>
-          <label><input type="checkbox" name="skills" value="Biology">Biology</label><br>
-          <button type="submit" class="btn btn-primary">Save</button>
-        </form>
+    </div>
+  <% } else { %>
+    <div class="dropdown" id="filter">
+      <button class="dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+        FILTER BY SKILL
+      </button>
+      <form id="filterMenu" class="dropdown-menu" aria-labelledby="dropdownMenuButton" action="/" method="get" >
+        <% const skills = ['Math', 'Sports', 'Physics', 'Computer Technology', 'Social Sciences', 'Biology']; %>
+        <li>
+          <div id="filterSelect">SELECT</div>
+        </li>
+        <% skills.forEach(skill => { %>
+          <li id="filterSelectList">
+            <label for="<%= skill %>">
+              <%= skill %>
+              <input id="<%= skill %>" name="skills" type="checkbox" value="<%= skill %>" class="dropdown-item form-check-input allow-focus"
+              <%= (selectedSkills && selectedSkills.includes(skill)) ? 'checked' : '' %>>
+            </label>
+          </li>
+        <% }) %>
+        <div id="deselectAllDiv">
+          <button type="btn btn-primary" id="deselectAllButton">DESELECT ALL</button>
+        </div>
+        <div id="filterSaveButtonDiv">
+          <button type="submit" id="filterSaveButton">SAVE</button>
+        </div>
+      </form>
+    </div>
+    
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active navigation" id="allUsers-tab" data-bs-toggle="tab" data-bs-target="#allUsers"
+          type="button" role="tab" aria-controls="allUsers" aria-selected="true">All Users</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link navigation" id="matchedUsers-tab" data-bs-toggle="tab" data-bs-target="#matchedUsers"
+          type="button" role="tab" aria-controls="matchedUsers" aria-selected="false">Matched Users</button>
+      </li>
+    </ul>
+  
+    <div class="tab-content" id="myTabContent">
+      <div class="tab-pane fade show active" id="allUsers" role="tabpanel" aria-labelledby="allUsers-tab">
+        <!-- Loop through all users -->
+        <ul class="list-group mt-3">
+          <% let email = user.email %>
+          <% users.forEach(user => { %>
+            <% if (email != user.email) { %>
+              <%- include('templates/user', { user, notificationList }) %>
+            <% } %>
+          <% }) %>
+        </ul>
       </div>
-      
-      <ul class="nav nav-tabs" id="myTab" role="tablist">
-        <li class="nav-item" role="presentation">
-          <button class="nav-link active" id="allUsers-tab" data-bs-toggle="tab" data-bs-target="#allUsers"
-            type="button" role="tab" aria-controls="allUsers" aria-selected="true">All Users</button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button class="nav-link" id="matchedUsers-tab" data-bs-toggle="tab" data-bs-target="#matchedUsers"
-            type="button" role="tab" aria-controls="matchedUsers" aria-selected="false">Matched Users</button>
-        </li>
-      </ul>
-
-      <div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade show active" id="allUsers" role="tabpanel" aria-labelledby="allUsers-tab">
+      <% if (connectedArray != null) { %>
+        <!-- Loop through matched users and wrap each one in a card -->
+        <div class="tab-pane fade" id="matchedUsers" role="tabpanel" aria-labelledby="matchedUsers-tab">
           <ul class="list-group mt-3">
-            <% let email = user.email %>
-            <% users.forEach(user=> { %>
-              <% if (email != user.email) { %>
-              <%- include('templates/user', { user }) %>
-              <% } %>
-              <% }) %>
+          <% var count = 0; %>
+          <% connectedArray.forEach(matchedUser => { %>
+            <%- include('templates/matchedUser', { count, matchedUser, matchedUsers, sessionEmail, notificationList }) %>
+            <% console.log('count', count); %>
+            <% count++ %>
+          <% }); %>
           </ul>
         </div>
-          <% if (connectedArray !=null) { %>
-            <div class="tab-pane fade" id="matchedUsers" role="tabpanel" aria-labelledby="matchedUsers-tab">
-
-              <% connectedArray.forEach(matchedUser=> { %>
-                <% console.log(connectedArray) %>
-                  <%- include('templates/matchedUser', { matchedUser, matchedUsers, sessionEmail }) %>
-                    <% }); %>
-            </div>
-          <% } %>
-      </div>
       <% } %>
-</div>
+    </div>
+  <% } %>
 
-<% if (!user) { %>
-  <%- include("templates/footer_before_login") %>
-    <% } else { %>
-      <%- include("templates/footer_after_login") %>
-        <% } %>
+  <% if (!user) { %>
+    <%- include("templates/footer_before_login") %>
+  <% } else { %>
+    <%- include("templates/footer_after_login") %>
+  <% } %>
 
-<!-- Bootstrap JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
-  integrity="sha384-LNSAtfFYg/y4XHVQNISc4V/8e8u/D0tc5Bt7sg6syEBXmW6F7sI0AZpxS+ln6xG"
-  crossorigin="anonymous"></script>
+  <!-- Bootstrap JS -->
+  <script src="filter.js"></script>
+  <script src="match.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+    integrity="sha384-LNSAtfFYg/y4XHVQNISc4V/8e8u/D0tc5Bt7sg6syEBXmW6F7sI0AZpxS+ln6xG"
+    crossorigin="anonymous"></script>
+
+  <!-- Show Modal on "Match" button click -->
+  <script>
+    // Use jQuery to show the modal when the "Match" button is clicked
+    $(document).ready(function() {
+      $('#matchButton').on('click', function() {
+        $('#matchModal').modal('show');
+      });
+      $('#modalCloseButton').on('click', function() {
+        location.reload();
+      });
+    });
+  </script>
+</body>

@@ -1,49 +1,54 @@
-const mongoose = require('mongoose');
-const { type } = require('os');
+const mongoose = require("mongoose");
+const { type } = require("os");
 const Schema  = mongoose.Schema;
 
 const userSchema = new Schema({
-    name: {
-        type: String,
-        required: true,
-    },
-    userId: {
-        type: String,
+    connected: {
         required: false,
+        type: Array
+    },
+    description: {
+        required: false,
+        type: String
     },
     email: {
-        type: String,
         required: true,
-        unique: true,
-    },
-    password: {
         type: String,
-        required: true,
-    },
-    skills: {
-        type: Array,
-        default: 'NaN',
-        required: true,
-    },
-    tempCode: {
-        type: String,
-        required: false,
+        unique: true
     },
     image_id: {
-        type: String,
         required: false,
+        type: String
     },
     joinDate: {
-        type: String,
         required: true,
+        type: String
     },
-    connected: {
-        type: Array,
+    name: {
+        required: true,
+        type: String
+    },
+    password: {
+        required: true,
+        type: String
+    },
+    rate: {
         required: false,
-    }, rate: {
-        type: Array,
+        type: Array
+    },
+    skills: {
+        default: "NaN",
+        required: true,
+        type: Array
+    },
+    tempCode: {
         required: false,
+        type: String
+    },
+    userId: {
+        required: false,
+        type: String
     }
 });
 
-module.exports = mongoose.mongoose.model('User', userSchema);
+module.exports = mongoose.mongoose.model("User", userSchema);
