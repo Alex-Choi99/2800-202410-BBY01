@@ -28,7 +28,7 @@
     <div class="ms-auto d-flex justify-content-between">
         <p class="d-flex flex-row list-group justify-content-center align-items-center mx-2 rounded border my-1" style="flex-wrap: wrap;">
             <span id="averageRatingSpan" class="mx-2">AVERAGE RATE: </span>
-            <span class="me-2"><%= avg.toFixed(2) %>/5 (by <%= user.rate.length %>)</span>
+            <span class="me-2"><%= avg.toFixed(2) %>/5 (by <%= matchedUsers[count].rate.length %>)</span>
         </p>
         <!-- Unmatch button triggers the modal -->
         <button type="button" class="btn btn-danger requestBTN m-1" data-bs-toggle="modal" data-bs-target="#unmatchModal-<%= safeEmailID %>">
