@@ -30,7 +30,8 @@ See Tree.txt
 
 5. How to install or run the project
 5.1 - Clone repo from GitHub https://github.com/Alex-Choi99/2800-202410-BBY01.git
-5.2 - 
+5.2 - npm install
+5.3 - node index.js or nodemon
 
 6. How to use the product (Features)
 6.1 - Sign up for an account via the app
