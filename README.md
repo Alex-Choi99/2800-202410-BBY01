@@ -29,14 +29,35 @@ SourceTree
 See Tree.txt
 
 5. How to install or run the project
-5.1 - Clone repo from GitHub https://github.com/Alex-Choi99/2800-202410-BBY01.git
-5.2 - npm install
-5.3 - node index.js or nodemon
+5.1 - Download Visual Studio Code 
+5.2 - Clone repo from GitHub https://github.com/Alex-Choi99/2800-202410-BBY01.git on any folder
+5.3 - npm install
+5.4 - Create a MongoDB account and server configuration
+5.5 - Create a mailjet account
+5.6 - Create a Cloudinary account
+5.7 - API keys need to be within a .env file
+    PORT=
+    MONGODB_HOST=
+    MONGODB_USER=
+    MONGODB_PASSWORD=
+    MONGODB_DATABASE_SESSION=sessions
+    MONGODB_DATABASE_USER=users
+    NODE_SESSION_SECRET=
+    MONGODB_SESSION_SECRET=
+    MJ_APIKEY_PUBLIC=
+    MJ_APIKEY_PRIVATE=
+    CLOUDINARY_CLOUD_NAME=
+    CLOUDINARY_CLOUD_KEY=
+    CLOUDINARY_CLOUD_SECRET=
+5.8 - node index.js or nodemon
+5.9 - Access our testing log -> https://docs.google.com/spreadsheets/d/1t1n7dpVyBsGPGmdbGdgdz-OIGlq8zmOLIN-LhQrnweQ/edit?usp=sharing
 
 6. How to use the product (Features)
 6.1 - Sign up for an account via the app
 6.2 - Select skills that you want to teach
 6.3 - Request to connect with other users and chat
+6.4 - Access your profile information, and change your image
+6.5 - See your notifications
 
 7. Include Credits, References, and Licenses
 7.1 - Use of ChatGPT debugging code
@@ -44,16 +65,17 @@ See Tree.txt
 
 8. How did you use AI? Tell us exactly what AI services and products you used and how you used them. Be very specific:
 ChatGPT
-8.1 - AI is helpful to get started researching
-8.2 - Information provided by AI might be outdated
-8.3 - More detailed prompts give better responses
+8.1 - AI is helpful to get started researching ideas. It suggested various api that fits requirements
+8.2 - AI is also used for cleaning up codes
+8.3 - Information provided by AI might be outdated
+8.4 - More detailed prompts give better responses
 
 9. Contact Information
 Team Name: BBY-01
 Team Members: 
-- Alfredo Luzardo
-- Alex Choi
-- Mark Pirvulescu
-- Wayne Wong
-- Daniil Yarygin
+- Alfredo Luzardo   luzardoneto2005@gmail.com
+- Alex Choi         sequoia.alex.ca@gmail.com
+- Mark Pirvulescu   mpirvulescu@gmail.com
+- Wayne Wong        w96wong@gmail.com
+- Daniil Yarygin    daniilbcross101@gmail.com
 
