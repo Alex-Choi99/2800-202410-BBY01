@@ -81,15 +81,6 @@ body {
 .circle-item > *:nth-of-type(6) {
   transform: rotate(255deg) translate(13em) rotate(-255deg);
 }
-/* .circle-item > *:nth-of-type(7) {
-          transform: rotate(306deg) translate(13em) rotate(-306deg);
-} */
-/* .circle-item > *:nth-of-type(8) {
-          transform: rotate(228deg) translate(3.6em) rotate(-228deg);
-} */
-    
-
-
 
 .container{
   margin:50px;
@@ -109,7 +100,6 @@ body {
   border-radius:50%;
   margin: -30px;
 }
-     
      
 .deg{
   transform : rotate(45deg) ;

@@ -1,18 +1,9 @@
-/* Style for both user and matched user cards */
 .user-card,
 .matched-users-card {
     border-radius: 8px;
-    /* padding: 20px; */
-    /* margin-bottom: 20px; */
     background: rgb(238, 239, 240);
-    /* color: #001a3c; */
-    /* display: flex; */
-    /* align-items: center; */
-    /* justify-content: space-between; */
     margin-left: 10%;
     margin-right: 10%;
-    /* border-color:#76accf; */
-    /* border-width: 3px; */
 }
 
 #filterSelect {
@@ -26,13 +17,10 @@
     margin-bottom: 50pt;
 }
 
-/* Additional styles for buttons */
 .user-card .btn,
 .matched-users-card .btn {
-    margin-left: 5px; /* Add some space between buttons */
+    margin-left: 5px;
 }
-
-/* Custom CSS for Navigation Buttons */
 
 .navigation {
     border-radius: 10px 10px 0 0;
@@ -42,14 +30,12 @@
 }
 
 .navigation:hover {
-    /* background-color: rgb(188, 205, 221); */
     color: rgb(42, 97, 180);
     color: black;
 }
 
 .navigation.active {
     font-weight: bold;
-    
 }
 
 .nav-tabs {
@@ -59,40 +45,24 @@
 
 
 .nav-item {
-    margin-right: 15px; /* Add space between tabs */
+    margin-right: 15px;
  } 
 
 .dropdown-menu button {
-    margin-top: 10px; /* Add top margin to the "Save" button */
+    margin-top: 10px;
 }
 
-/* New box styles */
 .new-box {
     position: absolute;
-    top: 40%; /* Adjusted to position the top part in the center */
+    top: 40%; 
     left: 50%;
     transform: translateX(-50%);
     width: 30%;
     height: 60%;
-    background-color: rgba(255, 255, 255, 0.8); /* White background with some transparency */
-    border-radius: 20px; /* Rounded corners */
-    z-index: -1; /* Place behind other elements */
+    background-color: rgba(255, 255, 255, 0.8); 
+    border-radius: 20px; 
+    z-index: -1; 
 }
-
-/* Custom button styles */
-/* .teal-btn {
-    background-color: rgb(26, 147, 195);
-    color: white;
-    border: none;
-    border-radius: 8px;
-    padding: 10px 20px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-} */
-
-/* .teal-btn:hover { */
-    /* background-color: #1f5980; Darker teal on hover */
-/* } */
 
 #notificationImage img {
     width: 30px;
@@ -106,12 +76,6 @@
     scale: 1.2;
 }
 
-/* Additional styles for tab labels */
-/* .nav-link {
-    text-transform: capitalize; /* Convert tab labels to title case */
-/* }  */
-
-/* Move filter by skill menu above the tabs */
 #filter {
     text-align: left;
     margin-top: 20px;
@@ -120,10 +84,9 @@
     margin-right: 10%;
 }
 
-/* Additional styles for matched user cards */
 .matched-users-card {
-    margin-left: 10%; /* Set margin from left */
-    margin-right: 10%; /* Set margin from right */
+    margin-left: 10%; 
+    margin-right: 10%;
 }
 
 #notUserButtonDiv {
@@ -182,7 +145,6 @@
     #notUserButtonDiv {
         display: block;
         width: 200px;
-        /* justify-content: center; */
     }
 
     #loginBtn, #signupBtn {

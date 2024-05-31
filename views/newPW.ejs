@@ -1,21 +1,36 @@
-<%- include('templates/header'), { pageName: 'newPW'} %>
-<div class="d-flex justify-content-center flex-nowrap">
-  <div class="col-10 col-md-4">
-    <form action="/newPWSubmit" method="post">
+<%- include('templates/header'), { pageName: 'newPW' } %>
+
+  <div class="d-flex justify-content-center flex-nowrap">
+    <div class="col-10 col-md-4">
+
+      <form action="/newPWSubmit" method="post">
+
+        <!-- TEMP CODE INPUT -->
         <div class="form-floating">
-            <input name="tempCode" type="text" class="form-control" id="floatingPassword" placeholder="Password" min="2" max="10">
-            <label for="floatingPassword">Temporary code</label>
+          <input name="tempCode" type="text" class="form-control" id="floatingPassword" placeholder="Password" min="2"
+            max="10">
+          <label for="floatingPassword">Temporary code</label>
         </div>
+
+        <!-- NEW PASSWORD INPUT -->
         <div class="form-floating">
-            <input name="newPW" type="password" class="form-control" id="floatingPassword" placeholder="Password" min="2" max="30">
-            <label for="floatingPassword">New password</label>
+          <input name="newPW" type="password" class="form-control" id="floatingPassword" placeholder="Password" min="2"
+            max="30">
+          <label for="floatingPassword">New password</label>
         </div>
+
+        <!-- CONFIRM NEW PASSWORD INPUT -->
         <div class="form-floating">
-            <input name="confirmPW" type="password" class="form-control" id="floatingPassword" placeholder="Password" min="2" max="30">
-            <label for="floatingPassword">Confirm New password</label>
+          <input name="confirmPW" type="password" class="form-control" id="floatingPassword" placeholder="Password"
+            min="2" max="30">
+          <label for="floatingPassword">Confirm New password</label>
         </div>
+
+        <!-- SUBMIT BUTTON -->
         <button class="btn btn-primary w-100 py-2" type="submit">Submit</button>
-    </form>
+      </form>
+
+    </div>
   </div>
-</div>
-<%- include('templates/footer_before_login') %>
+
+  <%- include('templates/footer_before_login') %>

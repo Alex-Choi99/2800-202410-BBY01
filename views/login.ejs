@@ -1,5 +1,8 @@
 <% var boi = user %>
 <%- include("templates/header", { user: boi }) %>
+
+<!-- Reuse login page for multiple purposes. Normal login, 
+    when user forgot their info, when they submit their email to reset info -->
 <%
     switch(forgor) {
         case 'forgor':

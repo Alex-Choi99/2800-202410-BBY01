@@ -1,7 +1,10 @@
 <%- include('templates/header'), { pageName: 'newPW' } %>
+  
   <div class="d-flex justify-content-center flex-nowrap my-4">
     <h1>Rating the user "<%= user.name %>"</h1>
   </div>
+
+  <!-- Submit Rate Form -->
   <div class="d-flex justify-content-center flex-nowrap my-2">
     <form action="/rateSubmit" method="post">
       <input type="hidden" name="ratedUserEmail" value="<%= user.email %>">
@@ -18,9 +21,7 @@
       </label>
       <textarea id="feedback" name="feedback" placeholder="Leave a message!" class="mx-auto form-control my-2" rows="3" maxlength="500"></textarea>
       <button class="btn btn-primary w-100 py-2" type="submit">Submit</button>
-  </form>
-  
+    </form>
   </div>
-  <script>
-  </script>
+
   <%- include('templates/footer_before_login') %>

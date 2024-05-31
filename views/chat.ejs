@@ -1,94 +1,101 @@
 <%- include ("templates/header") %>
 
-    <div class="container-fluid py-3">
-      <div class="row justify-content-center mb-4">
-        <div class="col-md-8">
-          <div class="card">
-            <div class="card-header text-bg-primary">
-              Chat Room
-            </div>
-            <div class="card-body">
-              <div id="chat" class="chat-container">
-                <% chat.messages.forEach(msg=> { %>
-                  <div class="message mb-2">
-                    <div class="d-flex justify-content-between">
-                      <strong>
-                        <%= msg.sender %>:
-                      </strong>
-                      <small class="text-muted">
-                        <%= new Date(msg.timestamp).toLocaleTimeString() %>
-                      </small>
-                    </div>
-                    <div>
-                      <%= msg.message %>
-                    </div>
+  <!-- CHAT CONTAINER -->
+  <div class="container-fluid py-3">
+    <div class="row justify-content-center mb-4">
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-header text-bg-primary">
+            Chat Room
+          </div>
+
+          <div class="card-body">
+            <div id="chat" class="chat-container">
+              <!-- Check chat database to load its contents -->
+              <% chat.messages.forEach(msg=> { %>
+                <div class="message mb-2">
+                  <div class="d-flex justify-content-between">
+                    <strong>
+                      <%= msg.sender %>:
+                    </strong>
+                    <small class="text-muted">
+                      <%= new Date(msg.timestamp).toLocaleTimeString() %>
+                    </small>
                   </div>
-                  <% }); %>
-              </div>
+                  <div>
+                    <%= msg.message %>
+                  </div>
+                </div>
+                <% }); %>
             </div>
-            <div class="card-footer">
-              <form id="messageForm" class="form-inline">
-                <input type="text" id="messageInput" class="form-control flex-grow-1 mr-2"
-                  placeholder="Type your message..." required>
-                <button type="submit" class="btn btn-primary">Send</button>
-              </form>
-            </div>
+          </div>
+
+          <!-- Bottom of chat container -->
+          <div class="card-footer">
+            <form id="messageForm" class="form-inline">
+              <input type="text" id="messageInput" class="form-control flex-grow-1 mr-2"
+                placeholder="Type your message..." required>
+              <button type="submit" class="btn btn-primary">Send</button>
+            </form>
           </div>
         </div>
       </div>
-        </div>
-      </div>
     </div>
+  </div>
 
-    <script>
-      document.addEventListener("DOMContentLoaded", async () => {
-        console.log("cheese");
-        const socket = io();
-        console.log(socket);
+  <script>
 
-        const chatId = "<%= chatId %>";
-        let senderName = "<%= user.name %>";
+    // After the document is loaded connect to socket.io
+    document.addEventListener("DOMContentLoaded", async () => {
+      // Define socket
+      const socket = io();
+      console.log(socket);
 
-        socket.on('connect', () => {
-          console.log("CONNECTED");
-          socket.emit('joinRoom', chatId);
-        });
+      const chatId = "<%= chatId %>";
+      let senderName = "<%= user.name %>";
 
-        async function sendMessage(e) {
-          console.log("SENDING");
-          e.preventDefault();
-          const input = document.getElementById('messageInput');
-          const message = input.value;
-          console.log("INPUT: " + message);
-
-          if (message) {
-            await socket.emit('sendMessage', { chatId, message, senderName });
-            input.value = '';
-          }
-          input.focus();
-        }
-
-        document.querySelector('form').addEventListener('submit', sendMessage);
-
-        socket.on('receiveMessage', (data) => {
-          const { sender, message, timestamp } = data;
-
-          const messageDiv = document.createElement('div');
-          messageDiv.classList.add('message', 'mb-2');
-
-          messageDiv.innerHTML = `
-                    <div class="d-flex justify-content-between">
-                        <strong>${sender}:</strong>
-                        <small class="text-muted">${new Date(timestamp).toLocaleTimeString()}</small>
-                    </div>
-                    <div>${message}</div>
-                `;
-
-          document.getElementById('chat').appendChild(messageDiv);
-
-        });
-
+      // Connect to socket.io
+      socket.on('connect', () => {
+        socket.emit('joinRoom', chatId);
       });
-    </script>
 
-    <%- include ("templates/footer_after_login") %>
+      async function sendMessage(e) {
+
+        e.preventDefault();
+        const input = document.getElementById('messageInput');
+        const message = input.value;
+
+        // Send the message and other variables using the socket sendMessage function in index.js
+        if (message) {
+          await socket.emit('sendMessage', { chatId, message, senderName });
+          input.value = '';
+        }
+        input.focus();
+      }
+
+      document.querySelector('form').addEventListener('submit', sendMessage);
+
+      // Function that defines recieving a message
+      socket.on('receiveMessage', (data) => {
+        const { sender, message, timestamp } = data;
+
+        //Creating the message div
+        const messageDiv = document.createElement('div');
+        messageDiv.classList.add('message', 'mb-2');
+
+        // Builds how the message wil look using html
+        messageDiv.innerHTML = `
+        <div class="d-flex justify-content-between">
+          <strong>${sender}:</strong>
+          <small class="text-muted">${new Date(timestamp).toLocaleTimeString()}</small>
+        </div>
+        <div>${message}</div>
+        `;
+
+        document.getElementById('chat').appendChild(messageDiv);
+      });
+    });
+
+  </script>
+
+  <%- include ("templates/footer_after_login") %>

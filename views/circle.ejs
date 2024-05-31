@@ -6,15 +6,16 @@
   <meta name="Author" content="blog.sombex.com">
   <title>Arranging Items around a Circle</title>
   <link rel="stylesheet" href="/css/circle.css">
-
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 
 <body>
+  <!-- AUDIO -->
   <audio loop autoplay>
     <source src="/audio/Circus_Theme_Song.mp3" type="audio/mp3">
   </audio>
 
+  <!-- ROTATING IMAGES -->
   <div class="circle-container" style="display:block;">
     <ul class="circle-item">
       <li><img src="/images/Alex.jpg" id="acButton"></li>
@@ -25,10 +26,14 @@
       <li><a href="/"><img src="/images/Logo2_BBY01.png"></a></li>
     </ul>
   </div>
+
+  <!-- Display spinning circles
+    This block of code is adapted from here:
+    source: https://blog.sombex.com/2017/10/arrange-items-aroud-circle-using-basic.html
+  -->
   <script>
     // Spinning Circle
     $(function () {
-
       var deg = 0;
       var rotate = 1;
       var club_rotate = setInterval(club_rotate, 5);
@@ -63,36 +68,42 @@
       }
     });
 
+    // Each developer has their own sound when hover on easter egg page's face
+
+    // ALEX CHOI BUTTON
     var acSound = new Audio("/audio/223467-f07c9cf3-4f95-409e-bf9b-062956b4d6b3.mp3");
     var acButton = document.getElementById('acButton');
     acButton.addEventListener('click', function () {
       acSound.play();
     });
 
+    // ALFREDO LUZARDO BUTTON
     var alSound = new Audio("/audio/lisan-al-gaib.mp3");
     var alButton = document.getElementById('alButton');
     alButton.addEventListener('click', function () {
       alSound.play();
     });
 
+    // DANIIL YARYGIN BUTTON
     var dySound = new Audio("/audio/whistle_haaa.mp3");
     var dyButton = document.getElementById('dyButton');
     dyButton.addEventListener('click', function () {
       dySound.play();
     });
 
+    // MARK PIRVULESCU BUTTON
     var mpSound = new Audio("/audio/final_60a626b637d6cf006f9cebb9_881985_p9h3WM4.mp3");
     var mpButton = document.getElementById('mpButton');
     mpButton.addEventListener('click', function () {
       mpSound.play();
     });
 
+    // WAYNE WONG BUTTON
     var wwSound = new Audio("/audio/PeonPissed2.ogg");
     var wwButton = document.getElementById('wwButton');
     wwButton.addEventListener('click', function () {
       wwSound.play();
     });
-
   </script>
 
 </body>
