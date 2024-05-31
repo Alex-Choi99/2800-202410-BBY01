@@ -57,7 +57,9 @@ See Tree.txt
 6.2 - Select skills that you want to teach
 6.3 - Request to connect with other users and chat
 6.4 - Access your profile information, and change your image
-6.5 - See your notifications
+6.5 - See your notifications through the bell icon
+6.6 - Rate other users
+6.7 - Unmatch users you have finished bartering with
 
 7. Include Credits, References, and Licenses
 7.1 - Use of ChatGPT debugging code
@@ -65,10 +67,10 @@ See Tree.txt
 
 8. How did you use AI? Tell us exactly what AI services and products you used and how you used them. Be very specific:
 ChatGPT
-8.1 - AI is helpful to get started researching ideas. It suggested various api that fits requirements
-8.2 - AI is also used for cleaning up codes
-8.3 - Information provided by AI might be outdated
-8.4 - More detailed prompts give better responses
+8.1 - AI is helpful to get started researching ideas. It suggested various api that fits requirements. We also found AI very useful to help debug our code.
+8.2 - We did not use AI to create data sets or clean data sets
+8.3 - Our app does not use AI as a feature
+8.4 - We did encounter limitations in AI during the creation of our project, and they included the AI giving outdated information, and that you need to give very detailed information to get exactly what you want. 
 
 9. Contact Information
 Team Name: BBY-01
@@ -78,4 +80,3 @@ Team Members:
 - Mark Pirvulescu   mpirvulescu@gmail.com
 - Wayne Wong        w96wong@gmail.com
 - Daniil Yarygin    daniilbcross101@gmail.com
-
