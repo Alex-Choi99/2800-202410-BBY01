@@ -113,16 +113,13 @@
 
 .settingsDiv {
     position: fixed;
-    /* Use fixed to cover the entire viewport */
     top: 0;
     width: 100%;
     height: 100%;
     background-color: rgba(128, 128, 128, 0.5);
     display: none;
     justify-content: center;
-    /* Center content vertically */
     align-items: center;
-    /* Center content horizontally */
 }
 
 .settingsDiv.active {

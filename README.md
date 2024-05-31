@@ -5,8 +5,8 @@
 3. Technologies used:
 ejs 3.1.10
 JavaScript 
-CSS 
-HTML 
+CSS 3
+HTML 5
 Bootstrap 5.3.3
 Node.js 20.11.1
 express 4.19.2
@@ -26,19 +26,27 @@ figma
 SourceTree
 
 4. Listing of File Contents of folder
-
+See Tree.txt
 
 5. How to install or run the project
-
+5.1 - Clone repo from GitHub https://github.com/Alex-Choi99/2800-202410-BBY01.git
+5.2 - npm install
+5.3 - node index.js or nodemon
 
 6. How to use the product (Features)
-
+6.1 - Sign up for an account via the app
+6.2 - Select skills that you want to teach
+6.3 - Request to connect with other users and chat
 
 7. Include Credits, References, and Licenses
-
+7.1 - Use of ChatGPT debugging code
+7.2 - Above technologies do not require licenses (free to use to the best of our knowledge) 
 
 8. How did you use AI? Tell us exactly what AI services and products you used and how you used them. Be very specific:
-
+ChatGPT
+8.1 - AI is helpful to get started researching
+8.2 - Information provided by AI might be outdated
+8.3 - More detailed prompts give better responses
 
 9. Contact Information
 Team Name: BBY-01

@@ -2,49 +2,58 @@
 <%- include('templates/header.ejs') %>
 
     <div class="container mt-3">
+        
+        <!-- TITLE -->
         <h1 class="text-center mb-3">NOTIFICATIONS</h1>
         <hr>
+
+        <!-- IF THERE ARE 0 NOTIFICATIONS -->
         <% if (notifications.length == 0) { %>
             <div>
                 <h6>You currently have <span class="notificationAmount">0</span> notifications.</h6>
             </div>
         <% } else { %>
+
             <div>
                 <% if (notifications.length == 1) { %>
+                    <!-- "new notification" without 's' -->
                     <h6><span class="notificationAmount"><%= notifications.length %></span> new notification</h6>
                 <% } else { %>
+                    <!-- "new notification" with 's' -->
                     <h6><span class="notificationAmount"><%= notifications.length %></span> new notifications</h6>
                 <% } %>
             </div>
+
             <div class="container">
                 <div id="border">
+                    <!-- EACH NOTIFICATION CARD -->
                     <% notifications.forEach(notification=> { %>
                         <div class="card" id="notificationCard">
                             <div class="card-body" id="notificationCardBody">
                                 <div>
                                     <span id="email"> <%= notification.senderEmail %></span> <%= notification.message %>
                                 </div>
+
+                                <!-- BUTTONS -->
                                 <div id="notificationButtonDiv" class="ms-auto d-flex">
+                                    <!-- ACCEPT BUTTON -->
                                     <form action="/acceptRequest" method="post" id="acceptButtonForm">
                                         <input type="hidden" name="notificationId" value="<%= notification._id %>">
                                         <button type="submit" id="acceptButton">ACCEPT</button>
                                     </form>
+                                    <!-- DENY BUTTON -->
                                     <form action="/denyRequest" method="post" id="denyButtonForm">
                                         <input type="hidden" name="notificationId" value="<%= notification._id %>">
                                         <button type="submit"  id="denyButton">DENY</button>
                                     </form>
                                 </div>
+
                             </div>
                         </div>
                     <% }); %>
                 </div>
             </div>
+
         <% } %>
 
-<!-- Include footer.ejs -->
 <%- include ("templates/footer_after_login") %>
-
-<!-- Bootstrap JS -->
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-LNSAtfFYg/y4XHVQNISc4V/8e8u/D0tc5Bt7sg6syEBXmW6F7sI0AZpxS+ln6xG" crossorigin="anonymous"></script> -->

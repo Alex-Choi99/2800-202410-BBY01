@@ -1,20 +1,13 @@
 <%- include("templates/header") %>
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script type="text/javascript">
-  $.cloudinary.config({ cloud_name: '<%= process.env.CLOUDINARY_CLOUD_NAME %>', secure: true });
-</script>
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script type="text/javascript">
-  $.cloudinary.config({ cloud_name: '<%= process.env.CLOUDINARY_CLOUD_NAME %>', secure: true });
-</script>
 
   <div class="container" id="profileDiv">
+    
     <!-- PROFILE HEADER -->
     <div class="widget-card shadow-sm card" id="profileHeader">
+
       <!-- IMAGE -->
       <div id="profileImage">
+        <!-- Display default image if user hasn't posted any profile image -->
         <% if (user.image_id==null) { %>
           <div id="mainDefaultProfilePicture">
             <img src="/images/defaultProfilePicture.png" alt="default">
@@ -23,6 +16,7 @@
             <img src="<%= user.imageUrl %>" alt="Profile Image" />
             <% } %>
       </div>
+
       <!-- USERNAME -->
       <div id="profileUserName" class="text-start w-100 d-flex flex-column">
         <h4>
@@ -34,6 +28,7 @@
           <button type="submit" class="btn btn-primary btn-sm">Submit</button>
         </form>
       </div>
+
       <!-- INFO -->
       <div id="description" class="text-start d-flex flex-column w-100">
         <h4>Description <button id="editDescriptionButton" class="btn btn-primary btn-sm">Edit</button></h4>
@@ -47,6 +42,8 @@
         </form>
       </div>
     </div>
+
+    <!-- Join Date -->
     <div id="profileInfo" class="card widget-card shadow-sm">
       <h6><i class="fa-solid fa-calendar-days"></i><span id="joinedText">Joined <%= user.joinDate %></span></h6>
       <hr>
@@ -67,6 +64,8 @@
               <% }) %>
       </div>
     </div>
+
+    <!-- Display review info in a div(average rating and feedback comments) -->
     <% var sum=0; %>
       <% var countRates=0; %>
         <% user.rate.forEach(rating=> { %>
@@ -98,19 +97,26 @@
                   </div>
   </div>
 
+  <!-- CHANGE IMAGE POPUP-->
   <div class="settingsDiv" id="settingsDiv">
+
     <div class="card ">
+      <!-- TITLE -->
       <div class="card-header">
         <span id="settingsTitle">Change Image</span>
         <div class="float-end" id="exitIcon">
           <i class="fa-solid fa-x"></i>
         </div>
       </div>
+
       <div class="card-body">
+
         <!-- UPLOAD IMAGE FORM -->
         <form action="/setProfilePic" method="post" enctype="multipart/form-data">
           <div class="container d-flex text-center">
             <div id="defaultProfilePicture">
+
+              <!-- Display default image if user hasn't posted any profile image -->
               <% if (user.image_id==null) { %>
                 <img src="/images/defaultProfilePicture.png" alt="default">
                 <% } else { %>
@@ -128,10 +134,10 @@
             <input id="saveButton" type="submit" value="Save">
           </div>
         </form>
-        <!-- ADD OTHER INFO TO PROFILE SETTINGS TAB -->
+
       </div>
     </div>
   </div>
-
+  
   <script src="/js/profile.js"></script>
   <%- include("templates/footer_after_login") %>
